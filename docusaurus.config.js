@@ -16,7 +16,7 @@ const config = {
 
   // GitHub pages deployment config.
   organizationName: 'extism',
-  projectName: 'web',
+  projectName: 'docs',
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -127,6 +127,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        additionalLanguages: ['php', 'ruby', 'rust'],
       },
     }),
 };

@@ -17,7 +17,7 @@ const FeatureList = [
     description: (
       <>
         Don't worry about what some plug-in code might do to your program. Extism is built with
-        security as a core principal, and fully sandboxes the execution of all plug-in code.
+        security as a core principle, and fully sandboxes the execution of all plug-in code.
       </>
     ),
   },
