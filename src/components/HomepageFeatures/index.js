@@ -13,7 +13,7 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Secure by default',
+    title: 'Secure by Default',
     description: (
       <>
         Don't worry about what some plug-in code might do to your program. Extism is built with
@@ -22,7 +22,7 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Available everywhere',
+    title: 'Available Everywhere',
     description: (
       <>
         Our flexible architecture uniquely allows Extism to run almost anywhere, with idiomatic Host
