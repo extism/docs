@@ -1,13 +1,16 @@
 ---
 title: C
+tags:
+    - c
+    - host sdk
 ---
 
 # Using the C Host SDK
 
 
-:::caution Installation check!
+:::caution Check your installation
 
-Before continuing with this guide, please be sure you've gone through the **"Install Extism"** portion of the documentation.
+Please be sure you've installed Extism before continuing with this guide.
 
 Visit those docs [here](/docs/install).
 

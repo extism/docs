@@ -1,5 +1,4 @@
 // @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
@@ -14,13 +13,9 @@ const config = {
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
-  // GitHub pages deployment config.
   organizationName: 'extism',
   projectName: 'docs',
 
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -33,15 +28,11 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/extism/docs',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/extism/docs',
         },
@@ -98,18 +89,11 @@ const config = {
           {
             title: 'Community',
             items: [
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/extism',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/extism',
-              },
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/extism',
-              },
+              { label: 'Extism Improvement Proposals (EIP)', href: 'https://github.com/extism/proposals' },
+              { label: 'GitHub Discussions', href: 'https://github.com/extism/extism/discussions' },
+              { label: 'Discord', href: 'https://discordapp.com/invite/extism' },
+              { label: 'Twitter', href: 'https://twitter.com/extism' },
+              { label: 'Stack Overflow', href: 'https://stackoverflow.com/questions/tagged/extism' },
             ],
           },
           {
