@@ -10,7 +10,7 @@ Extism is a plug-in system for everyone. We've carefully designed it to be flexi
   <img src="/img/extism-language-support.png"/>
 </p>
 
-You can use Extism in your codebase, regardless of the programming language. We support several environments through our official [Host SDKs](/docs/category/integrate-into-your-codebase), and are adding more language support all the time. Let us know if we're missing yours by opening and [issue on GitHub](https://github.com/extism/proposals), or talk to us in our [Discord](https://discord.gg/cx3usBCWnc) server.
+You can use Extism in your codebase, regardless of the programming language. We support several environments through our official [Host SDKs](/docs/category/integrate-into-your-codebase), and are adding more language support all the time. Let us know if we're missing yours by opening an [issue on GitHub](https://github.com/extism/extism/issues), or talk to us in our [Discord](https://discord.gg/cx3usBCWnc) server.
 
 ## What is a "plug-in system"?
 
@@ -28,6 +28,8 @@ Instead of adding all of these options to Shoptofy, let the store owner add a li
 
 With Extism, Shoptofy would locate a spot in its codebase, before some event or function such as `charge_credit_card()`, and run a function that a store owner has provided. Extism is built on top of WebAssembly, which makes untrusted code execution like this [safe to do](https://webassembly.org/docs/security/) via isolation and sandboxing! 
 
+### Example in action
+
 Here's some psuedo-code demonstrating this example:
 
 ```ruby title=shoptofy/checkout.rb
@@ -37,7 +39,7 @@ require 'json'
 # your manifest can be created from wasm code on disk (seen here), or from bytes read from other 
 # sources such as a database or cache.
 manifest = {
-  :wasm => [{:path => "../wasm/code.wasm"}] 
+  :wasm => [{:path => "store_owner/checkout.wasm"}] 
 }
 plugin = Plugin.new(manifest)
 input = JSON.generate({
