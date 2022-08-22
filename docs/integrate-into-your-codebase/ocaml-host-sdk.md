@@ -25,7 +25,7 @@ opam install extism
 
 Install via `git`:
 ```sh
-opam pin extism https://github.com/talex5/mirage-tcpip.git#main
+opam pin extism https://github.com/extism/extism.git#main
 ```
 
 ### 2. Import the library and use the APIs
