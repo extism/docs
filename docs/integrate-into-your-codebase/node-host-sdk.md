@@ -16,77 +16,30 @@ Visit those docs [here](/docs/install).
 
 :::
 
-### 1. Install the C library
+### 1. Install the Node library
 
-Install via [Conan](https://conan.io):
+Install via [npm](https://www.npmjs.com/):
 ```sh
-# TODO
+npm i --save extism
 ```
 
 Install via `git`:
 ```sh
-git submodule add https://github.com/extism/extism c
+# TODO
 ```
 
-### 2. Include the library and use the APIs
+### 2. Import the library and use the APIs
 
-```c title=main.c
-#include "../core/extism.h"
+```javascript title=app.js
+import { Plugin } from "extism";
+import { readFileSync } from "fs";
 
-#include <assert.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <unistd.h>
+let wasm = readFileSync("../wasm/code.wasm");
+let plugin = new Plugin(wasm);
 
-uint8_t *read_file(const char *filename, size_t *len) {
+let buf = plugin.call("count_vowels", process.argv[2] || "this is a test");
 
-  FILE *fp = fopen(filename, "rb");
-  if (fp == NULL) {
-    return NULL;
-  }
-  fseek(fp, 0, SEEK_END);
-  size_t length = ftell(fp);
-  fseek(fp, 0, SEEK_SET);
-
-  uint8_t *data = malloc(length);
-  if (data == NULL) {
-    return NULL;
-  }
-
-  assert(fread(data, 1, length, fp) == length);
-  fclose(fp);
-
-  *len = length;
-  return data;
-}
-
-int main(int argc, char *argv[]) {
-  if (argc < 2) {
-    fputs("Not enough arguments\n", stderr);
-    exit(1);
-  }
-  size_t len = 0;
-  uint8_t *data = read_file("../wasm/code.wasm", &len);
-  ExtismPlugin plugin = extism_plugin_register(data, len, false);
-  free(data);
-  if (plugin < 0) {
-    exit(1);
-  }
-
-  assert(extism_call(plugin, "count_vowels", (uint8_t *)argv[1],
-                     strlen(argv[1])) == 0);
-  ExtismSize out_len = extism_output_length(plugin);
-  char output[out_len];
-  extism_output_get(plugin, (uint8_t *)output, out_len);
-  write(STDOUT_FILENO, output, out_len);
-  write(STDOUT_FILENO, "\n", 1);
-
-  return 0;
-}
+console.log(JSON.parse(buf.toString())['count']);
 ```
 
 
