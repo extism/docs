@@ -16,7 +16,7 @@ Visit those docs [here](/docs/install).
 
 :::
 
-### 1. Install the Node library
+### 1. Install the Node module
 
 Install via [npm](https://www.npmjs.com/):
 ```sh
@@ -28,7 +28,7 @@ Install via `git`:
 # TODO
 ```
 
-### 2. Import the library and use the APIs
+### 2. Import the module and use the APIs
 
 ```javascript title=app.js
 import { Plugin } from "extism";
@@ -47,5 +47,5 @@ console.log(JSON.parse(buf.toString())['count']);
 
 If you've encountered a bug or think something is missing, please open an issue on the [Extism GitHub](https://github.com/extism/extism) repository.
 
-There is an active community on [Discord](#) where the project maintainers and users can help you. Come hang out!
+There is an active community on [Discord](https://discord.gg/cx3usBCWnc) where the project maintainers and users can help you. Come hang out!
 

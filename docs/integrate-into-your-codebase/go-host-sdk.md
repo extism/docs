@@ -76,5 +76,5 @@ See the module documentation at: https://pkg.go.dev/github.com/extism/extism
 
 If you've encountered a bug or think something is missing, please open an issue on the [Extism GitHub](https://github.com/extism/extism) repository.
 
-There is an active community on [Discord](#) where the project maintainers and users can help you. Come hang out!
+There is an active community on [Discord](https://discord.gg/cx3usBCWnc) where the project maintainers and users can help you. Come hang out!
 
