@@ -91,7 +91,7 @@ const config = {
             items: [
               { label: 'Extism Improvement Proposals (EIP)', href: 'https://github.com/extism/proposals' },
               { label: 'GitHub Discussions', href: 'https://github.com/extism/extism/discussions' },
-              { label: 'Discord', href: 'https://discordapp.com/invite/extism' },
+              { label: 'Discord', href: 'https://discord.gg/cx3usBCWnc' },
               { label: 'Twitter', href: 'https://twitter.com/extism' },
               { label: 'Stack Overflow', href: 'https://stackoverflow.com/questions/tagged/extism' },
             ],
