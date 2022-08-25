@@ -10,9 +10,7 @@ tags:
 
 :::caution Check your installation
 
-Please be sure you've installed Extism before continuing with this guide.
-
-Visit those docs [here](/docs/install).
+Please be sure you've [installed Extism](/docs/install) before continuing with this guide.
 
 :::
 
