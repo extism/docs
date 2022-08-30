@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Extism',
+  title: 'Extism - make all software programmable. Extend from within.',
   tagline: 'The Universal Plug-in System',
   url: 'https://extism.org',
   baseUrl: '/',
