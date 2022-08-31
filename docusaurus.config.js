@@ -78,6 +78,7 @@ const config = {
               { to: '/docs/integrate-into-your-codebase/c-host-sdk', label: 'Plug-in system in C' },
               { to: '/docs/integrate-into-your-codebase/cpp-host-sdk', label: 'Plug-in system in C++' },
               { to: '/docs/integrate-into-your-codebase/go-host-sdk', label: 'Plug-in system in Go' },
+              { to: '/docs/integrate-into-your-codebase/haskell-host-sdk', label: 'Plug-in system in Haskell' },
               { to: '/docs/integrate-into-your-codebase/node-host-sdk', label: 'Plug-in system in Node' },
               { to: '/docs/integrate-into-your-codebase/ocaml-host-sdk', label: 'Plug-in system in OCaml' },
               { to: '/docs/integrate-into-your-codebase/php-host-sdk', label: 'Plug-in system in PHP' },
