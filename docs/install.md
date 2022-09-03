@@ -11,13 +11,18 @@ The `extism` CLI is used to manage [Extism](https://github.com/extism/extism) in
 Using curl:
 
 ```sh
-$ curl https://raw.githubusercontent.com/extism/cli/main/install.sh | sh
+curl https://raw.githubusercontent.com/extism/cli/main/install.sh | sh
+
+# or to override default (~/.local/bin):
+
+sh <(curl https://raw.githubusercontent.com/extism/cli/main/install.sh) /usr/local/bin
 ```
 
 Using pip:
 
 ```sh
-$ pip3 install git+https://github.com/extism/cli
+pip3 install poetry
+pip3 install git+https://github.com/extism/cli
 ```
 
 ## Usage
