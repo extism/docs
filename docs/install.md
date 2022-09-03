@@ -8,6 +8,12 @@ The `extism` CLI is used to manage [Extism](https://github.com/extism/extism) in
 
 ## Install
 
+Using curl:
+
+```sh
+$ curl https://raw.githubusercontent.com/extism/cli/main/install.sh | sh
+```
+
 Using pip:
 
 ```sh
@@ -22,14 +28,15 @@ the installation prefix of your choice.
 In order to build from source, you must have a recent version of the [Rust toolchain installed](https://rustup.rs/).
 
 ```sh
-$ extism install # install to ~/.local/lib and ~/.local/include
+# build from source & install
+$ extism install git # installs to ~/.local/lib and ~/.local/include by default
 
 # download & install the latest pre-built bundle
-$ extism fetch v0.0.1-alpha
+$ extism install latest
 ```
 
 By default the prefix is `~/.local`, but it can easily be configured:
 
 ```sh
-$ extism --prefix /usr/local install
+$ extism --sudo --prefix /usr/local install
 ```
