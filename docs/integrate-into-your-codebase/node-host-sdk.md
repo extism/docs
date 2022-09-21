@@ -24,7 +24,7 @@ npm install @extism/extism
 ### 2. Import the module and use the APIs
 
 ```javascript title=app.js
-import { withContext, Context } from './index.js';
+import { withContext, Context } from '@extism/extism';
 import { readFileSync } from 'fs';
 
 withContext(async function (context) {
