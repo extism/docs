@@ -18,7 +18,7 @@ cargo build --release --target wasm32-unknown-unknown #wasm32-wasi is also suppo
 ```
 
 ### Example Usage
-```rust title=example.rs
+```rust title=lib.rs
 #![no_main]
 
 use extism_pdk::*;
@@ -71,7 +71,7 @@ unsafe fn count_vowels() -> i32 {
 
 ### Example Usage: PNG Inverter
 
-```rust file=invert.rs
+```rust file=lib.rs
 use extism_pdk::*;
 use ril::Image;
 use serde::{Deserialize, Serialize};

@@ -21,7 +21,7 @@ npx asc example.ts --outFile example.wasm --use abort=example/myAbort
 
 ### Example Usage
 
-```typescript name=example.ts
+```typescript title=example.ts
 import { Host } from '@extism/as-pdk';
 
 function myAbort(
