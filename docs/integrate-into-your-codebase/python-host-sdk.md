@@ -34,7 +34,6 @@ import os
 import json
 import hashlib
 
-sys.path.append(".")
 from extism import Plugin, Context
 
 if len(sys.argv) > 1:
