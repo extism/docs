@@ -16,20 +16,15 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 
 ### 1. Install the C library
 
-Install via [Conan](https://conan.io):
-```sh
-# TODO
-```
-
 Install via `git`:
 ```sh
-git submodule add https://github.com/extism/extism c
+git submodule add https://github.com/extism/extism extism
 ```
 
 ### 2. Include the library and use the APIs
 
 ```c title=main.c
-#include "../core/extism.h"
+#include "extism/runtime/extism.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -67,22 +62,26 @@ int main(int argc, char *argv[]) {
     fputs("Not enough arguments\n", stderr);
     exit(1);
   }
+
+  ExtismContext *ctx = extism_context_new();
+
   size_t len = 0;
   uint8_t *data = read_file("../wasm/code.wasm", &len);
-  ExtismPlugin plugin = extism_plugin_register(data, len, false);
+  ExtismPlugin plugin = extism_plugin_new(ctx, data, len, false);
   free(data);
   if (plugin < 0) {
     exit(1);
   }
 
-  assert(extism_call(plugin, "count_vowels", (uint8_t *)argv[1],
-                     strlen(argv[1])) == 0);
-  ExtismSize out_len = extism_output_length(plugin);
-  char output[out_len];
-  extism_output_get(plugin, (uint8_t *)output, out_len);
+  assert(extism_plugin_call(ctx, plugin, "count_vowels", (uint8_t *)argv[1],
+                            strlen(argv[1])) == 0);
+  ExtismSize out_len = extism_plugin_output_length(ctx, plugin);
+  const uint8_t *output = extism_plugin_output_data(ctx, plugin);
   write(STDOUT_FILENO, output, out_len);
   write(STDOUT_FILENO, "\n", 1);
 
+  extism_plugin_free(ctx, plugin);
+  extism_context_free(ctx);
   return 0;
 }
 ```

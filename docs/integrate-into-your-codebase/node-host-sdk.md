@@ -18,26 +18,34 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 
 Install via [npm](https://www.npmjs.com/):
 ```sh
-npm i --save extism
-```
-
-Install via `git`:
-```sh
-# TODO
+npm install @extism/extism
 ```
 
 ### 2. Import the module and use the APIs
 
 ```javascript title=app.js
-import { Plugin } from "extism";
-import { readFileSync } from "fs";
+import { withContext, Context } from './index.js';
+import { readFileSync } from 'fs';
 
-let wasm = readFileSync("../wasm/code.wasm");
-let plugin = new Plugin(wasm);
+withContext(async function (context) {
+  let wasm = readFileSync('../wasm/code.wasm');
+  let p = context.plugin(wasm);
 
-let buf = plugin.call("count_vowels", process.argv[2] || "this is a test");
+  if (!p.functionExists('count_vowels')) {
+    console.log("no function 'count_vowels' in wasm");
+    process.exit(1);
+  }
 
-console.log(JSON.parse(buf.toString())['count']);
+  let buf = await p.call('count_vowels', process.argv[2] || 'this is a test');
+  console.log(JSON.parse(buf.toString())['count']);
+  p.free();
+});
+
+// or, use a context like this:
+let ctx = new Context();
+let wasm = readFileSync('../wasm/code.wasm');
+let p = ctx.plugin(wasm);
+// ... where the context can be passed around to various functions etc. 
 ```
 
 

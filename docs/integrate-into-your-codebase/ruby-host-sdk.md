@@ -18,12 +18,7 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 
 Install via [RubyGems](https://rubygems.org/):
 ```sh
-gem install extism
-```
-
-Install via `git`:
-```sh
-# TODO
+# TODO 
 ```
 
 ### 2. Require the library and use the APIs
@@ -32,12 +27,19 @@ Install via `git`:
 require 'extism'
 require 'json'
 
-manifest = {
-  :wasm => [{:path => "../wasm/code.wasm"}]
+# a Context provides a scope for plugins to be managed within. creating multiple contexts
+# is expected and groups plugins based on source/tenant/lifetime etc.
+ctx = Extism::Context.new
+Extism::with_context {|ctx| 
+  manifest = {
+    :wasm => [{:path => "../wasm/code.wasm"}]
+  }
+
+  plugin = ctx.plugin(manifest)
+  res = JSON.parse(plugin.call("count_vowels", ARGV[0] || "this is a test"))
+  
+  puts res['count']
 }
-plugin = Extism::Plugin.new(manifest)
-res = JSON.parse(plugin.call("count_vowels", ARGV[0] || "this is a test"))
-puts res['count']
 ```
 
 

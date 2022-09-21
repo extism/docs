@@ -33,8 +33,10 @@ use extism::Plugin;
 
 fn main() {
     let wasm = include_bytes!("../../wasm/code.wasm");
-    let plugin = Plugin::new(wasm, false).unwrap();
+    let context = Context::new();
+    let plugin = Plugin::new(&context, wasm, false).unwrap();
     let data = plugin.call("count_vowels", "this is a test").unwrap();
+    assert_eq!(data, b"{\"count\": 4}");
 }
 ```
 
