@@ -18,7 +18,7 @@ Feel free to skip past this part if you already know the answer. But, generally 
 
 When using Extism, your job is to determine where in your application some arbitrary code should run, what data that code should be provided, and the data the plug-in should return. 
 
-Let's use an example to make this more concrete. Pretend you operate an e-commerce platform, Shoptofy. On Shoptofy, your customers (let's call them "store owners") build websites and add products to sell. When a shopper visits their website, they add products to a shopping cart and are sent to a checkout page when it's time to pay. Your store owners tell you that they love Shoptofy, but wish they could offer discounts to users who are spending lots of money. 
+Let's use an example to make this more concrete. Pretend you operate an e-commerce platform, "Shoptofy". On Shoptofy, your customers (let's call them "store owners") build websites and add products to sell. When a shopper visits their website, they add products to a shopping cart and are sent to a checkout page when it's time to pay. Your store owners tell you that they love Shoptofy, but wish they could offer discounts to users who are spending lots of money. 
 
 One store owner wants to offer a 10% discount if the total sale amount is over $200. Another store owner wants to offer 25% off and free shipping if a shopper gives them an email address. A third store owner wants to add a free product for first-time shoppers who spend more than $100. That seems like a lot of specific logic to implement in order to satisfy all the different needs of store owners...
 
@@ -32,7 +32,7 @@ With Extism, Shoptofy would locate a spot in its codebase, before some event or 
 
 Here's some psuedo-code demonstrating this example:
 
-```ruby title=shoptofy/checkout.rb
+```ruby title=Shoptofy/checkout.rb
 require 'extism'
 require 'json'
 
