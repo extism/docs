@@ -36,12 +36,14 @@ Here's some psuedo-code demonstrating this example:
 require 'extism'
 require 'json'
 
+ctx = Extism::Context.new
+
 # your manifest can be created from wasm code on disk (seen here), or from bytes read from other 
 # sources such as a database or cache.
 manifest = {
   :wasm => [{:path => "store_owner/checkout.wasm"}] 
 }
-plugin = Plugin.new(manifest)
+plugin = ctx.plugin(manifest)
 input = JSON.generate({
   :cart_total => cart_total.as_cents, 
   :is_new_customer => true, 
