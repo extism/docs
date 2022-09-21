@@ -1,8 +1,8 @@
 {
-    "label": "Tools & Components",
+    "label": "Concepts",
     "position": 5,
     "link": {
         "type": "generated-index",
-        "description": "Deeper dives into the components that make up the Extism project and how it helps you make your software programmable."
+        "description": "Deeper dives into the concepts and components that make up the Extism project and how it helps you make your software programmable."
     }
 }
