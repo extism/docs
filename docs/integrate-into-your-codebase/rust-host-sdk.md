@@ -29,7 +29,7 @@ cargo add extism --git https://github.com/extism/extism.git
 ### 2. Import the library and use the APIs
 
 ```rust title=main.rs
-use extism::Plugin;
+use extism::{Context, Plugin};
 
 fn main() {
     let wasm = include_bytes!("../../wasm/code.wasm");
