@@ -3,15 +3,15 @@ title: AssemblyScript
 sidebar_position: 3
 ---
 
-# How to use the Extism AssemblyScript PDK
+## How to install and use the Extism AssemblyScript PDK
 
-## Installation
+### Installation
 
 ```sh
 npm install @extism/as-pdk
 ```
 
-## Compiling to WebAssembly
+### Compiling to WebAssembly
 
 Use the AssemblyScript compiler, `asc`:
 
@@ -19,7 +19,7 @@ Use the AssemblyScript compiler, `asc`:
 npx asc example.ts --outFile example.wasm --use abort=example/myAbort
 ```
 
-## Example Usage
+### Example Usage
 
 ```typescript name=example.ts
 import { Host } from '@extism/as-pdk';

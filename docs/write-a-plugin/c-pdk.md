@@ -3,15 +3,15 @@ title: C
 sidebar_position: 4
 ---
 
-# How to use the Extism C PDK
+## How to install and use the Extism C PDK
 
-## Installation
+### Installation
 
 ```sh
 git submodule add https://github.com/extism/c-pdk extism
 ```
 
-## Compiling to WebAssembly
+### Compiling to WebAssembly
 
 Download the Emscripten [SDK & toolchain](https://emscripten.org/index.html), and using `emcc`:
 
@@ -19,7 +19,7 @@ Download the Emscripten [SDK & toolchain](https://emscripten.org/index.html), an
 emcc -o example.wasm example/count_vowels.c --no-entry -Wl,--export-all -sERROR_ON_UNDEFINED_SYMBOLS=0
 ```
 
-## Example Usage
+### Example Usage
 ```c title=main.c
 #include "extism/extism-pdk.h"
 

@@ -3,21 +3,21 @@ title: Rust
 sidebar_position: 1
 ---
 
-# How to use the Extism Rust PDK
+## How to install and use the Extism Rust PDK
 
-## Installation
+### Installation
 
 ```sh
 cargo add extism-pdk
 ```
 
-## Compiling to WebAssembly
+### Compiling to WebAssembly
 
 ```sh
 cargo build --release --target wasm32-unknown-unknown #wasm32-wasi is also supported
 ```
 
-## Example Usage
+### Example Usage
 ```rust title=example.rs
 #![no_main]
 
@@ -69,7 +69,7 @@ unsafe fn count_vowels() -> i32 {
 }
 ```
 
-## Example Usage: PNG Inverter
+### Example Usage: PNG Inverter
 
 ```rust file=invert.rs
 use extism_pdk::*;

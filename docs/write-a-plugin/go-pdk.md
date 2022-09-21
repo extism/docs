@@ -3,15 +3,15 @@ title: Go
 sidebar_position: 2
 ---
 
-# How to use the Extism Go PDK
+## How to install and use the Extism Go PDK
 
-## Installation
+### Installation
 
 ```sh
 go get github.com/extism/go-pdk
 ```
 
-## Compiling to WebAssembly
+### Compiling to WebAssembly
 
 Install the [TinyGo compiler](https://tinygo.org/getting-started/install/) and run:
 
@@ -22,7 +22,7 @@ tinygo build -o example.wasm -target wasi main.go
 > **NOTE:** Currently all Go plugins must be compiled targeting `WASI`. Active work is being done to 
 remove this requirement.
 
-## Example Usage
+### Example Usage
 ```go title=main.go
 package main
 
