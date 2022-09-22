@@ -28,13 +28,13 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/extism/docs',
+          // editUrl:
+          //   'https://github.com/extism/docs',
         },
         blog: {
           showReadingTime: true,
-          editUrl:
-            'https://github.com/extism/docs',
+          // editUrl:
+          //   'https://github.com/extism/docs',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
