@@ -49,7 +49,7 @@ output = JSON.parse(plugin.call("before_checkout_finalize", input)
 
 # use the output however you want in order to charge the customer accordingly
 
-if output.discount > 0 
+if output.discount_percent > 0 
   charge_credit_card(cart_total.apply_discount(order.discount_percent))
 else 
   charge_credit_card(cart_total)
