@@ -14,8 +14,10 @@ cargo add extism-pdk
 ### Compiling to WebAssembly
 
 ```sh
-cargo build --release --target wasm32-unknown-unknown #wasm32-wasi is also supported
+cargo build --release --target wasm32-unknown-unknown
 ```
+
+> **NOTE:** `--target wasm32-wasi` is also fully supported
 
 ### Example Usage
 ```rust title=lib.rs
