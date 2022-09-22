@@ -14,25 +14,17 @@ You can use Extism in your codebase, regardless of the programming language. We 
 
 ## What is a "plug-in system"?
 
-Feel free to skip past this part if you already know the answer. But, generally stated, a plug-in system is software that enables _your_ users or customers to add some logic into certain points in your application. You decide where this logic runs, and your users decide what the plug-in does. 
+A plug-in system is software that enables _your_ users or customers to add some logic into certain points in your application. You decide where this logic runs, and your users decide what the plug-in does. 
 
 When using Extism, your job is to determine where in your application some arbitrary code should run, what data that code should be provided, and the data the plug-in should return. 
 
-Let's use an example to make this more concrete. Pretend you operate an e-commerce platform, "Shoptofy". On Shoptofy, your customers (let's call them "store owners") build websites and add products to sell. When a shopper visits their website, they add products to a shopping cart and are sent to a checkout page when it's time to pay. Your store owners tell you that they love Shoptofy, but wish they could offer discounts to users who are spending lots of money. 
-
-One store owner wants to offer a 10% discount if the total sale amount is over $200. Another store owner wants to offer 25% off and free shipping if a shopper gives them an email address. A third store owner wants to add a free product for first-time shoppers who spend more than $100. That seems like a lot of specific logic to implement in order to satisfy all the different needs of store owners...
-
-Aha! Here's a good place for a plug-in system. 
-
-Instead of adding all of these options to Shoptofy, let the store owner add a little bit of code to tell Shoptofy how to process the sale. This way Shoptofy platform stays fairly simple, but can be extended in infinite ways by store owners, each having their own unique use cases. 
-
-With Extism, Shoptofy would locate a spot in its codebase, before some event or function such as `charge_credit_card()`, and run a function that a store owner has provided. Extism is built on top of WebAssembly, which makes untrusted code execution like this [safe to do](https://webassembly.org/docs/security/) via isolation and sandboxing! 
+With Extism, you would locate a spot in your codebase, before some event or function such as `charge_credit_card()`, and run a function from a plug-in that is dynamically loaded and possibly from a third party. Extism is built on top of WebAssembly, which makes untrusted code execution like this [safe to do](https://webassembly.org/docs/security/) via isolation and sandboxing!
 
 ### Example in action
 
-Here's some psuedo-code demonstrating this example:
+Here's some partial code demonstrating an example ecommerce platform allowing store owners to add custom discount logic:
 
-```ruby title=Shoptofy/checkout.rb
+```ruby title=platform/checkout.rb
 require 'extism'
 require 'json'
 
@@ -53,6 +45,7 @@ input = JSON.generate({
 # call the plug-in's `before_checkout_finalize` function for any custom behavior
 
 output = JSON.parse(plugin.call("before_checkout_finalize", input)
+# output = {discount_percent: 20.0}
 
 # use the output however you want in order to charge the customer accordingly
 
@@ -109,7 +102,7 @@ pub extern "C" fn before_checkout_finalize() -> i32 {
 
 ## Usage
 
-Add a flexible, secure, and _bLaZiNg FaSt_ plug-in system to your project. Server, desktop, mobile, web, database -- you name it. Enable users to write and execute safe extensions to your software in **3 easy steps:**
+Add a fast, flexible, and secure plug-in system to your project. Server, desktop, mobile, web, database -- you name it. Enable users to write and execute safe extensions to your software in **3 easy steps:**
 
 ### 1. Import
 
