@@ -29,6 +29,7 @@ For Mix:
 ```elixir
 require Extism
 
+ctx = Extism.Context.new
 # point to the count-vowels plugin on my machine
 manifest = %{ wasm: [ %{ path: "/Users/ben/.extism/extism/wasm/code.wasm" } ]}
 {:ok, plugin} = Extism.Context.new_plugin(ctx, manifest, false)
