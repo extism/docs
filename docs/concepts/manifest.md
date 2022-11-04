@@ -42,7 +42,7 @@ with Context() as context:
             # the optional sha256 hash in hex form, it's optional but recommended to do this
             "hash": "15c66d72f683e0225c774134b42ba6e04275a7a56b0a522af538d029650f15a8",
         },
-        # or you can pass raw binary data for the code already in memory
+        # or, you can pass raw binary data for the code already in memory:
         {
             # the raw bytes in the host memory <class 'bytes'>
             "data": open("../wasm/code.wasm", 'rb').read(),
