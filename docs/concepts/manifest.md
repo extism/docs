@@ -30,8 +30,8 @@ with Context() as context:
 
 ```python schema.py
 {
-    # the wasm key describes the wasm code needed to build the plugin
-    # there are a few ways to load wasm code
+    # The "wasm" key describes the wasm code needed to build the plugin.
+    # There are a few ways to load wasm code:
     "wasm": [
         # you can point to a file
         {
