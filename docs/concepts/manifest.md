@@ -39,7 +39,7 @@ with Context() as context:
             "path": "./code/myplugin.wasm",
             # an optional name
             "name": "main",
-            # the optional sha256 hash in hex form, it's optional but recommended to do this
+            # the optional sha256 hash in hex form (it's optional, but recommended)
             "hash": "15c66d72f683e0225c774134b42ba6e04275a7a56b0a522af538d029650f15a8",
         },
         # or, you can pass raw binary data for the code already in memory:
