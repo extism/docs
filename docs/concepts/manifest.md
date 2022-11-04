@@ -33,7 +33,7 @@ with Context() as context:
     # The "wasm" key describes the wasm code needed to build the plugin.
     # There are a few ways to load wasm code:
     "wasm": [
-        # you can point to a file
+        # you can point to a file:
         {
             # a file path for a plugin on disk
             "path": "./code/myplugin.wasm",
