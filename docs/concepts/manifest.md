@@ -96,6 +96,6 @@ with Context() as context:
 
 ## Validating the manifest
 
-If needed, we maintain an exported json schema for the manifest which [you can find here](https://raw.githubusercontent.com/extism/extism/main/manifest/schema.json).
+If needed, we maintain an exported JSON schema for the manifest which [you can find here](https://raw.githubusercontent.com/extism/extism/main/manifest/schema.json).
 
 ![JSON Schema manifest](/img/manifest-schema.png)
