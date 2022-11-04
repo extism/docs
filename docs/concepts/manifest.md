@@ -51,23 +51,23 @@ with Context() as context:
             # the optional sha256 hash in hex form (it's optional, but recommended)
             "hash": "15c66d72f683e0225c774134b42ba6e04275a7a56b0a522af538d029650f15a8",
         },
-        # Or you can load a remote resource with a URL
+        # or, you can load a remote resource with a URL:
         {
             # an object representing an HTTP request
             "req": {
-                # A url to some wasm code
+                # a URL to some wasm code
                 "url": "https://example.com/mycode.wasm",
                 # optional headers you may need to get the data, e.g. auth headers
                 "header": {
                     "X-API-KEY": "34b42ba6e04275",
                     "User-Agent": "extism",
                 },
-                # optional HTTP method to use
+                # optional HTTP method to use, (default: GET)
                 "method": "GET"
             },
             # an optional name
             "name": "main",
-            # the optional sha256 hash in hex form, it's optional but recommended to do this
+            # the optional sha256 hash in hex form (it's optional, but recommended)
             "hash": "15c66d72f683e0225c774134b42ba6e04275a7a56b0a522af538d029650f15a8",
         },
     ]
@@ -79,15 +79,16 @@ with Context() as context:
         "max": 4
     },
 
-    # An optional set of hosts this plugin can communicate with
-    # only has an effect if the plugin needs to make HTTP calls
+    # An optional set of hosts this plugin can communicate with.
+    # This only has an effect if the plugin makes HTTP requests.
+    # Note: if left empty, all hosts are allowed.
     "allowed_hosts": [
         "example.com",
         "extism.org",
     ]
 
-    # config is a free form set of keys and values that can be passed to the plugin
-    # the plugin must have the knowledge how to use these
+    # The "config" key is a free-form map that can be passed to the plugin.
+    # A plugin author must know the arbitrary data this map may contain, so your own documentation should include some information about the "config" passed in.
     "config": {
         "mykey": "myvalue"
     }
