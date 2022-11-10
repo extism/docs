@@ -82,6 +82,8 @@ const config = {
               { to: '/docs/category/write-a-plug-in', label: 'Write a Plug-in' },
               { to: '/docs/integrate-into-your-codebase/c-host-sdk', label: 'Plug-in system in C' },
               { to: '/docs/integrate-into-your-codebase/cpp-host-sdk', label: 'Plug-in system in C++' },
+              { to: '/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk', label: 'Plug-in system in Elixir' },
+              { to: '/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk', label: 'Plug-in system in Erlang' },
               { to: '/docs/integrate-into-your-codebase/go-host-sdk', label: 'Plug-in system in Go' },
               { to: '/docs/integrate-into-your-codebase/haskell-host-sdk', label: 'Plug-in system in Haskell' },
               { to: '/docs/integrate-into-your-codebase/node-host-sdk', label: 'Plug-in system in Node' },
