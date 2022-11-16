@@ -1,0 +1,29 @@
+---
+title: Plug-in Development Kits (PDKs)
+sidebar_position: 2
+---
+
+import PDKLogoLinks from '@site/src/components/PDKLogoLinks';
+
+Using an official Plug-in Development Kit (PDK) makes it simple to write code which can be compiled to WebAssembly and run within an Extism Host environment. 
+
+Extism plug-ins are capable of interacting with their Host environment in many ways. While these are mostly optional, there are some functions that the PDK calls which are required in order for a plug-in to do anything useful: namely managing and accessing shared memory.
+
+### Usage
+
+Much like [Host SDKs](/docs/concepts/host-sdk), PDKs are published to each of the package managers for the respective officially supported languages:
+
+<div class="sdk-quickstart">
+    <PDKLogoLinks />
+</div>
+
+Each language PDK has it's own idiomatic APIs, which are documented in each [PDK page](/docs/category/write-a-plug-in). Additionally, each plug-in you write must be compiled to WebAssembly (resulting in a `.wasm` binary artifact) before it can be run in an Extism Host. Instructions on how to compile plug-ins in each officially supported language are included on the PDK documentation pages as well. 
+
+If you are looking to embed Extism into your program/application, please refer to the [Host SDK](/docs/concepts/host-sdk) section of the documentation, where you will find information about using an SDK in your language of choice.
+
+### Need help?
+
+If you've encountered a bug or think something is missing, please open an issue on the [Extism GitHub](https://github.com/extism/extism) repository.
+
+There is an active community on [Discord](https://discord.gg/cx3usBCWnc) where the project maintainers and users can help you. Come hang out!
+

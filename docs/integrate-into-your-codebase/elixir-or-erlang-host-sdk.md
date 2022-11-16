@@ -21,7 +21,7 @@ Install via [hex.pm](https://hex.pm/packages/extism):
 For Mix:
 
 ```elixir
-{:extism, "~> 0.0.1-rc.5"}
+{:extism, "~> 0.0.1-rc.6"}
 ```
 
 ### 2. Import the library and use the APIs

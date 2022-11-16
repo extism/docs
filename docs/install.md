@@ -34,19 +34,21 @@ In order to build from source, you must have a recent version of the [Rust toolc
 
 ```sh
 # build from source & install
-$ extism install git # installs to ~/.local/lib and ~/.local/include by default
+extism install git # installs to ~/.local/lib and ~/.local/include by default
 ```
 
 It's also possible to install Extism from Github releases:
 
 ```sh
 # download & install the latest pre-built bundle
-$ extism install latest
-$ extism install --list-available # shows a list of releases
+extism install latest
+
+# show a list of releases
+extism install --list-available
 ```
 
 By default the prefix is `~/.local`, but it can easily be configured:
 
 ```sh
-$ extism --sudo --prefix /usr/local install
+extism --sudo --prefix /usr/local install
 ```
