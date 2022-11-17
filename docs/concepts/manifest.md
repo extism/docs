@@ -3,8 +3,6 @@ title: The Manifest
 sidebar_position: 4
 ---
 
-# The Manifest
-
 The manifest is a descripition of your plugin and some of the runtime constraints to apply to it. You can think of it as a blueprint to build your plugin.
 
 ```python tile=run-plugin.py
@@ -26,7 +24,7 @@ with Context() as context:
     plugin = context.plugin(config)
 ```
 
-## The Schema
+### Schema
 
 ```python schema.py
 {
@@ -95,7 +93,7 @@ with Context() as context:
 }
 ```
 
-## Validating the Manifest
+### Validating the Manifest
 
 If needed, we maintain an exported JSON schema for the manifest which [you can find here](https://raw.githubusercontent.com/extism/extism/main/manifest/schema.json).
 
