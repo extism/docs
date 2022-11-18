@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Extism is a plug-in system for everyone. We've carefully designed it to be flexible, fitting into codebases of all shapes and sizes, but opinionated enough so that things _Just Work™_ the way they should. Extism's goal is to make all software programmable.
+Extism is a plug-in system for everyone. We've carefully designed it to be flexible, fitting into codebases of all shapes and sizes, but opinionated enough so that things _Just Work™_ the way they should. **Extism's goal is to make all software programmable.**
 
 <p align="center">
   <img style={{width: '80%', maxWidth: '600px'}} src="/img/extism-language-support.png"/>
@@ -12,9 +12,22 @@ Extism is a plug-in system for everyone. We've carefully designed it to be flexi
 
 You can use Extism in your codebase, regardless of the programming language. We support several environments through our official [Host SDKs](/docs/category/integrate-into-your-codebase), and are adding more language support all the time. Let us know if we're missing yours by opening an [issue on GitHub](https://github.com/extism/extism/issues), or talk to us in our [Discord](https://discord.gg/cx3usBCWnc) server.
 
-## What is a "plug-in system"?
+## Why use a plug-in system?
 
 A plug-in system is software that enables _your_ users or customers to add some logic into certain points in your application. You decide where this logic runs, and your users decide what the plug-in does. 
+
+Many engineering teams face an ever-growing list of feature requests, often exceeding their bandwidth several times over. How can you ever keep up? Making your product **extensible** by its end-users is a great way to move some of those features outside the core, and empower customers to make your software more useful for them.
+
+Practically speaking, you can't predict all the ways users will want to work with your software, and for that reason alone a plug-in system is an ideal feature to implement. 
+
+### Common use cases
+
+- adding functionality to command-line tools
+- enabling users to "mod" a game
+- simplify "webhooks" to run event-driven logic in vendor system
+- user-defined functions in a database
+- no-code application extensions
+- content management system extensions
 
 When using Extism, your job is to determine where in your application some arbitrary code should run, what data that code should be provided, and the data the plug-in should return. 
 
@@ -24,7 +37,7 @@ With Extism, you would locate a spot in your codebase, before some event or func
 
 Here's some partial code demonstrating an example ecommerce platform allowing store owners to add custom discount logic:
 
-```ruby title=platform/checkout.rb
+```ruby title=ecommerce/checkout.rb
 require 'extism'
 require 'json'
 
@@ -58,10 +71,9 @@ end
 
 A store owner can implement a plug-in in a variety of languages (the only real requirement is that it can be run in or as WebAssembly). We officially support many options through the use of an Extism [Plug-in Development Kit (PDK)](/docs/category/write-a-plug-in). Here's an example of the `before_checkout_finalize` function implemented in a plug-in:
 
-```rust title=customer/plugin.rs
+```rust title=store_owner/checkout.rs
 use extism_pdk::*;
 use serde::{Deserialize, Serialize};
-use serde_json;
 
 #[derive(Deserialize)]
 struct CartDataInput {
@@ -75,14 +87,8 @@ struct CartDataOutput {
     pub discount_percent: f32,
 }
 
-#[no_mangle]
-pub extern "C" fn before_checkout_finalize() -> i32 {
-    // create a binding to the "host" program, which is calling this function
-    let host = Host::new();
-
-    // get the input data from the "host" and deserialize it into the `CartDataInput` type
-    let checkout_data: CartDataInput = serde_json::from_slice(host.input()).unwrap();
-
+#[plugin_fn]
+pub fn before_checkout_finalize(Json(checkout_data): Json<CartDataInput>) -> FnResult<Json<CartDataOutput>> {
     let mut output = CartDataOutput {
         discount_percent: 0.0,
     };
@@ -92,11 +98,7 @@ pub extern "C" fn before_checkout_finalize() -> i32 {
         output.discount_percent = 20.0
     }
 
-    // write the output back to the "host"
-    host.output(&serde_json::to_string(&output).unwrap());
-
-    // return an error code, where conventionally, `0` indicates a successful function execution
-    0
+    Ok(Json(output))
 }
 ```
 
@@ -106,7 +108,7 @@ Add a fast, flexible, and secure plug-in system to your project. Server, desktop
 
 ### 1. Import
 
-Import Extism host SDK into your code as a library dependency.
+Import an Extism [Host SDK](/docs/category/integrate-into-your-codebase/) into your code as a library dependency.
 
 ### 2. Integrate 
 
