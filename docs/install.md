@@ -1,22 +1,20 @@
 ---
+title: Installing Extism
 sidebar_position: 2
 ---
 
-# Install Extism
+The `extism` CLI is used to manage [Extism](https://github.com/extism/extism) installations. In order to run Extism, your system must be able to locate the `libextism.so` (on Linux) or `libextism.dylib` (on macos). Windows support is coming soon.
 
-The `extism` CLI is used to manage [Extism](https://github.com/extism/extism) installations
+> **Note:** If you are using the [Rust Host SDK](/docs/integrate-into-your-codebase/rust-host-sdk), this is not the case, and can use Extism as a [crate dependency](https://crates.io/crates/extism) in your `Cargo.toml`. 
 
-## Install
 
-Using curl:
+---
 
-```sh
-curl https://raw.githubusercontent.com/extism/cli/main/install.sh | sh
+The following instructions will walk you through how to install the Extism CLI, and then the installation of the shared library which a [Host SDK](/docs/concepts/host-sdk) will look for automatically.
 
-# or to override default (~/.local/bin):
+## Install the Extism CLI
 
-sh <(curl https://raw.githubusercontent.com/extism/cli/main/install.sh) /usr/local/bin
-```
+### macos
 
 Using pip:
 
@@ -25,30 +23,96 @@ pip3 install poetry
 pip3 install git+https://github.com/extism/cli
 ```
 
-## Usage
+Using curl:
 
-The most common use-case is to download and build the source code then install the library and header file into 
-the installation prefix of your choice.
+```sh
+sh <(curl https://raw.githubusercontent.com/extism/cli/main/install.sh) /usr/local/bin
+```
+
+### Linux
+
+Using pip:
+
+```sh
+pip3 install poetry
+pip3 install git+https://github.com/extism/cli
+```
+
+Using curl:
+
+```sh
+curl https://raw.githubusercontent.com/extism/cli/main/install.sh | sh
+```
+
+---
+
+## Using the Extism CLI
+
+The most common use-case is to to install Extism from Github releases, and then install the library and header file into the installation prefix of your choice.
+
+### macos
+
+```sh
+extism --sudo --prefix /usr/local install latest
+```
+
+### Linux
+
+```sh
+extism install latest
+```
+
+#### Build from source
 
 In order to build from source, you must have a recent version of the [Rust toolchain installed](https://rustup.rs/).
 
 ```sh
-# build from source & install
 extism install git # installs to ~/.local/lib and ~/.local/include by default
 ```
 
-It's also possible to install Extism from Github releases:
+---
+
+## Other CLI Features
 
 ```sh
-# download & install the latest pre-built bundle
-extism install latest
+usage: extism [-h] [--quiet] [--prefix PREFIX] [--github-token GITHUB_TOKEN] [--sudo] {build,version,install,fetch,uninstall,link,info,call} ...
 
-# show a list of releases
-extism install --list-available
+options:
+  -h, --help            show this help message and exit
+  --quiet               Limit output to errors
+  --prefix PREFIX       Installation prefix
+  --github-token GITHUB_TOKEN
+                        Github token
+  --sudo                Use sudo to install files
+
+command:
+  {build,version,install,fetch,uninstall,link,info,call}
 ```
 
-By default the prefix is `~/.local`, but it can easily be configured:
+### Call plug-in functions
+
+You can use the `extism` CLI as a test runner to check your plug-ins outside of any Host program:
 
 ```sh
-extism --sudo --prefix /usr/local install
+extism call --input "this is a test" test/code.wasm count_vowels
+{"count": 4}
+```
+
+### Get installation info
+
+It's helpful to know where the CLI is locating the Extism shared library, and which version of the SDK it is using:
+
+```sh
+extism info
+Prefix  /home/me/.local
+Version v0.0.1-rc.6
+```
+
+### Get SDK version
+
+Sometimes you might only want to check the version of the SDK:
+
+```sh
+extism version
+v0.0.1-rc.6
 ```
