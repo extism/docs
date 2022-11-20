@@ -22,6 +22,12 @@ tinygo build -o example.wasm -target wasi main.go
 > **NOTE:** Currently all Go plugins must be compiled targeting `WASI`. Active work is being done to 
 remove this requirement.
 
+
+### Latest Docs
+
+[https://pkg.go.dev/github.com/extism/go-pdk](https://pkg.go.dev/github.com/extism/go-pdk)
+
+
 ### Example Usage
 ```go title=main.go
 package main
