@@ -34,8 +34,7 @@ import (
 
 //export count_vowels
 func count_vowels() int32 {
-	host := pdk.NewHost()
-	input := host.Input()
+	input := pdk.Input()
 
 	count := 0
 	for _, a := range input {
@@ -46,25 +45,22 @@ func count_vowels() int32 {
 		}
 	}
 
-    // Additional plug-in APIs:
-
-    // persistent variables (scoped to individual plugin)
-	vars := host.Vars()
-	if vars.Get("a") == nil {
-		vars.Set("a", []byte("this is var a"))
+	// test some extra pdk functionality
+	if pdk.GetVar("a") == nil {
+		pdk.SetVar("a", []byte("this is var a"))
 	}
-	varA := vars.Get("a")
+	varA := pdk.GetVar("a")
+	thing, ok := pdk.GetConfig("thing")
 
-    // config, provided by the host
-	thing := host.Config("thing")
-	if thing == "" {
+	if !ok {
 		thing = "<unset by host>"
 	}
 
-	// zero-copy output to host
 	output := `{"count": ` + strconv.Itoa(count) + `, "config": "` + thing + `", "a": "` + string(varA) + `"}`
-	mem := host.AllocateString(output)
-	host.OutputMemory(mem)
+	mem := pdk.AllocateString(output)
+
+	// zero-copy output to host
+	pdk.OutputMemory(mem)
 
 	return 0
 }
