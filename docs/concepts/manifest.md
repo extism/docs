@@ -42,7 +42,7 @@ with Context() as context:
         },
         # or, you can pass raw binary data for the code already in memory:
         {
-            # the raw bytes in the host memory <class 'bytes'>
+            # the base64-encoded raw bytes of the wasm module
             "data": open("../wasm/code.wasm", 'rb').read(),
             # an optional name
             "name": "main",
