@@ -16,7 +16,7 @@ The following instructions will walk you through how to install the Extism CLI, 
 
 ### macos
 
-Using pip:
+Using pip: <small><em>(recommended)</em></small>
 
 ```sh
 pip3 install poetry
@@ -27,6 +27,9 @@ Using curl:
 
 ```sh
 sh <(curl https://raw.githubusercontent.com/extism/cli/main/install.sh) /usr/local/bin
+
+# To use advanced features of the CLI, install the Extism Python SDK:
+# pip3 install extism
 ```
 
 ### Linux
@@ -42,6 +45,9 @@ Using curl:
 
 ```sh
 curl https://raw.githubusercontent.com/extism/cli/main/install.sh | sh
+
+# To use advanced features of the CLI, install the Extism Python SDK:
+# pip3 install extism
 ```
 
 ---
@@ -53,7 +59,7 @@ The most common use-case is to to install Extism from Github releases, and then 
 ### macos
 
 ```sh
-extism --sudo --prefix /usr/local install latest
+extism install latest
 ```
 
 ### Linux
@@ -67,7 +73,15 @@ extism install latest
 In order to build from source, you must have a recent version of the [Rust toolchain installed](https://rustup.rs/).
 
 ```sh
-extism install git # installs to ~/.local/lib and ~/.local/include by default
+extism install git # installs to /usr/lib and /usr/include by default
+```
+
+#### Overriding install location
+
+Pass the `--prefix` argument a path on disk where `extism` CLI will install the system files:
+
+```sh
+extism --prefix ~/.local install latest
 ```
 
 ---
@@ -98,19 +112,21 @@ extism call --input "this is a test" test/code.wasm count_vowels
 {"count": 4}
 ```
 
+> **Note:** if you encounter the error `Could not find extism on this machine`, please install the Extism Python SDK by running: `pip3 install extism`
+
 ### Get installation info
 
-It's helpful to know where the CLI is locating the Extism shared library, and which version of the SDK it is using:
+It's helpful to know where the CLI is locating the Extism shared library, and which version of the runtime it is using:
 
 ```sh
 extism info
-Prefix  /home/me/.local
+Prefix  /usr/local
 Version v0.0.1-rc.6
 ```
 
-### Get SDK version
+### Get runtime version
 
-Sometimes you might only want to check the version of the SDK:
+Sometimes you might only want to check the version of the runtime:
 
 ```sh
 extism version
