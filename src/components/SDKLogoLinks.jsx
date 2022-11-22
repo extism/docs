@@ -2,6 +2,7 @@ import React from 'react';
 
 export default function SDKLogoLinks() {
     const sdks = [
+        { name: "C", path: "/docs/integrate-into-your-codebase/browser-runtime-sdk", logo: "/img/sdk-languages/js.svg" },
         { name: "C", path: "/docs/integrate-into-your-codebase/c-host-sdk", logo: "/img/sdk-languages/c.svg" },
         { name: "C++", path: "/docs/integrate-into-your-codebase/cpp-host-sdk", logo: "/img/sdk-languages/cpp.svg" },
         { name: "Elixir", path: "/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk", logo: "/img/sdk-languages/elixir.svg" },

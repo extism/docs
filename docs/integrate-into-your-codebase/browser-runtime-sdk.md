@@ -1,0 +1,50 @@
+---
+title: Browser / JS
+tags:
+    - web
+    - javascript
+    - browser
+    - host sdk
+    - runtime
+---
+
+# Using the Browser Runtime SDK
+
+### 1. Install the Javascript library
+
+Install via `npm`:
+```sh
+npm install @extism/runtime-browser
+```
+
+### 2. Include the library and use the APIs
+
+```javascript title=app.js
+const data = '...' // get the bytes of a wasm module file (via network, file input, etc)
+const ctx = new ExtismContext();
+const plugin = await ctx.newPlugin({ wasm: [{ data: data }] });
+
+// call the function 'count_vowels' defined in the wasm module
+let output = await plugin.call('count_vowels', 'this is a test');
+
+conosole.log(JSON.parse(new TextDecoder().decode(output)));
+```
+
+### Current Plug-in Support
+
+:::caution Limited Support
+
+`extism_http_request` and `WASI` PDK functionality is currently unavailable, but please reach out on [Discord](https://discord.gg/cx3usBCWnc) or open an issue on the [Extism GitHub](https://github.com/extism/extism) repository to let us know you'd like to see them supported.
+
+:::
+
+### Playground
+
+The [Extism Playground](https://playground.extism.org) is built using the Browser Runtime SDK, and its [source code is available](https://github.com/extism/playground) -- please test it out and use the Playground codebase as a reference in case it is helpful.
+
+### Need help?
+
+If you've encountered a bug or think something is missing, please open an issue on the [Extism GitHub](https://github.com/extism/extism) repository.
+
+There is an active community on [Discord](https://discord.gg/cx3usBCWnc) where the project maintainers and users can help you. Come hang out!
+
