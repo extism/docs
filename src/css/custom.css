@@ -54,6 +54,12 @@
 .sdk-quickstart ul li {
   display: inline-block;
   width: 20%;
-  max-width: 65px;
+  max-width: 75px;
   margin: 20px;
+  transition: 0.1s ease-in-out;
+}
+
+.sdk-quickstart ul li:hover {
+  transform: scale(1.1);
+  transition: 0.1s ease-in-out;
 }
