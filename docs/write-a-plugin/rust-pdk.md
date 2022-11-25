@@ -25,8 +25,6 @@ cargo build --release --target wasm32-unknown-unknown
 
 ### Example Usage
 ```rust title=lib.rs
-#![no_main]
-
 use extism_pdk::*;
 use serde::Serialize;
 
@@ -40,7 +38,7 @@ struct TestOutput {
 }
 
 #[plugin_fn]
-pub unsafe fn count_vowels(input: String) -> FnResult<Json<TestOutput>> {
+pub fn count_vowels(input: String) -> FnResult<Json<TestOutput>> {
     let mut count = 0;
     for ch in input.chars() {
         if VOWELS.contains(&ch) {
