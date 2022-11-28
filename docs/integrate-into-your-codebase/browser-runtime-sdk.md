@@ -20,9 +20,17 @@ npm install @extism/runtime-browser
 ### 2. Include the library and use the APIs
 
 ```javascript title=app.js
-const data = '...' // get the bytes of a wasm module file (via network, file input, etc)
+// import or require (depending on your module system)
+import { ExtismContext } from "@extism/runtime-browser"
+
+// You can load raw wasm bytes from file, request, etc
+const manifest = { wasm: [{ data: "..." }] };
+
+// Or you can pass in a path to a wasm file
+const manifest = { wasm: [{ path: "https://example.com/myplugin.wasm" }] };
+
 const ctx = new ExtismContext();
-const plugin = await ctx.newPlugin({ wasm: [{ data: data }] });
+const plugin = await ctx.newPlugin(manifest);
 
 // call the function 'count_vowels' defined in the wasm module
 let output = await plugin.call('count_vowels', 'this is a test');
