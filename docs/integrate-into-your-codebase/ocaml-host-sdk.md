@@ -16,10 +16,7 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 
 ### 1. Install the OCaml library
 
-Install via [opam](https://opam.ocaml.org/):
-```sh
-opam install extism
-```
+Extism is not yet released on `opam`
 
 Install via `git`:
 ```sh
