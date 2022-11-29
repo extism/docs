@@ -21,6 +21,20 @@ Install via [Packagist](https://packagist.org/):
 composer require extism/extism
 ```
 
+:::caution
+
+For the time being you may need to add a minimum-stability of "dev" to your composer.json
+
+```json
+{
+    // ...
+    "minimum-stability": "dev",
+    // ...
+}
+```
+
+:::
+
 ### 2. Import the library and use the APIs
 
 ```php title=index.php

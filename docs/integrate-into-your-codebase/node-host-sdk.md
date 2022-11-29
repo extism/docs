@@ -17,15 +17,16 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 ### 1. Install the Node module
 
 Install via [npm](https://www.npmjs.com/):
+
 ```sh
-npm install @extism/extism
+npm install @extism/extism --save
 ```
 
 ### 2. Import the module and use the APIs
 
-```javascript title=app.js
-import { withContext, Context } from '@extism/extism';
-import { readFileSync } from 'fs';
+```javascript title=index.js
+const { withContext, Context } = require('@extism/extism');
+const { readFileSync } = require('fs');
 
 withContext(async function (context) {
   let wasm = readFileSync('../wasm/code.wasm');

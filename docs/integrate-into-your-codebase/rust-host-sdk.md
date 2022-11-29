@@ -17,14 +17,20 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 ### 1. Install the Rust crate
 
 Install via [Crates.io](https://crates.io/):
+
 ```sh
 cargo add extism
 ```
 
-Install via `git`:
+:::note
+
+If you need unreleased functionality you can install via git:
+
 ```sh
 cargo add extism --git https://github.com/extism/extism.git
 ```
+
+:::
 
 ### 2. Import the library and use the APIs
 
@@ -34,7 +40,7 @@ use extism::{Context, Plugin};
 fn main() {
     let wasm = include_bytes!("../../wasm/code.wasm");
     let context = Context::new();
-    let plugin = Plugin::new(&context, wasm, false).unwrap();
+    let mut plugin = Plugin::new(&context, wasm, false).unwrap();
     let data = plugin.call("count_vowels", "this is a test").unwrap();
     assert_eq!(data, b"{\"count\": 4}");
 }
