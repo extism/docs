@@ -5,6 +5,19 @@ sidebar_position: 1
 
 ## How to install and use the Extism Rust PDK
 
+### Create a Rust project
+
+```sh
+cargo new --lib my-plugin
+```
+
+In the generated `Cargo.toml`, be sure to include:
+
+```toml
+[lib]
+crate_type = ["cdylib"]
+```
+
 ### Installation
 
 ```sh
@@ -21,9 +34,12 @@ cargo build --release --target wasm32-unknown-unknown
 
 ### Latest Docs
 
-[https://docs.rs/extism-pdk/latest/extism_pdk/](https://docs.rs/extism-pdk/latest/extism_pdk/)
+[https://docs.rs/extism-pdk](https://docs.rs/extism-pdk)
 
 ### Example Usage
+
+#### Using Config, I/O, & Persisted Variables
+
 ```rust title=lib.rs
 use extism_pdk::*;
 use serde::Serialize;
@@ -54,5 +70,19 @@ pub fn count_vowels(input: String) -> FnResult<Json<TestOutput>> {
 
     let output = TestOutput { count, config, a };
     Ok(Json(output))
+}
+```
+
+#### Using Extism built-in HTTP
+
+```rust title=lib.rs
+use extism_pdk::*;
+
+#[plugin_fn]
+// see https://docs.rs/extism-pdk/latest/extism_pdk/struct.HttpRequest.html for docs on this type
+pub fn http_get(Json(req): Json<HttpRequest>) -> FnResult<HttpResponse> {
+    info!("Request to: {}", req.url);
+    let res = http::request::<()>(&req, None)?;
+    Ok(res)
 }
 ```
