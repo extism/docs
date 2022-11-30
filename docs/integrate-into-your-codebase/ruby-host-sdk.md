@@ -7,7 +7,6 @@ tags:
 
 # Using the Ruby Host SDK
 
-
 :::caution Check your installation
 
 Please be sure you've [installed Extism](/docs/install) before continuing with this guide.
@@ -16,15 +15,22 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 
 ### 1. Install the Ruby gem
 
-Install via [RubyGems](https://rubygems.org/):
+The gem is hosted on [RubyGems](https://rubygems.org/gems/extism).
+Put the `extism` gem in your `Gemfile`:
+
+```rb
+gem "extism", "~> 0.1.0"
+```
+
+Or install with `gem install` if you are not using bundler:
 
 ```sh
-gem install extism --pre
+gem install extism
 ```
 
 ### 2. Require the library and use the APIs
 
-```ruby title=index.rb
+```ruby title=app.rb
 require 'extism'
 require 'json'
 

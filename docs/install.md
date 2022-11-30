@@ -116,19 +116,19 @@ extism call --input "this is a test" test/code.wasm count_vowels
 
 ### Get installation info
 
-It's helpful to know where the CLI is locating the Extism shared library, and which version of the runtime it is using:
+It's helpful to know where the CLI is locating the Extism shared library, and which version of the runtime it's using.
 
 ```sh
 extism info
 Prefix  /usr/local
-Version v0.0.1-rc.6
+Version v0.0.1
 ```
 
 ### Get runtime version
 
-Sometimes you might only want to check the version of the runtime:
+Use the `version` command to print the version of the Extism runtime installed on your machine:
 
 ```sh
 extism version
-v0.0.1-rc.6
+v0.1.0
 ```
