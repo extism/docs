@@ -167,7 +167,7 @@ func count_vowels() int32 {
     }
 
 	// prepare some data to write back to the host
-    output := fmt.Sprintf("Counted %d vowels!")
+    output := fmt.Sprintf("Counted %d vowels!", count)
     mem := pdk.AllocateString(output)
 
     // zero-copy output to host
