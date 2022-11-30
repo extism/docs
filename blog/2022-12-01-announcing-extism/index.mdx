@@ -75,7 +75,7 @@ right at home working within a language they know and love.
 The runtime is only half of the equation though. What about plug-in authors? What kind of features
 and functionality should they get from the runtime? How do we expose these features to the plug-in
 environment? This is where WebAssembly really shines. Providing a standard ABI to WebAssembly 
-modules is very straightforward thanks to its simple import/export arhictecture. Extism defines a 
+modules is very straightforward thanks to its simple import/export architecture. Extism defines a 
 set of functions which are linked from the host runtime to the `.wasm` module when it is instantiated, 
 and our PDKs provide idiomatic wrappers over bindings to these native functions. From a `.wasm` 
 module's perspective, these functions are "imports", provided to it from its host. Some of these 
