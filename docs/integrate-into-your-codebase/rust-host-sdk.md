@@ -7,13 +7,6 @@ tags:
 
 # Using the Rust Host SDK
 
-
-:::caution Check your installation
-
-Please be sure you've [installed Extism](/docs/install) before continuing with this guide.
-
-:::
-
 ### 1. Install the Rust crate
 
 Install via [Crates.io](https://crates.io/):
