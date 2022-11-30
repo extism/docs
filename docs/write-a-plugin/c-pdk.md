@@ -11,6 +11,31 @@ sidebar_position: 4
 git submodule add https://github.com/extism/c-pdk extism
 ```
 
+:::note Choose a version
+
+It is recommended that you lock this submodule to a release tag.
+
+First edit `.gitmodules` to point to the tag
+
+```
+[submodule "extism"]
+	path = extism
+	url = https://github.com/extism/c-pdk
+	tag = v0.1.0
+```
+
+> **N.B.**: See the [c-pdk releases](https://github.com/extism/c-pdk/releases) page for available versions
+
+Then update:
+
+```
+git submodule foreach --recursive 'git fetch --tags'
+git submodule update --init --recursive --remote
+git commit -am 'Lock extism version to v0.1.0'
+```
+
+:::
+
 ### Compiling to WebAssembly
 
 Download the Emscripten [SDK & toolchain](https://emscripten.org/index.html), and using `emcc`:

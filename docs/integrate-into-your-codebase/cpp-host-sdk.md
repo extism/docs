@@ -21,6 +21,31 @@ Install via `git`:
 git submodule add https://github.com/extism/extism extism
 ```
 
+:::note Choose a version
+
+It is recommended that you lock this submodule to a release tag.
+
+First edit `.gitmodules` to point to the tag
+
+```
+[submodule "extism"]
+	path = extism
+	url = https://github.com/extism/extism
+	tag = v0.1.0
+```
+
+> **N.B.**: See the [Extism releases](https://github.com/extism/extism/releases) page for available versions
+
+Then update:
+
+```
+git submodule foreach --recursive 'git fetch --tags'
+git submodule update --init --recursive --remote
+git commit -am 'Lock extism version to v0.1.0'
+```
+
+:::
+
 ### 2. Include the library and use the APIs
 
 ```c title=main.cpp
