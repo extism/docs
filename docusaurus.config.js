@@ -85,6 +85,7 @@ const config = {
               },
               { to: '/docs/install', label: 'Installation' },
               { to: '/docs/category/write-a-plug-in', label: 'Write a Plug-in' },
+              { to: '/docs/integrate-into-your-codebase/browser-runtime-sdk', label: 'Plug-in system for a Web application' },
               { to: '/docs/integrate-into-your-codebase/c-host-sdk', label: 'Plug-in system in C' },
               { to: '/docs/integrate-into-your-codebase/cpp-host-sdk', label: 'Plug-in system in C++' },
               { to: '/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk', label: 'Plug-in system in Elixir' },
@@ -124,7 +125,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['php', 'ruby', 'rust', 'haskell', 'elixir'],
+        additionalLanguages: ['php', 'ruby', 'rust', 'haskell', 'elixir', 'toml'],
       },
     }),
 };
