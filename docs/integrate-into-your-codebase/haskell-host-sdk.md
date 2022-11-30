@@ -16,11 +16,20 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 
 ### 1. Install the Haskell library
 
-Install via `stack`:
-```yaml title=stack.yaml
-extra-deps:
-  - git: https://github.com/extism/extism.git
-    commit: # TODO
+Install via `cabal` from git:
+
+Add the git repository to your cabal project:
+```title=cabal.project
+source-repository-package
+  type: git
+  location: https://github.com/extism/extism.git
+  subdir: haskell
+```
+
+Add the dependency to your cabal file:
+```title=example.cabal
+library
+  build-depends: extism
 ```
 
 ### 2. Import the library and use the APIs
@@ -28,27 +37,19 @@ extra-deps:
 ```haskell title=Main.hs
 module Main where
 
-import System.Exit (exitFailure, exitSuccess)
-import qualified Data.ByteString as B
 import Extism
-import Extism.Manifest
+import Extism.Manifest(manifest, wasmFile)
 
-try f (Right x) = f x
-try f (Left (Error msg)) = do
-  _ <- putStrLn msg
-  exitFailure
-
-handlePlugin plugin = do
-  res <- Extism.call plugin "count_vowels" (Extism.toByteString "this is a test")
-  try (\bs -> do
-    _ <- putStrLn (Extism.fromByteString bs)
-    _ <- Extism.free plugin
-    exitSuccess) res
+unwrap (Right x) = x
+unwrap (Left (ErrorMessage msg)) = do
+  error msg
 
 main = do
-  context <- Extism.newContext ()
-  plugin <- Extism.pluginFromManifest context (manifest [wasmFile "../wasm/code.wasm"]) False
-  try handlePlugin plugin
+  context <- Extism.newContext
+  plugin <- unwrap <$> Extism.pluginFromManifest context (manifest [wasmFile "../wasm/code.wasm"]) False 
+  res <- unwrap <$> Extism.call plugin "count_vowels" (Extism.toByteString "this is a test")
+  putStrLn (Extism.fromByteString res)
+  Extism.free plugin
 ```
 
 
