@@ -56,6 +56,7 @@ const config = {
           { type: 'doc', docId: 'overview', position: 'left', label: 'Overview' },
           { to: '/docs/install', label: 'Installation', position: 'left' },
           { to: '/docs/category/write-a-plug-in', label: 'Write a Plug-in', position: 'left' },
+          { to: '/blog', label: 'Blog', position: 'left' },
           {
             href: 'https://playground.extism.org',
             label: 'Extism Playground',
