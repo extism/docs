@@ -1,8 +1,194 @@
 ---
 slug: announcing-extism
-title: "Extism: Make all software programmable."
+title: "Extism: make all software programmable"
 authors: [steve, zach, ben]
-tags: [announcement, launch]
+tags: [announcement, launch, WebAssembly, plug-in system]
 ---
 
-[placeholder]
+import SDKLogoLinks from '@site/src/components/SDKLogoLinks';
+import PDKLogoLinks from '@site/src/components/PDKLogoLinks';
+
+### Hello, World!
+
+Today, we are excited to officially announce [**Extism**](https://github.com/extism/extism), the 
+universal plug-in system. Over the past few months, we have focused on building an embeddable, safe, 
+performant runtime that is as easy to use from as many programs as possible. Extism brings 
+extensibility to software of all shapes and sizes in a way which we believe to have been previously 
+unachievable. 
+
+Extism's goal is simple: **make all software programmable**. We've released the project under the 
+permissive BSD-3 license, and you can see all of its components on [GitHub](https://github.com/extism).
+
+![Extism, universal plug-in system](/img/extism-language-support.png)
+### Being "Universal"
+
+The power of a plug-in system is that it enables software end-users to dream up new capabilities 
+and functionality of a program, which the original authors couldn't foresee, or didn't want to add
+to the core of a product. Keeping programs as simple as possible often leads to higher quality, 
+better performance, and easier maintainability. It's important to us that software creators using 
+_any_ language have the same opportunity to have these benefits, and also be able to give their
+users rich extensibility. 
+
+As of today, Extism can be easily embedded into **13 languages**, using our official SDKs:
+
+<div className="sdk-quickstart">
+    <SDKLogoLinks/>
+</div>
+
+Embed Extism into any of your projects: web apps (using our [browser runtime](/docs/integrate-into-your-codebase/browser-runtime-sdk)), 
+databases, API servers, command-line apps, smart TVs, IoT, SaaS... you name it! Extism meets your 
+code wherever it's at.
+
+Extism, at its core, is a code runtime built in [Rust](https://rust-lang.org). Underneath the hood,
+we run [WebAssembly](https://webassembly.org) code as the plug-in execution format. This makes it 
+safe to execute untrusted, 3rd party plug-in code even while it's directly embedded within the same
+OS process as your program. WebAssembly has a battle-tested sandbox isolation architecture, and is
+in use across the software industry from browsers, edge platforms, cloud environments, and more. 
+In addition to its security benefits, WebAssembly is a compilation target that is already supported
+by many different programming languages. This enables plug-in authors to use the language that they
+prefer to write their plug-in, and as of today, Extism plug-ins can be written in **5 languages**,
+using our official plug-in development kits (PDKs):
+
+<div className="sdk-quickstart">
+    <PDKLogoLinks/>
+</div>
+
+We plan to add more language support to our SDKs and PDKs over the coming months & years, so if you
+don't see your favorite language listed above, please [join our Discord](https://discord.gg/cx3usBCWnc)
+or [file and issue](https://github.com/extism/extism/issues) and we can prioritize it or help you 
+contribute!
+
+### How We Built It
+
+Staying true to our goal to _make all software programmable_, we knew Extism would need to be 
+embedded into several languages. It needs to be able to go _anywhere_. Other projects with similar
+goals like `sqlite` or `openssl`, are low-level system components exposed to a multitude of language
+environments through [FFI](https://en.wikipedia.org/wiki/Foreign_function_interface), 
+the _foreign function interface_. Extism is no different. Choosing Rust was an obvious choice to 
+help build a reliable and performance-sensitive core runtime, and with Rust's fantastic FFI support, 
+we could expose [runtime APIs](/docs/concepts/runtime-apis) which can be called from almost any 
+language used today. 
+
+All of our official SDKs provide idiomatic wrappers over bindings to Extism, so users will feel 
+right at home working within a language they know and love. 
+
+The runtime is only half of the equation though. What about plug-in authors? What kind of features
+and functionality should they get from the runtime? How do we expose these features to the plug-in
+environment? This is where WebAssembly really shines. Providing a standard ABI to WebAssembly 
+modules is very straightforward thanks to its simple import/export arhictecture. Extism defines a 
+set of functions which are linked from the host runtime to the `.wasm` module when it is instantiated, 
+and our PDKs provide idiomatic wrappers over bindings to these native functions. From a `.wasm` 
+module's perspective, these functions are "imports", provided to it from its host. Some of these 
+include the ability for plug-ins to make network calls via HTTP, persist variables in between plug-in
+invocations, read host configuration data, and most importantly read & write complex data between
+the host and plug-in. 
+
+In addition to the imports provided by Extism, a host can elect to enable [`WASI`](https://wasi.dev) 
+and offer plug-ins a rich POSIX-like system interface, which allows many existing codebases and 
+libraries to be compiled to `.wasm` modules and used within a plug-in. It's important to keep
+safety and security in mind, and as such, we've decided to hold off on enabling direct disk/filesystem
+access from plug-ins, and instead opt for a more explicit requirement to pass file data in and out
+of a plug-in directly. We're experimenting with approaches here and would appreciate your feedback.
+
+### Let's See Some Code
+
+Head over to the [SDK documentation](/docs/category/integrate-into-your-codebase) for dozens of 
+examples of embedding Extism into all of our supported host languages, or if you're interested in 
+compiling plug-ins to WebAssembly, check out many examples in the [PDK documentation](/docs/category/write-a-plug-in) 
+for plug-in code in each supported language. 
+
+As a fully open-source project, we also invite you to head to our [GitHub repository](https://github.com/extism/extism)
+and see how everything works. In the main repository, you will find all of the runtime code as well
+as each of the host SDKs. Each PDK is split into its own repository within the [Extism GitHub Organization](https://github.com/extism).
+
+For a quick glance at some simple examples, see below:
+
+#### Node.js Host SDK Example
+
+```js title=index.js
+import { withContext, Context } from '@extism/extism';
+import { readFileSync } from 'fs';
+
+withContext(async function (context) {
+  // get plug-in code from anywhere (disk, network, cache, database etc.)
+  let wasm = readFileSync('../wasm/code.wasm');
+  // construct a plug-in, to use WASI, pass `true` to constructor (see docs for more options)
+  let plugin = context.plugin(wasm);
+
+  // simple call any function from the plug-in and pass it any complex data, 
+  // many SDKs provide options to pass strings, raw bytes, etc.
+  let buf = await plugin.call('count_vowels', 'this could be any data!');
+
+  // parse or decode the returned data from the plug-in however your app needs to
+  console.log(buf.toString());
+
+  // plug-ins will be automatically freed where possible, but you can ensure cleanup is done
+  p.free();
+});
+```
+
+#### Go Plugin PDK Example
+
+```go title=main.go
+package main
+
+import (
+    "fmt"
+
+    "github.com/extism/go-pdk"
+)
+
+//export count_vowels
+func count_vowels() int32 {
+	// read input from the host and use it from within the plug-in
+    input := pdk.Input()
+
+    count := 0
+    for _, a := range input {
+        switch a {
+        case 'A', 'I', 'E', 'O', 'U', 'a', 'e', 'i', 'o', 'u':
+            count++
+        default:
+        }
+    }
+
+    // for demonstration, use persisted variables which can be accessed 
+	// between plug-in invocations
+    if pdk.GetVar("a") == nil {
+        pdk.SetVar("a", []byte("this is var a"))
+    }
+    varA := pdk.GetVar("a")
+	
+	// for demonstration, access key-value based configuration data 
+	// provided by the host
+    thing, ok := pdk.GetConfig("thing")
+    if !ok {
+        thing = "<unset by host>"
+    }
+
+	// prepare some data to write back to the host
+    output := fmt.Sprintf("Counted %d vowels!")
+    mem := pdk.AllocateString(output)
+
+    // zero-copy output to host
+    pdk.OutputMemory(mem)
+
+	// most PDKs return a status code to hosts, `0` here indicates success.
+    return 0
+}
+```
+
+### What's Next?
+
+Over the coming weeks and months, we plan on working with interested users and incorporating feedback,
+adding more language support wherever possible, and expanding our documentation and demos for users
+to learn from. Your input is critical and always appreciated, so please [join us on Discord](https://discord.gg/cx3usBCWnc)
+where we hang out and chat. Use each repository's issue tracker to file any experience report or bug
+you encounter. No feedback is too small, and we thank you for the time it takes to help us make
+Extism as great as it can be!
+
+#### Spread the word!
+
+- Discuss on [Hacker News](#)
+- Share on [Twitter](http://www.twitter.com/share?text=Extism%3A%20make%20all%20software%20programmable&url=https://extism.org/blog/announcing-extism&hashtags=WebAssembly,wasm)
+- Star the project on [GitHub](https://github.com/extism/extism)
