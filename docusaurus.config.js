@@ -55,6 +55,8 @@ const config = {
         items: [
           { type: 'doc', docId: 'overview', position: 'left', label: 'Overview' },
           { to: '/docs/install', label: 'Installation', position: 'left' },
+          { to: '/docs/category/integrate-into-your-codebase', label: 'Integrate', position: 'left' },
+          { to: '/docs/category/concepts', label: 'Concepts', position: 'left' },
           { to: '/docs/category/write-a-plug-in', label: 'Write a Plug-in', position: 'left' },
           { to: '/blog', label: 'Blog', position: 'left' },
           {
