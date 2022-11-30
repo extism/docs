@@ -106,8 +106,8 @@ For a quick glance at some simple examples, see below:
 #### Node.js Host SDK Example
 
 ```js title=index.js
-import { withContext, Context } from '@extism/extism';
-import { readFileSync } from 'fs';
+const { withContext, Context } = require('@extism/extism');
+const { readFileSync } = require('fs');
 
 withContext(async function (context) {
   // get plug-in code from anywhere (disk, network, cache, database etc.)
