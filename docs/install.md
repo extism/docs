@@ -126,7 +126,7 @@ Version v0.0.1
 
 ### Get runtime version
 
-Use the `version` command to print the version if the Extism runtime on your machine:
+Use the `version` command to print the version of the Extism runtime installed on your machine:
 
 ```sh
 extism version
