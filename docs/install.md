@@ -116,7 +116,7 @@ extism call --input "this is a test" test/code.wasm count_vowels
 
 ### Get installation info
 
-It's helpful to know where the CLI is locating the Extism shared library, and the version of the CLI:
+It's helpful to know where the CLI is locating the Extism shared library, and which version of the runtime it's using.
 
 ```sh
 extism info
