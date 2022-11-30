@@ -34,6 +34,14 @@ We recommend installing `rustup`.
 
 ### 2. Import the library and use the APIs
 
+:::note Count Vowels Plugin
+`code.wasm` in this example is our example plugin that counts vowels. If you want to run this, download it first and set the path:
+
+```
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.wasm
+```
+:::
+
 ```elixir
 require Extism
 

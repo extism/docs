@@ -27,7 +27,8 @@ import { ExtismContext } from "@extism/runtime-browser"
 const manifest = { wasm: [{ data: "..." }] };
 
 // Or you can pass in a path to a wasm file
-const manifest = { wasm: [{ path: "https://example.com/myplugin.wasm" }] };
+// this is our count-vowels example plugin
+const manifest = { wasm: [{ path: "https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm" }] };
 
 const ctx = new ExtismContext();
 const plugin = await ctx.newPlugin(manifest);
