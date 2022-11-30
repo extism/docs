@@ -24,6 +24,14 @@ For Mix:
 {:extism, "~> 0.0.1-rc.6"}
 ```
 
+:::note Rust Dependency
+
+The extism package is writen in rust and the NIF must be compiled in your application with mix.
+Because of that, [installing rust](https://www.rust-lang.org/tools/install) is currently a requirement.
+We recommend installing `rustup`.
+
+:::
+
 ### 2. Import the library and use the APIs
 
 ```elixir
