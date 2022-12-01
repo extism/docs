@@ -8,12 +8,6 @@ tags:
 
 # Using the Elixir / Erlang Host SDK
 
-:::caution Check your installation
-
-Please be sure you've [installed Extism](/docs/install) before continuing with this guide.
-
-:::
-
 ### 1. Install the package
 
 Install via [hex.pm](https://hex.pm/packages/extism):
@@ -47,7 +41,7 @@ require Extism
 
 ctx = Extism.Context.new
 # point to the count-vowels plugin on my machine
-manifest = %{ wasm: [ %{ path: "/Users/ben/.extism/extism/wasm/code.wasm" } ]}
+manifest = %{ wasm: [ %{ path: "code.wasm" } ]}
 {:ok, plugin} = Extism.Context.new_plugin(ctx, manifest, false)
 {:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "this is a test")
 JSON.decode!(output)
