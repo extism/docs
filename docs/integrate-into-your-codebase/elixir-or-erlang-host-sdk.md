@@ -41,7 +41,7 @@ require Extism
 
 ctx = Extism.Context.new
 # point to the count-vowels plugin on my machine
-manifest = %{ wasm: [ %{ path: "/Users/ben/.extism/extism/wasm/code.wasm" } ]}
+manifest = %{ wasm: [ %{ path: "code.wasm" } ]}
 {:ok, plugin} = Extism.Context.new_plugin(ctx, manifest, false)
 {:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "this is a test")
 JSON.decode!(output)
