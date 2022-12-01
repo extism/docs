@@ -59,6 +59,7 @@ $json = json_decode(pack('C*', ...$output));
 echo "Vowels counted = " . $json->{'count'} . PHP_EOL;
 ```
 
+> **NOTE:** on some MacOS devices (particularly Apple Silicon), you may hit an error regarding the `Security.framework`. We're working on a solution here, but in the meantime, if this happens to you please file an issue or comment here: [https://github.com/extism/extism/issues/96](https://github.com/extism/extism/issues/96).
 
 ### Need help?
 
