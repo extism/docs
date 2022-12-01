@@ -8,12 +8,6 @@ tags:
 
 # Using the Elixir / Erlang Host SDK
 
-:::caution Check your installation
-
-Please be sure you've [installed Extism](/docs/install) before continuing with this guide.
-
-:::
-
 ### 1. Install the package
 
 Install via [hex.pm](https://hex.pm/packages/extism):
