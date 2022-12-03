@@ -173,7 +173,7 @@ end
 
 Okay let's try the count vowels example again but now with a GenServer:
 
-```
+```elixir
 iex(1)> {:ok, pid} = GenServer.start_link(Wasmactor.PluginServer, nil)
 {:ok, #PID<0.220.0>}
 iex(2)> GenServer.call(pid, {:new, %{wasm: [%{path: "./code.wasm"}]}, false})
