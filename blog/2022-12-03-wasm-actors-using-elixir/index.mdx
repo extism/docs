@@ -13,31 +13,31 @@ So naturally, I built [Elixir support](/docs/integrate-into-your-codebase/elixir
 
 I wanted to explore this idea of a Wasm module as an Erlang process and see what kind of interesting things could you create
 when you combined this with OTP. Along the way I discovered that an Extism plugin maps almost perfectly with the interface of
-the [GenServer](https://hexdocs.pm/elixir/GenServer.html) behavior. This has some powerful implications! This means you can map
+the [GenServer](https://hexdocs.pm/elixir/GenServer.html) behavior. This has some powerful implications!
 
-In this post I'm going to explain how to set this up and we'll try running a few experiments.
+In this post I'm going to explain how to set this up and try some experiments.
 
 ### Setting up Extism
 
-We generally recommend people install the [Extism CLI](https://extism.org/docs/install/) to get started. This installs
-the extism runtime on your machine and gives you some commands to play with. With the Elixir library, it's not needed.
-You just need rust installed as we ship the runtime source along with the Elixir package.
 
 #### Install Depdendencies
 
 All you need to get started is [rustup](https://rustup.rs/) and [elixir](https://elixir-lang.org/install.html).
 If you have these installed you can skip to the next section.
 
-> **N.B.**: I'm doing all this on an Ubuntu jammy docker container. You can grab a shell session with `docker run -it ubuntu:latest bash`.
+:::note Use Docker
 
-```bash
-apt update
-apt install -y curl build-essential
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-# Choose 1 for default
-source "$HOME/.cargo/env"
-apt install -y elixir
+If you want a temporary Dockerized environment, run these commands:
+
 ```
+mkdir /tmp/elixir-blogpost
+cd /tmp/elixir-blogpost
+curl https://extism.org/docs/data/elixir-blogpost/Dockerfile > Dockerfile
+docker build -t wasm_actor .
+docker run -it wasm_actor bash
+```
+
+:::
 
 #### Create an Elixir project
 
@@ -48,7 +48,7 @@ mix new wasmactor
 cd wasmactor
 ```
 
-Now let's add Extism as a dependency in `mix.exs`
+Add Extism as a dependency in `mix.exs`
 
 ```elixir
   defp deps do
@@ -59,7 +59,7 @@ Now let's add Extism as a dependency in `mix.exs`
   end
 ```
 
-Now fetch the deps and compile them:
+Fecth the deps and compile them:
 
 ```bash
 mix do deps.get, deps.compile
@@ -117,18 +117,18 @@ iex(5)> JSON.decode!(output)
 Okay, how do we turn this into a [GenServer](https://hexdocs.pm/elixir/GenServer.html)?
 There would be two approaches:
 
-1. Wrap the Extism Context in the Genserver
+1. Wrap the Extism Context in the GenServer
     * Store the Context as the state
     * Provide callbacks to load and unload plugins
     * Provide callbacks to lookup and call those plugins
-2. Wrap the Extism Plugin in the Genserver
+2. Wrap the Extism Plugin in the GenServer
     * Store both the context and the plugin as state
     * Provide callbacks to load and reload the plugin code
     * Provide callbacks to call functions on the plugin
 
 :::info What is a Context?
 
-You can think of a Context right now as an arena of plugins. When a plugin is loaded, the context owns
+You can think of a Context as an arena of plugins. When a plugin is loaded, the context owns
 that plugin and is responsible for freeing it. Freeing a context frees all it's plugins.
 
 :::
@@ -136,10 +136,10 @@ that plugin and is responsible for freeing it. Freeing a context frees all it's 
 I went with #2 here because I think it's more granular and allows for more flexibility and concurrency.
 There isn't much of a penalty to have one context per plugin so it's okay to do it this way.
 
-With that in mind, I implemented this GenServer in `lib/wasmactor.ex`:
+With that in mind, I implemented this barebones GenServer in `lib/wasm_actor.ex`:
 
 ```elixir
-defmodule Wasmactor.PluginServer do
+defmodule WasmActor.PluginServer do
   use GenServer
 
   @impl true
@@ -173,10 +173,12 @@ defmodule Wasmactor.PluginServer do
 end
 ```
 
-Okay let's try the count vowels example again but now with a GenServer:
+Okay let's try the count vowels example again but now with a GenServer. Start the repl again:
 
 ```elixir
-iex(1)> {:ok, pid} = GenServer.start_link(Wasmactor.PluginServer, nil)
+$ iex -S mix
+
+iex(1)> {:ok, pid} = GenServer.start_link(WasmActor.PluginServer, nil)
 {:ok, #PID<0.220.0>}
 iex(2)> GenServer.call(pid, {:new, %{wasm: [%{path: "./code.wasm"}]}, false})
 {:ok,
@@ -192,7 +194,7 @@ Now we're doing the same thing, but instead of invoking a function on the plugin
 invoking it on a pid. What does this inversion give us exactly? Well, because it's a pid, it can live anywhere
 in your cluster.
 
-This also means we can replace any GenServer in our application, or in a framework like Phoenix, with a Wasm module.
+This also means we can replace any GenServer in our application, or in a framework like [Phoenix](https://www.phoenixframework.org/), with a Wasm module.
 This would allow your customers to extend your application or maybe allow you to write part of your Elixir application
 in a language better suited to the task of the GenServer you are replacing.
 
