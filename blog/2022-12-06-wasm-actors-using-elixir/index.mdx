@@ -155,7 +155,7 @@ defmodule GameBox.PluginServer do
   # This special call is for loading or reloading a plugin given a manifest
   @impl true
   def handle_call({:new, manifest, wasi}, _from, {ctx, plugin}) do
-    # if we have an exiting Plugin let's free it
+    # if we have an existing Plugin let's free it
     if plugin do
         Extism.Plugin.free(plugin)
     end
