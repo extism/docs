@@ -138,7 +138,8 @@ that plugin and is responsible for freeing it. Freeing a context frees all it's 
 I went with #2 here because I think it's more granular and allows for more flexibility and concurrency.
 There isn't much of a penalty to have one context per plugin so it's okay to do it this way.
 
-With that in mind, I implemented this barebones GenServer in `lib/game_box.ex`:
+With that in mind, I implemented this barebones GenServer in `lib/game_box.ex`. Go ahead and copy paste it
+into that file:
 
 ```elixir
 defmodule GameBox.PluginServer do
