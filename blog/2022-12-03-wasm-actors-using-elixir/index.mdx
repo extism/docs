@@ -119,18 +119,18 @@ iex(5)> JSON.decode!(output)
 Okay, how do we turn this into a [GenServer](https://hexdocs.pm/elixir/GenServer.html)?
 There would be two approaches:
 
-1. Wrap the Extism Context in the GenServer
+1. Wrap the [Extism.Context](https://hexdocs.pm/extism/Extism.Context.html) in the GenServer
     * Store the Context as the state
     * Provide callbacks to load and unload plugins
     * Provide callbacks to lookup and call those plugins
-2. Wrap the Extism Plugin in the GenServer
+2. Wrap the [Extism.Plugin](https://hexdocs.pm/extism/Extism.Plugin.html) in the GenServer
     * Store both the context and the plugin as state
     * Provide callbacks to load and reload the plugin code
     * Provide callbacks to call functions on the plugin
 
 :::info What is a Context?
 
-You can think of a Context as an arena of plugins. When a plugin is loaded, the context owns
+You can think of a [Context](https://hexdocs.pm/extism/Extism.Context.html) as an arena of plugins. When a plugin is loaded, the context owns
 that plugin and is responsible for freeing it. Freeing a context frees all it's plugins.
 
 :::
