@@ -164,7 +164,7 @@ defmodule GameBox.PluginServer do
     {:reply, {:ok, plugin}, {ctx, plugin}}
   end
 
-  # this is a generic way to call functions on the Extism.Plugin module
+  # this is a generic to proxy messages to the underlying Extism.Plugin module
   # we're mostly going to use `call` here:
   #     e.g. call_details = {:call, "count_vowels", "this is a test"}
   @impl true
