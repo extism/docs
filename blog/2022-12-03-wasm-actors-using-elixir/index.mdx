@@ -1,26 +1,28 @@
 ---
-slug: wasm-actors-using-elixir
-title: "Wasm actors using Elixir"
+slug: extending-fly-io-distributed-game-system-part-1
+title: "Extending Fly.io's Distributed Turn-Based Game System, Part 1: Extism in Elixir"
 authors: [ben]
-tags: [WebAssembly, Elixir]
+tags: [WebAssembly, Elixir, Phoenix, Fly.io]
 ---
 
-### Wasm Actors in Elixir
+### Extending Fly.io's Distributed Turn-Based Game System, Part 1
 
-When I first started working with Wasm, I felt there was a natural synergy between Wasm and the actor model.
-The most powerful example of the actor model is, in my opinion, the [BEAM and OTP](https://www.erlang.org/).
-So naturally, I built [Elixir support](/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk) into Extism by creating an Elixir Host SDK.
+Since I built [Elixir support](/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk) into Extism,
+I've been thinking about how to demonstrate the power of combining Extism and the Elixir ecosystem.
 
-I wanted to explore this idea of a Wasm module as an Erlang process and see what kind of interesting things could you create
-when you combined this with OTP. Along the way I discovered that an Extism plugin maps almost perfectly with the interface of
-the [GenServer](https://hexdocs.pm/elixir/GenServer.html) behavior. This has some powerful implications!
+I wanted to explore wrapping a Wasm module in an Erlang process and see what kind of interesting things could you create
+when combining it with OTP. Along the way, I discovered that the programming model of an Extism plugin maps almost perfectly
+the [GenServer](https://hexdocs.pm/elixir/GenServer.html) behavior.
 
-In this post I'm going to explain how to set this up and try some experiments.
+This has some powerful implications! In this two-part post, I'm going to show why. Our goal is to
+extend this [turn-based game engine created by Fly.io](https://fly.io/blog/building-a-distributed-turn-based-game-system-in-elixir/).
+With just a couple invocations of the Extism library, we will allow users to create and upload their own turn based games.
 
-### Setting up Extism
+Part 1 of this post will be explaining how to use Extism in Elixir and how to create this magic Extism Genserver.
 
+## Setting up Extism
 
-#### Install Depdendencies
+### Install Depdendencies
 
 All you need to get started is [rustup](https://rustup.rs/) and [elixir](https://elixir-lang.org/install.html).
 If you have these installed you can skip to the next section.
@@ -33,19 +35,19 @@ If you want a temporary Dockerized environment, run these commands:
 mkdir /tmp/elixir-blogpost
 cd /tmp/elixir-blogpost
 curl https://extism.org/docs/data/elixir-blogpost/Dockerfile > Dockerfile
-docker build -t wasm_actor .
-docker run -it wasm_actor bash
+docker build -t game_box .
+docker run -it game_box bash
 ```
 
 :::
 
-#### Create an Elixir project
+### Create an Elixir project
 
 Now let's create a new Elixir project with `mix`:
 
 ```bash
-mix new wasmactor
-cd wasmactor
+mix new game_box
+cd game_box
 ```
 
 Add Extism as a dependency in `mix.exs`
@@ -107,7 +109,7 @@ JSON.decode!(output)
 
 If all is working you'll see 4 vowels in the input string:
 
-```
+```elixir
 iex(5)> JSON.decode!(output)
 %{"count" => 4}
 ```
@@ -136,16 +138,16 @@ that plugin and is responsible for freeing it. Freeing a context frees all it's 
 I went with #2 here because I think it's more granular and allows for more flexibility and concurrency.
 There isn't much of a penalty to have one context per plugin so it's okay to do it this way.
 
-With that in mind, I implemented this barebones GenServer in `lib/wasm_actor.ex`:
+With that in mind, I implemented this barebones GenServer in `lib/game_box.ex`:
 
 ```elixir
-defmodule WasmActor.PluginServer do
+defmodule GameBox.PluginServer do
   use GenServer
 
   @impl true
   def init(_init_arg) do
     ctx = Extism.Context.new()
-    # as our state we will store a {Context, Plugin} tuple
+    # as our state we will store a {Extism.Context, Extism.Plugin} tuple
     {:ok, {ctx, nil}}
   end
 
@@ -178,7 +180,7 @@ Okay let's try the count vowels example again but now with a GenServer. Start th
 ```elixir
 $ iex -S mix
 
-iex(1)> {:ok, pid} = GenServer.start_link(WasmActor.PluginServer, nil)
+iex(1)> {:ok, pid} = GenServer.start_link(GameBox.PluginServer, nil)
 {:ok, #PID<0.220.0>}
 iex(2)> GenServer.call(pid, {:new, %{wasm: [%{path: "./code.wasm"}]}, false})
 {:ok,
@@ -190,12 +192,13 @@ iex(3)> GenServer.call(pid, {:call, "count_vowels", "this is a test"})
 {:ok, "{\"count\": 4}"}
 ```
 
-Now we're doing the same thing, but instead of invoking a function on the plugin we're 
+Now we're doing the same as before, but instead of invoking a function on the plugin we're 
 invoking it on a pid. What does this inversion give us exactly? Well, because it's a pid, it can live anywhere
-in your cluster.
+in your cluster. And it can be [supervised](https://hexdocs.pm/elixir/Supervisor.html) or [registered](https://hexdocs.pm/elixir/Registry.html).
 
 This also means we can replace any GenServer in our application, or in a framework like [Phoenix](https://www.phoenixframework.org/), with a Wasm module.
-This would allow your customers to extend your application or maybe allow you to write part of your Elixir application
-in a language better suited to the task of the GenServer you are replacing.
+This would allow your customers to extend your application or maybe
+allow you to write part of your Elixir application in a language better suited
+to the task of the GenServer you are replacing.
 
-We're currently working on something to demonstrate this idea. We will follow up in the coming weeks with a new blog post.
+In the next post we will show how we can use this PluginServer to replace an important part of the Phoenix ecosystem, the [Phoenix.LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html) module.
