@@ -193,7 +193,7 @@ iex(3)> GenServer.call(pid, {:call, "count_vowels", "this is a test"})
 {:ok, "{\"count\": 4}"}
 ```
 
-Now we're doing the same as before, but instead of invoking a function on the plugin we're 
+Now we're doing the same thing as before, but instead of invoking a function on the plugin we're 
 invoking it on a pid. What does this inversion give us exactly? Well, because it's a pid, it can live anywhere
 in your cluster. And it can be [supervised](https://hexdocs.pm/elixir/Supervisor.html) or [registered](https://hexdocs.pm/elixir/Registry.html).
 
