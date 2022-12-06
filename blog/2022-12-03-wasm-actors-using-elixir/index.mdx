@@ -11,7 +11,7 @@ Since I built [Elixir support](/docs/integrate-into-your-codebase/elixir-or-erla
 I've been thinking about how to demonstrate the power of combining the two.
 
 I wanted to explore wrapping a Wasm module in an Erlang process and see what kind of interesting things could you create
-when you leverage OTP. Along the way, I discovered that the programming model of an Extism plugin maps almost perfectly to
+when you leverage OTP. Along the way, I discovered that the programming model of an Extism plugin maps almost perfectly to 
 the [GenServer](https://hexdocs.pm/elixir/GenServer.html) behavior.
 
 This has some powerful implications! In this two-part post, I'm going to show why. Our goal is to
@@ -61,10 +61,10 @@ Add Extism as a dependency in `mix.exs`
   end
 ```
 
-Fecth the deps and compile them:
+Fecth the deps and compile:
 
 ```bash
-mix do deps.get, deps.compile
+mix do deps.get, compile
 ```
 
 This should kick off a rust build of the Extism package and runtime and it should end something like this:
