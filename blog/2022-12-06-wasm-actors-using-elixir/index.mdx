@@ -107,7 +107,7 @@ manifest = %{ wasm: [ %{ path: "./code.wasm" } ]}
 JSON.decode!(output)
 ```
 
-If all is working you'll see 4 vowels in the input string:
+If all is working you'll see `{"count" =>  4}` in the output string:
 
 ```elixir
 iex(5)> JSON.decode!(output)
