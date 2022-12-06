@@ -22,7 +22,12 @@ Add to your `cabal.project` file:
 ```
 source-repository-package
   type: git
-  location: ssh://git@github.com/extism/haskell-pdk.git
+  location: https://github.com/extism/extism.git
+  subdir: haskell
+
+source-repository-package
+  type: git
+  location: https://github.com/extism/haskell-pdk.git
 ```
 
 ### Compiling to WebAssembly
