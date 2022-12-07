@@ -1,5 +1,5 @@
 ---
-title: Dotnet
+title: .NET
 tags:
     - dotnet
     - csharp
@@ -7,7 +7,7 @@ tags:
     - host sdk
 ---
 
-# Using the Dotnet Host SDK
+# Using the .NET Host SDK
 
 ### 1. Install the Nuget Package
 
@@ -27,7 +27,7 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.
 ```
 :::
 
-```rust title=Program.cs
+```csharp title=Program.cs
 using Extism.Sdk.Native;
 using System.Reflection;
 using System.Text;
