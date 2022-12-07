@@ -11,7 +11,7 @@ tags:
 
 ### 1. Install the Nuget Package
 
-Install via [Crates.io](https://crates.io/):
+Install via [nuget](https://nuget.org):
 
 ```sh
 dotnet add package Extism.SDK --version 0.1.0
