@@ -5,16 +5,6 @@ sidebar_position: 3
 
 ## How to install and use the Extism Haskell PDK
 
-### Before you start
-
-- This library is intended to be used with [wasm32-wasi-ghc](https://gitlab.haskell.org/ghc/ghc-wasm-meta)
-- The Haskell PDK is different from the other PDKs because it requires WASI and the resulting plugins expose a 
-  single `_start` function instead of named functions.  It is possible to export named Haskell functions, 
-  however because Haskell has a runtime that needs to be initialized it's not possible to call them directly.
-- If you're geting linker errors about undefined Extism functions when compiling a plugin then the following 
-  arguments need to be passed to GHC: `-optl -Wl,--allow-undefined`
-  (see [extism-pdk.cabal](https://github.com/extism/haskell-pdk/tree/main/extism-pdk.cabal))
-
 ### Installation
 
 Add to your `cabal.project` file:
@@ -23,11 +13,23 @@ Add to your `cabal.project` file:
 source-repository-package
   type: git
   location: https://github.com/extism/extism.git
-  subdir: haskell
+  subdir: haskell/manifest
 
 source-repository-package
   type: git
   location: https://github.com/extism/haskell-pdk.git
+
+package my-package
+  ghc-options:
+    -optl -Wl,--export=hs_init -optl -Wl,--export=hs_exit -optl -Wl,--allow-undefined 
+```
+
+To export a specific function using `foreign export` you should also include the following in your
+plugin's executable stanza:
+
+```
+  ghc-options:
+    -optl -Wl,--export=myFunction
 ```
 
 ### Compiling to WebAssembly
