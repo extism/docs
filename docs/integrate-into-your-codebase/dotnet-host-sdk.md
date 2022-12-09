@@ -1,5 +1,5 @@
 ---
-title: Dotnet
+title: .NET
 tags:
     - dotnet
     - csharp
@@ -7,7 +7,7 @@ tags:
     - host sdk
 ---
 
-# Using the Dotnet Host SDK
+# Using the .NET Host SDK
 
 ### 1. Install the Nuget Package
 
