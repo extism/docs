@@ -36,11 +36,10 @@ var context = new Context();
 var wasm = await File.ReadAllBytesAsync("./code.wasm");
 using var plugin = context.CreatePlugin(wasm, withWasi: true);
 
-string GetOutput() {
-  var outputBytes = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World!"));
-  return Encoding.UTF8.GetString(outputBytes);
-}
-Console.WriteLine(GetOutput()); // prints {"count": 3}
+var output = Encoding.UTF8.GetString(
+    plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
+);
+Console.WriteLine(output); // prints {"count": 3}
 ```
 
 ### Need help?
