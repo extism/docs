@@ -28,6 +28,18 @@ source-repository-package
 source-repository-package
   type: git
   location: https://github.com/extism/haskell-pdk.git
+
+package my-package
+  ghc-options:
+    -optl -Wl,--export=hs_init -optl -Wl,--export=hs_exit -optl -Wl,--allow-undefined 
+```
+
+To export a specific function using `foreign export` you should also include the following in your
+plugin's executable stanza:
+
+```
+  ghc-options:
+    -optl -Wl,--export=myFunction
 ```
 
 ### Compiling to WebAssembly
