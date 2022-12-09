@@ -13,7 +13,7 @@ Add to your `cabal.project` file:
 source-repository-package
   type: git
   location: https://github.com/extism/extism.git
-  subdir: haskell
+  subdir: haskell/manifest
 
 source-repository-package
   type: git
