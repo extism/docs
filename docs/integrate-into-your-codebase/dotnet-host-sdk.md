@@ -14,7 +14,7 @@ tags:
 Install via [nuget](https://nuget.org):
 
 ```sh
-dotnet add package Extism.SDK --version 0.1.0
+dotnet add package Extism.Sdk --version 0.1.0
 ```
 
 ### 2. Import the library and use the APIs
@@ -27,19 +27,20 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.
 ```
 :::
 
-```rust title=Program.cs
+```csharp title=Program.cs
 using Extism.Sdk.Native;
 using System.Reflection;
 using System.Text;
 
-using var context = new Context();
-var binDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-var wasm = await File.ReadAllBytesAsync(Path.Combine(binDirectory, "./code.wasm"));
+var context = new Context();
+var wasm = await File.ReadAllBytesAsync("./code.wasm");
 using var plugin = context.CreatePlugin(wasm, withWasi: true);
 
-var outputBytes = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World!"));
-var output = Encoding.UTF8.GetString(outputBytes);
-Console.WriteLine(output); // prints {"count": 3}
+string GetOutput() {
+  var outputBytes = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World!"));
+  return Encoding.UTF8.GetString(outputBytes);
+}
+Console.WriteLine(GetOutput()); // prints {"count": 3}
 ```
 
 ### Need help?
