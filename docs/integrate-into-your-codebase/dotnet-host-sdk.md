@@ -12,7 +12,7 @@ tags:
 :::caution Check your installation
 
 For Mac and Linux users, please be sure you've [installed Extism](/docs/install) before continuing with this guide.
-This step is not required for Windows users as the native package is bundled with the Extism runtime dll.
+This step is not required for Windows users as the native package is bundled with the Extism runtime DLL.
 
 :::
 
@@ -26,7 +26,7 @@ dotnet add package Extism.Sdk
 
 :::note Windows Support
 
-We provide a [native package for Windows](https://www.nuget.org/packages/Extism.runtime.win-x64/0.1.0-rc2).
+We provide a [native package for Windows](https://www.nuget.org/packages/Extism.runtime.win-x64).
 You can install with:
 
 ```
