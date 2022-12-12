@@ -9,13 +9,30 @@ tags:
 
 # Using the .NET Host SDK
 
+:::caution Check your installation
+
+For Mac and Linux users, please be sure you've [installed Extism](/docs/install) before continuing with this guide.
+This step is not required for Windows users as the native package is bundled with the Extism runtime dll.
+
+:::
+
 ### 1. Install the Nuget Package
 
 Install via [nuget](https://nuget.org):
 
 ```sh
-dotnet add package Extism.Sdk --version 0.1.0
+dotnet add package Extism.Sdk
 ```
+
+:::note Windows Support
+
+We provide a [native package for Windows](https://www.nuget.org/packages/Extism.runtime.win-x64/0.1.0-rc2).
+You can install with:
+
+```
+dotnet add package Extism.runtime.win-64
+```
+:::
 
 ### 2. Import the library and use the APIs
 
