@@ -95,6 +95,7 @@ const config = {
               { to: '/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk', label: 'Plug-in system in Erlang' },
               { to: '/docs/integrate-into-your-codebase/go-host-sdk', label: 'Plug-in system in Go' },
               { to: '/docs/integrate-into-your-codebase/haskell-host-sdk', label: 'Plug-in system in Haskell' },
+              { to: '/docs/integrate-into-your-codebase/dotnet-host-sdk', label: 'Plug-in system in .NET' },
               { to: '/docs/integrate-into-your-codebase/node-host-sdk', label: 'Plug-in system in Node' },
               { to: '/docs/integrate-into-your-codebase/ocaml-host-sdk', label: 'Plug-in system in OCaml' },
               { to: '/docs/integrate-into-your-codebase/php-host-sdk', label: 'Plug-in system in PHP' },
@@ -128,7 +129,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['php', 'ruby', 'rust', 'haskell', 'elixir', 'toml'],
+        additionalLanguages: ['php', 'ruby', 'rust', 'haskell', 'elixir', 'toml', 'csharp'],
       },
     }),
 };
