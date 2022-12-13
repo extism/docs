@@ -5,6 +5,7 @@ export default function SDKLogoLinks() {
         { name: "C", path: "/docs/integrate-into-your-codebase/browser-runtime-sdk", logo: "/img/sdk-languages/js.svg" },
         { name: "C", path: "/docs/integrate-into-your-codebase/c-host-sdk", logo: "/img/sdk-languages/c.svg" },
         { name: "C++", path: "/docs/integrate-into-your-codebase/cpp-host-sdk", logo: "/img/sdk-languages/cpp.svg" },
+        { name: ".NET", path: "/docs/integrate-into-your-codebase/dotnet-host-sdk", logo: "/img/sdk-languages/dotnet.svg" },
         { name: "Elixir", path: "/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk", logo: "/img/sdk-languages/elixir.svg" },
         { name: "Erlang", path: "/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk", logo: "/img/sdk-languages/erlang.svg" },
         { name: "Go", path: "/docs/integrate-into-your-codebase/go-host-sdk", logo: "/img/sdk-languages/go.svg" },
