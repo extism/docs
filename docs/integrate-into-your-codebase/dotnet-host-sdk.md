@@ -16,9 +16,9 @@ This step is not required for Windows users as the native package is bundled wit
 
 :::
 
-### 1. Install the Nuget Package
+### 1. Install the NuGet Package
 
-Install via [nuget](https://nuget.org):
+Install via [NuGet](https://nuget.org):
 
 ```sh
 dotnet add package Extism.Sdk
