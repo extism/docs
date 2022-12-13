@@ -46,7 +46,6 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.
 
 ```csharp title=Program.cs
 using Extism.Sdk.Native;
-using System.Reflection;
 using System.Text;
 
 var context = new Context();
