@@ -6,9 +6,7 @@ sidebar_position: 1
 
 Extism is a plug-in system for everyone. We've carefully designed it to be flexible, fitting into codebases of all shapes and sizes, but opinionated enough so that things _Just Work™_ the way they should. **Extism's goal is to make all software programmable.**
 
-<p align="center">
-  <img style={{width: '80%', maxWidth: '600px'}} src="/img/extism-language-support.png"/>
-</p>
+![Extism, universal plug-in system](/img/extism-language-support.png)
 
 You can use Extism in your codebase, regardless of the programming language. We support several environments through our official [Host SDKs](/docs/category/integrate-into-your-codebase), and are adding more language support all the time. Let us know if we're missing yours by opening an [issue on GitHub](https://github.com/extism/extism/issues), or talk to us in our [Discord](https://discord.gg/cx3usBCWnc) server.
 
