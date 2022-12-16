@@ -3,7 +3,7 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
-/** @type {import('@docusaurus/types').Config} */
+// /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Extism - make all software programmable. Extend from within.',
   tagline: 'The Universal Plug-in System',
@@ -20,7 +20,6 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
   presets: [
     [
       'classic',
@@ -130,6 +129,29 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
         additionalLanguages: ['php', 'ruby', 'rust', 'haskell', 'elixir', 'toml', 'csharp'],
+      },
+      algolia: {
+        // The application ID provided by Algolia
+        appId: 'ODNR4SNJO8',
+
+        // Public API key: it is safe to commit it
+        apiKey: 'ce6382c7f97326cea11a1dc6ea42374e',
+
+        indexName: 'extism',
+
+        // Optional: see doc section below
+        contextualSearch: true,
+
+        // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+        // externalUrlRegex: 'external\\.com|domain\\.com',
+
+        // Optional: Algolia search parameters
+        searchParameters: {},
+
+        // Optional: path for search page that enabled by default (`false` to disable it)
+        searchPagePath: false,
+
+        //... other Algolia params
       },
     }),
 };
