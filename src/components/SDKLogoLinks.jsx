@@ -9,6 +9,7 @@ export default function SDKLogoLinks() {
         { name: "Erlang", path: "/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk", logo: "/img/sdk-languages/erlang.svg" },
         { name: "Go", path: "/docs/integrate-into-your-codebase/go-host-sdk", logo: "/img/sdk-languages/go.svg" },
         { name: "Haskell", path: "/docs/integrate-into-your-codebase/haskell-host-sdk", logo: "/img/sdk-languages/haskell.svg" },
+        { name: "Java", path: "/docs/integrate-into-your-codebase/java-host-sdk", logo: "/img/sdk-languages/java-android.svg" },
         { name: ".NET", path: "/docs/integrate-into-your-codebase/dotnet-host-sdk", logo: "/img/sdk-languages/dotnet.svg" },
         { name: "Node", path: "/docs/integrate-into-your-codebase/node-host-sdk", logo: "/img/sdk-languages/node.svg" },
         { name: "OCaml", path: "/docs/integrate-into-your-codebase/ocaml-host-sdk", logo: "/img/sdk-languages/ocaml.svg" },
