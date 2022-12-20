@@ -15,7 +15,7 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 
 ### 1. Install the jar
 
-The package is hosted on [Maven Central](https://search.maven.org/artifact/org.extism/sdk).
+The package is hosted on [Maven Central](https://search.maven.org/artifact/org.extism.sdk/extism).
 
 
 For maven, add to your `pom.xml`:
