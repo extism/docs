@@ -58,20 +58,13 @@ public class App
 {
     public static void main(String[] args)
     {
-        var wasmPath = args.length > 0 ? args[0] : "./code.wasm";
-        var functionName = args.length > 1 ? args[1] : "count_vowels";
-        var input = args.length > 2 ? args[2] : "Hello World";
+        var resolver = new WasmSourceResolver();
+        var manifest = new Manifest(resolver.resolve(Path.of("./code.wasm")));
 
-        var wasmSourceResolver = new WasmSourceResolver();
-        var manifest = new Manifest(wasmSourceResolver.resolve(Path.of(wasmPath)));
-
-        System.out.printf("Executing \"%s\" from \"%s\" with input \"%s\"%n", functionName, wasmPath, input);
-
-        try (var ctx = new Context()) {
-            try (var plugin = ctx.newPlugin(manifest, false)) {
-                var output = plugin.call(functionName, input);
-                System.out.println(output);
-            }
+        try (var ctx = new Context(); var plugin = ctx.newPlugin(manifest, false)) 
+        {
+            var output = plugin.call("count_vowels", "Hello World");
+            System.out.println(output);
         }
     }
 }
@@ -79,8 +72,8 @@ public class App
 ```
 
 Output:
+
 ```
-Executing "count_vowels" from "./code.wasm" with input "Hello World"
 {"count": 3}
 ```
 
