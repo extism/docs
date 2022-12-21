@@ -88,7 +88,7 @@ import (
 
 //export http_get
 func http_get() int32 {
-	// create an HTTP Request (withuot relying on WASI), set headers as needed
+	// create an HTTP Request (without relying on WASI), set headers as needed
 	req := pdk.NewHTTPRequest("GET", "https://jsonplaceholder.typicode.com/todos/1")
 	req.SetHeader("some-name", "some-value")
 	req.SetHeader("another", "again")

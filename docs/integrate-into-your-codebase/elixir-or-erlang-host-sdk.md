@@ -20,7 +20,7 @@ For Mix:
 
 :::note Rust Dependency
 
-The extism package is writen in rust and the NIF must be compiled in your application with mix.
+The extism package is written in rust and the NIF must be compiled in your application with mix.
 Because of that, [installing rust](https://www.rust-lang.org/tools/install) is currently a requirement.
 We recommend installing `rustup`.
 

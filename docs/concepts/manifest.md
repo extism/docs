@@ -3,7 +3,7 @@ title: The Manifest
 sidebar_position: 4
 ---
 
-The manifest is a descripition of your plugin and some of the runtime constraints to apply to it. You can think of it as a blueprint to build your plugin.
+The manifest is a description of your plugin and some of the runtime constraints to apply to it. You can think of it as a blueprint to build your plugin.
 
 ```python tile=run-plugin.py
 with Context() as context:
