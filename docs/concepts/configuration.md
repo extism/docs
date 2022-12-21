@@ -9,7 +9,7 @@ Configuration for both Host and Plug-in environments is still being worked on, a
 
 :::
 
-Generally speaking, all configuration is defined at the Host level. As a plug-in, you are able to configuration data that has been provided by a Hosy, but you cannot edit runtime configuration. The sections below go into further detail about configurability, as well as some advanced functionality which require Extism to be built from source with specific feature flags.
+Generally speaking, all configuration is defined at the Host level. As a plug-in, you are able to configuration data that has been provided by a Host, but you cannot edit runtime configuration. The sections below go into further detail about configurability, as well as some advanced functionality which require Extism to be built from source with specific feature flags.
 
 ## Plug-ins
 
@@ -17,7 +17,7 @@ The most typical configuration you may elect to set as a Host is whether or not 
 
 Outside of `WASI` enablement, most plug-in configuration is done using [The Manifest](/docs/concepts/manifest). However, there is another more generic option you can use as well when you don't want to use a manifest: the configuration object. 
 
-In each [Host SDK](/docs/category/integrate-into-your-codebase/), functionality is provided to allow a Host to pass arbitrary configuration data to plug-ins. This funciton is called something like `SetConfig`, or this configuration object can be included in the SDKs' `Manifest` equivalent.
+In each [Host SDK](/docs/category/integrate-into-your-codebase/), functionality is provided to allow a Host to pass arbitrary configuration data to plug-ins. This function is called something like `SetConfig`, or this configuration object can be included in the SDKs' `Manifest` equivalent.
 
 To use this configuration data from within a plug-in, each [PDK](/docs/category/write-a-plug-in/) provides functions to access values of the configuration provided.
 
