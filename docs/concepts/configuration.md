@@ -9,7 +9,7 @@ Configuration for both Host and Plug-in environments is still being worked on, a
 
 :::
 
-Generally speaking, all configuration is defined at the Host level. As a plug-in, you are able to configuration data that has been provided by a Hosy, but you cannot edit runtime configuration. The sections below go into further detail about configurability, as well as some advanced functionality which require Extism to be built from source with specific feature flags.
+Generally speaking, all configuration is defined at the Host level. As a plug-in, you are able to configuration data that has been provided by a Host, but you cannot edit runtime configuration. The sections below go into further detail about configurability, as well as some advanced functionality which require Extism to be built from source with specific feature flags.
 
 ## Plug-ins
 
