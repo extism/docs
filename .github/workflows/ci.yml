@@ -12,3 +12,5 @@ jobs:
 
       - name: GitHub Spellcheck Action
         uses: rojopolis/spellcheck-github-actions@0.28.0
+        with:
+          config_path: .spellcheck.yml

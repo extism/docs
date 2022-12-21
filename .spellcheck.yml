@@ -1,0 +1,17 @@
+matrix:
+- name: Blog Content
+  aspell:
+    lang: en
+  dictionary:
+    encoding: utf-8
+    wordlists:
+      - .wordlist.txt
+  pipeline:
+  - pyspelling.filters.markdown:
+  - pyspelling.filters.html:
+      comments: false
+  sources:
+  - 'docs/**'
+  - 'src/components/**'
+  - 'src/pages/**'
+  default_encoding: utf-8
