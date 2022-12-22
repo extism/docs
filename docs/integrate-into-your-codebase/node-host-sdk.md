@@ -38,6 +38,9 @@ const { readFileSync } = require('fs');
 
 withContext(async function (context) {
   let wasm = readFileSync('../wasm/code.wasm');
+  // NOTE: if you encounter an error such as: 
+  // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+  // change pass `wasi=true` in the following function to provide WASI imports to your plugin.
   let p = context.plugin(wasm);
 
   if (!p.functionExists('count_vowels')) {

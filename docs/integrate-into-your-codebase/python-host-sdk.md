@@ -56,6 +56,10 @@ with Context() as context:
     hash = hashlib.sha256(wasm).hexdigest()
     config = {"wasm": [{"data": wasm, "hash": hash}], "memory": {"max": 5}}
 
+
+  #NOTE: if you encounter an error such as: 
+  # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+    # pass `wasi=True` in the following function to provide WASI imports to your plugin.
     plugin = context.plugin(config)
     # Call `count_vowels`
     j = json.loads(plugin.call("count_vowels", data))

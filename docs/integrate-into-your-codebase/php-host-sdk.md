@@ -52,6 +52,9 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 $ctx = new \Extism\Context();
 $wasm = file_get_contents("../../wasm/code.wasm");
+// NOTE: if you encounter an error such as: 
+// "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+// pass `true` after $wasm in the following function to provide WASI imports to your plugin.
 $plugin = new \Extism\Plugin($ctx, $wasm);
 
 $output = $plugin->call("count_vowels", "this is an example");

@@ -61,6 +61,9 @@ public class App
         var resolver = new WasmSourceResolver();
         var manifest = new Manifest(resolver.resolve(Path.of("./code.wasm")));
 
+        // NOTE: if you encounter an error such as: 
+        // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+        // change `false` to `true` in the following function to provide WASI imports to your plugin.
         try (var ctx = new Context(); var plugin = ctx.newPlugin(manifest, false)) 
         {
             var output = plugin.call("count_vowels", "Hello World");

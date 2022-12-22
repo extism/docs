@@ -76,6 +76,9 @@ int main(int argc, char *argv[]) {
   auto wasm = read("../wasm/code.wasm");
   Context context = Context();
 
+  // NOTE: if you encounter an error such as: 
+  // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+  // pass `with_wasi=true` in the following function to provide WASI imports to your plugin.
   Plugin plugin = context.plugin(wasm);
 
   const char *input = argc > 1 ? argv[1] : "this is a test";
