@@ -42,6 +42,9 @@ require Extism
 ctx = Extism.Context.new
 # point to the count-vowels plugin on my machine
 manifest = %{ wasm: [ %{ path: "code.wasm" } ]}
+# NOTE: if you encounter an error such as: 
+# "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+# change `false` to `true` in the following function to provide WASI imports to your plugin.
 {:ok, plugin} = Extism.Context.new_plugin(ctx, manifest, false)
 {:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "this is a test")
 JSON.decode!(output)

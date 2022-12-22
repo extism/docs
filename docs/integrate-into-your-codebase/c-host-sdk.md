@@ -94,6 +94,9 @@ int main(int argc, char *argv[]) {
 
   size_t len = 0;
   uint8_t *data = read_file("../wasm/code.wasm", &len);
+  // NOTE: if you encounter an error such as: 
+  // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+  // change `false` to `true` in the following function to provide WASI imports to your plugin.
   ExtismPlugin plugin = extism_plugin_new(ctx, data, len, false);
   free(data);
   if (plugin < 0) {

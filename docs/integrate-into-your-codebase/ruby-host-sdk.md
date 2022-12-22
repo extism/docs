@@ -51,6 +51,10 @@ Extism.with_context do |ctx|
     :wasm => [{:path => "../wasm/code.wasm"}]
   }
 
+
+  # NOTE: if you encounter an error such as: 
+  # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+  # pass `true` after `manifest` in the following function to provide WASI imports to your plugin.
   plugin = ctx.plugin(manifest)
   res = JSON.parse(plugin.call("count_vowels", ARGV[0] || "this is a test"))
   
