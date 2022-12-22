@@ -54,9 +54,9 @@ func main() {
 	}
 
 	manifest := extism.Manifest{Wasm: []extism.Wasm{extism.WasmFile{Path: "../wasm/code.wasm"}}}
-  // NOTE: if you encounter an error such as: 
-  // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-  // change `false` to `true` in the following function to provide WASI imports to your plugin.
+	// NOTE: if you encounter an error such as: 
+	// "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+	// change `false` to `true` in the following function to provide WASI imports to your plugin.
 	plugin, err := ctx.PluginFromManifest(manifest, false)
 	if err != nil {
 		fmt.Println(err)
