@@ -1,5 +1,6 @@
 af
 alloc
+allocator
 APIs
 argc
 args
@@ -86,7 +87,9 @@ func
 functionExists
 GetBytes
 getConfig
+getInput
 GetString
+getVar
 ghc
 GiB
 github
@@ -154,6 +157,7 @@ OCaml
 ok
 Ok
 optl
+orelse
 os
 oss
 outFile
@@ -188,7 +192,9 @@ sendRequest
 serde
 sERROR
 SetConfig
+setHeader
 SetHeader
+setVar
 sexualized
 sha
 siteConfig
@@ -239,3 +245,5 @@ withWasi
 Wl
 WriteLine
 www
+zig
+Zig
