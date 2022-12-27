@@ -7,6 +7,7 @@ export default function PDKLogoLinks() {
         { name: "Haskell", path: "/docs/write-a-plugin/haskell-pdk", logo: "/img/sdk-languages/haskell.svg" },
         { name: "AssemblyScript", path: "/docs/write-a-plugin/assemblyscript-pdk", logo: "/img/sdk-languages/assemblyscript.svg" },
         { name: "C", path: "/docs/write-a-plugin/c-pdk", logo: "/img/sdk-languages/c.svg" },
+        { name: "Zig", path: "/docs/write-a-plugin/zig-pdk", logo: "/img/sdk-languages/zig.svg" },
     ]
 
     return (
