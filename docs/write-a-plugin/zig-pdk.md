@@ -17,7 +17,7 @@ gyro add --src github extism/zig-pdk
 
 ```yaml title=zigmod.yml
 name: my-plugin
-main: src/lib.zig
+main: src/main.zig
 license: None
 description: None
 dependencies:
