@@ -20,7 +20,7 @@ Extism is not yet released on `opam`
 
 Install via `git`:
 ```sh
-opam pin extism https://github.com/extism/extism.git#main
+opam install https://github.com/extism/extism.git#main
 ```
 
 ### 2. Import the library and use the APIs
@@ -44,9 +44,9 @@ let () =
   let manifest = Manifest.v [ Manifest.file "../wasm/code.wasm" ] in
   (* NOTE: if you encounter an error such as: 
      "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-     use [Extism.of_manifest ~wasi:true] in the following line to provide WASI imports to your plugin. *)
-  let plugin = Extism.of_manifest ctx manifest |> Result.get_ok in
-  let res = Extism.call plugin ~name:"count_vowels" input |> Result.get_ok in
+     use [Plugin.of_manifest ~wasi:true] in the following line to provide WASI imports to your plugin. *)
+  let plugin = Plugin.of_manifest ctx manifest |> Result.get_ok in
+  let res = Plugin.call plugin ~name:"count_vowels" input |> Result.get_ok in
   print_endline res;
   Context.free ctx
 ```
