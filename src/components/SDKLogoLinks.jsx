@@ -17,6 +17,7 @@ export default function SDKLogoLinks() {
         { name: "Python", path: "/docs/integrate-into-your-codebase/python-host-sdk", logo: "/img/sdk-languages/python.svg" },
         { name: "Ruby", path: "/docs/integrate-into-your-codebase/ruby-host-sdk", logo: "/img/sdk-languages/ruby.svg" },
         { name: "Rust", path: "/docs/integrate-into-your-codebase/rust-host-sdk", logo: "/img/sdk-languages/rust.svg" },
+        { name: "Zig", path: "/docs/integrate-into-your-codebase/zig-host-sdk", logo: "/img/sdk-languages/zig.svg" },
     ]
 
     return (

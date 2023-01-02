@@ -13,9 +13,20 @@ sidebar_position: 6
 gyro add --src github extism/zig-pdk
 ```
 
+#### via [`zigmod`](https://github.com/nektro/zigmod)
+
+```yaml title=zigmod.yml
+name: my-plugin
+main: src/lib.zig
+license: None
+description: None
+dependencies:
+  - src: git https://github.com/extism/zig-pdk
+```
+
 #### via `build.zig`
 
-First, clone the `extism-pdk` library into your `libs` directory:
+First, clone the `extism-pdk` library into a local project directory:
 
 ```sh
 mkdir -p libs
@@ -34,7 +45,7 @@ And import it into your program:
 ```zig title=plugin.zig
 const extism_pdk = @import("extism-pdk");
 const plugin = extism_pdk.Plugin;
-const http = pdk.http;
+const http = extism_pdk.http;
 // ...
 ```
 
