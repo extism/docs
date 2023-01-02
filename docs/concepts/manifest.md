@@ -71,7 +71,7 @@ with Context() as context:
     ]
 
     # Describes the limits on the memory the plugin may be allocated.
-    # The units here are pages where a page is 64Kib. e.g. 16 pages would require 1GiB.
+    # The units here are pages where a page is 64Kib. e.g. 16 pages would require 1MiB.
     "memory": {
         # The max amount of pages the plugin can allocate
         "max": 4
