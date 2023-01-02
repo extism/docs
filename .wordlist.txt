@@ -1,3 +1,4 @@
+addExecutable
 af
 alloc
 allocator
@@ -39,6 +40,7 @@ CreatePlugin
 csharp
 css
 ctx
+deinit
 Deserialize
 dev
 DLL
@@ -55,6 +57,7 @@ EOL
 eq
 erlang
 ErrorMessage
+exe
 extism
 Extism
 ExtismContext
@@ -128,11 +131,13 @@ jsonplaceholder
 Kib
 len
 libextism
+libs
 lineNumber
 lld
 macos
 MacOS
 malloc
+mkdir
 msg
 mut
 myAbort
@@ -201,6 +206,8 @@ siteConfig
 snprintf
 socio
 src
+standardReleaseOptions
+standardTargetOptions
 stderr
 STDOUT
 str
