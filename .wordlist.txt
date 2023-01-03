@@ -1,5 +1,7 @@
+addExecutable
 af
 alloc
+allocator
 APIs
 argc
 args
@@ -38,6 +40,7 @@ CreatePlugin
 csharp
 css
 ctx
+deinit
 Deserialize
 dev
 DLL
@@ -54,6 +57,7 @@ EOL
 eq
 erlang
 ErrorMessage
+exe
 extism
 Extism
 ExtismContext
@@ -86,7 +90,9 @@ func
 functionExists
 GetBytes
 getConfig
+getInput
 GetString
+getVar
 ghc
 GiB
 github
@@ -125,11 +131,13 @@ jsonplaceholder
 Kib
 len
 libextism
+libs
 lineNumber
 lld
 macos
 MacOS
 malloc
+mkdir
 msg
 mut
 myAbort
@@ -154,6 +162,7 @@ OCaml
 ok
 Ok
 optl
+orelse
 os
 oss
 outFile
@@ -188,13 +197,17 @@ sendRequest
 serde
 sERROR
 SetConfig
+setHeader
 SetHeader
+setVar
 sexualized
 sha
 siteConfig
 snprintf
 socio
 src
+standardReleaseOptions
+standardTargetOptions
 stderr
 STDOUT
 str
@@ -239,3 +252,5 @@ withWasi
 Wl
 WriteLine
 www
+zig
+Zig
