@@ -39,7 +39,7 @@ const std = @import("std");
 const extism = @import("extism");
 
 pub fn main() !void {
-    var ctx: extism.Context = extism.Context.init();
+    var ctx = extism.Context.init();
     defer ctx.deinit();
 
     const wasm_file = extism.manifest.WasmFile{ .path = "code.wasm" };
