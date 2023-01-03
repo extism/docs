@@ -51,8 +51,17 @@ const http = extism_pdk.http;
 
 ### Compiling to WebAssembly
 
+Since WebAssembly is probably the only target for your Extism plug-in, add this to your
+`build.zig`:
+
+```zig title=build.zig
+const target = b.standardTargetOptions(.{ .default_target = .{ .cpu_arch = .wasm32, .os_tag = .freestanding } });
+```
+
+Then simply run: 
+
 ```sh
-zig build plugin
+zig build
 ```
 
 ### Example Usage
