@@ -102,6 +102,7 @@ const config = {
               { to: '/docs/integrate-into-your-codebase/python-host-sdk', label: 'Plug-in system in Python' },
               { to: '/docs/integrate-into-your-codebase/ruby-host-sdk', label: 'Plug-in system in Ruby' },
               { to: '/docs/integrate-into-your-codebase/rust-host-sdk', label: 'Plug-in system in Rust' },
+              { to: '/docs/integrate-into-your-codebase/zig-host-sdk', label: 'Plug-in system in Zig' },
             ],
           },
           {
