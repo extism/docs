@@ -20,7 +20,7 @@ name: my-plugin
 main: src/main.zig
 license: None
 description: None
-dependencies:
+root_dependencies:
   - src: git https://github.com/extism/zig-pdk
 ```
 
