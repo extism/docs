@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
   // Input is a single i64 parameter, a pointer to a block of memory
   ExtismValType inputs[] = {I64};
 
-  // Output is a signle i64 parameter, a pointer to a block of memory 
+  // Output is a single i64 parameter, a pointer to a block of memory 
   ExtismValType outputs[] = {I64};
 
   // Create the function

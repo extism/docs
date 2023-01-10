@@ -254,3 +254,11 @@ WriteLine
 www
 zig
 Zig
+ExtismCurrentPlugin
+ExtismVal
+ptr
+fputc
+fwrite
+stdout
+ExtismValType
+ExtismFunction
