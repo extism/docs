@@ -17,7 +17,7 @@ with Context() as context:
             }
         ],
         "memory": {
-            "max": 5
+            "max_pages": 5
         }
     }
 
@@ -56,7 +56,7 @@ with Context() as context:
                 # a URL to some wasm code
                 "url": "https://example.com/mycode.wasm",
                 # optional headers you may need to get the data, e.g. auth headers
-                "header": {
+                "headers": {
                     "X-API-KEY": "34b42ba6e04275",
                     "User-Agent": "extism",
                 },
@@ -74,12 +74,12 @@ with Context() as context:
     # The units here are pages where a page is 64Kib. e.g. 16 pages would require 1MiB.
     "memory": {
         # The max amount of pages the plugin can allocate
-        "max": 4
+        "max_pages": 4
     },
 
     # An optional set of hosts this plugin can communicate with.
     # This only has an effect if the plugin makes HTTP requests.
-    # Note: if left empty, all hosts are allowed.
+    # Note: if left empty then no hosts are allowed and if `null` then all hosts are allowed.
     "allowed_hosts": [
         "example.com",
         "extism.org",
