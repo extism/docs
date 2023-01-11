@@ -58,12 +58,17 @@ eq
 erlang
 ErrorMessage
 exe
+exn
 extism
 Extism
 ExtismContext
+ExtismCurrentPlugin
+ExtismFunction
 ExtismPlugin
 Extism's
 ExtismSize
+ExtismVal
+ExtismValType
 faq
 fclose
 fd
@@ -79,6 +84,7 @@ FnResult
 fopen
 foreach
 fp
+fputc
 fputs
 fread
 fromByteString
@@ -88,6 +94,7 @@ fseek
 ftell
 func
 functionExists
+fwrite
 GetBytes
 getConfig
 getInput
@@ -137,6 +144,7 @@ lld
 macos
 MacOS
 malloc
+mem
 mkdir
 msg
 mut
@@ -170,6 +178,7 @@ outputJSON
 outputMemory
 outputString
 Packagist
+params
 pdk
 PDK
 PDKLogoLinks
@@ -177,6 +186,7 @@ PDKs
 php
 pluginFromManifest
 Println
+ptr
 putStrLn
 px
 py
@@ -209,6 +219,7 @@ src
 standardReleaseOptions
 standardTargetOptions
 stderr
+stdout
 STDOUT
 str
 strconv
@@ -254,11 +265,3 @@ WriteLine
 www
 zig
 Zig
-ExtismCurrentPlugin
-ExtismVal
-ptr
-fputc
-fwrite
-stdout
-ExtismValType
-ExtismFunction
