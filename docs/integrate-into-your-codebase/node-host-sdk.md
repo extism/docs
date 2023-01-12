@@ -28,7 +28,7 @@ npm install @extism/extism --save
 `code.wasm` in this example is our example plugin that counts vowels. If you want to run this, download it first and set the path:
 
 ```
-curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.wasm
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
 ```
 :::
 
@@ -60,7 +60,7 @@ let functions = [
 ];
 
 withContext(async function (context) {
-  let wasm = readFileSync('../wasm/code-functions.wasm');
+  let wasm = readFileSync('../wasm/code.wasm');
   // NOTE: if you encounter an error such as: 
   // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
   // change the second parameter to `true` in the following function to provide WASI imports to your plugin.

@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
   size_t len = 0;
 
   // Read count-vowels example with `hello_world` host function
-  uint8_t *data = read_file("../wasm/code-functions.wasm", &len);
+  uint8_t *data = read_file("../wasm/code.wasm", &len);
 
   // Input is a single i64 parameter, a pointer to a block of memory
   ExtismValType inputs[] = {I64};

@@ -32,7 +32,7 @@ poetry add extism
 `code.wasm` in this example is our example plugin that counts vowels. If you want to run this, download it first and set the path:
 
 ```
-curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.wasm
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
 ```
 :::
 
@@ -80,7 +80,7 @@ functions = [
 # a Context provides a scope for plugins to be managed within. creating multiple contexts
 # is expected and groups plugins based on source/tenant/lifetime etc.
 with Context() as context:
-    wasm = open("../wasm/code-functions.wasm", 'rb').read()
+    wasm = open("../wasm/code.wasm", 'rb').read()
     hash = hashlib.sha256(wasm).hexdigest()
     config = {"wasm": [{"data": wasm, "hash": hash}], "memory": {"max": 5}}
 
