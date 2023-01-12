@@ -113,6 +113,7 @@ heroBanner
 hexdigest
 HomepageFeatures
 HomepageHeader
+host_fn
 hpp
 hs
 html

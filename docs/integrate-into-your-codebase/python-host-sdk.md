@@ -42,25 +42,52 @@ import os
 import json
 import hashlib
 
-from extism import Plugin, Context
+from extism import Plugin, Context, host_fn
 
 if len(sys.argv) > 1:
     data = sys.argv[1].encode()
 else:
     data = b"some data from python!"
 
+        
+@host_fn
+def hello_world(plugin, input, output, a_string, another_string):
+    print("Hello from Python!")
+
+    # Print input argument
+    mem = plugin.memory_at_offset(input[0])
+    print(plugin.memory(mem)[:])
+
+    # Print user data
+    print(a_string)
+    print(another_string)
+
+    # Set output to input 
+    output[0] = input[0]
+
+
+functions = [
+    Function(
+        "hello_world",
+        [ValType.I64],
+        [ValType.I64],
+        hello_world,
+        "Hello again!",
+        "Hello once more!",
+    )
+]
+
 # a Context provides a scope for plugins to be managed within. creating multiple contexts
 # is expected and groups plugins based on source/tenant/lifetime etc.
 with Context() as context:
-    wasm = open("../wasm/code.wasm", 'rb').read()
+    wasm = open("../wasm/code-functions.wasm", 'rb').read()
     hash = hashlib.sha256(wasm).hexdigest()
     config = {"wasm": [{"data": wasm, "hash": hash}], "memory": {"max": 5}}
 
-
-  #NOTE: if you encounter an error such as: 
-  # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+    # NOTE: if you encounter an error such as: 
+    # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
     # pass `wasi=True` in the following function to provide WASI imports to your plugin.
-    plugin = context.plugin(config)
+    plugin = context.plugin(config, functions=functions)
     # Call `count_vowels`
     j = json.loads(plugin.call("count_vowels", data))
     print("Number of vowels:", j["count"])
