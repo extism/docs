@@ -86,3 +86,15 @@ pub fn http_get(Json(req): Json<HttpRequest>) -> FnResult<HttpResponse> {
     Ok(res)
 }
 ```
+
+#### Host functions
+
+A host function can be imported using an extern function:
+
+```rust
+use extism_pdk::*;
+
+extern "C" {
+    fn hello_world(ptr: i64) -> i64;
+}
+```
