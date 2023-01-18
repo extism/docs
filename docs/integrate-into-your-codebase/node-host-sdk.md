@@ -36,29 +36,6 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wa
 const { withContext, Context } = require('@extism/extism');
 const { readFileSync } = require('fs');
 
-function hello_world(currentPlugin, inputs, outputs, userData, userData1) {
-  console.log("Hello from Javascript!");
-  // Print data pointed to by input pointer
-  let mem = currentPlugin.memory(inputs[0].v.i64);
-  console.log(mem.toString());
-  // Print user data
-  console.log(userData);
-  console.log(userData1);
-  outputs[0] = inputs[0];
-}
-
-
-let functions = [
-  new HostFunction(
-    "hello_world",
-    [ValType.I64],
-    [ValType.I64],
-    f,
-    "Hello again!",
-    "Hello once more!",
-  )
-];
-
 withContext(async function (context) {
   let wasm = readFileSync('../wasm/code.wasm');
   // NOTE: if you encounter an error such as: 
@@ -81,6 +58,41 @@ let ctx = new Context();
 let wasm = readFileSync('../wasm/code.wasm');
 let p = ctx.plugin(wasm);
 // ... where the context can be passed around to various functions etc. 
+```
+
+It is also possible to create functions to expose additional functionality from the host. The first step
+is to define a function with the proper signature:
+
+```javascript
+function hello_world(currentPlugin, inputs, outputs, userData, userData1) {
+  console.log("Hello from Javascript!");
+  // Print data pointed to by input pointer
+  let mem = currentPlugin.memory(inputs[0].v.i64);
+  console.log(mem.toString());
+  // Print user data
+  console.log(userData);
+  console.log(userData1);
+  outputs[0] = inputs[0];
+}
+```
+
+Then add it to the plugin when it's created:
+
+```javascript
+
+let functions = [
+  new HostFunction(
+    "hello_world",
+    [ValType.I64],
+    [ValType.I64],
+    f,
+    "Hello again!",
+    "Hello once more!",
+  )
+];
+
+
+let p = context.plugin(wasm, false, functions);
 ```
 
 

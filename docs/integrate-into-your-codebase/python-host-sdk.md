@@ -49,7 +49,26 @@ if len(sys.argv) > 1:
 else:
     data = b"some data from python!"
 
-        
+# a Context provides a scope for plugins to be managed within. creating multiple contexts
+# is expected and groups plugins based on source/tenant/lifetime etc.
+with Context() as context:
+    wasm = open("../wasm/code.wasm", 'rb').read()
+    hash = hashlib.sha256(wasm).hexdigest()
+    config = {"wasm": [{"data": wasm, "hash": hash}], "memory": {"max": 5}}
+
+    # NOTE: if you encounter an error such as: 
+    # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+    # pass `wasi=True` in the following function to provide WASI imports to your plugin.
+    plugin = context.plugin(config)
+    # Call `count_vowels`
+    j = json.loads(plugin.call("count_vowels", data))
+    print("Number of vowels:", j["count"])
+```
+
+It is also possible to create functions to expose additional functionality from the host. The first step
+is to define a function with the proper signature:
+
+```python
 @host_fn
 def hello_world(plugin, input, output, a_string, another_string):
     print("Hello from Python!")
@@ -66,6 +85,11 @@ def hello_world(plugin, input, output, a_string, another_string):
     output[0] = input[0]
 
 
+```
+
+Then add it to the plugin when it's created:
+
+```python
 functions = [
     Function(
         "hello_world",
@@ -77,22 +101,8 @@ functions = [
     )
 ]
 
-# a Context provides a scope for plugins to be managed within. creating multiple contexts
-# is expected and groups plugins based on source/tenant/lifetime etc.
-with Context() as context:
-    wasm = open("../wasm/code.wasm", 'rb').read()
-    hash = hashlib.sha256(wasm).hexdigest()
-    config = {"wasm": [{"data": wasm, "hash": hash}], "memory": {"max": 5}}
-
-    # NOTE: if you encounter an error such as: 
-    # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-    # pass `wasi=True` in the following function to provide WASI imports to your plugin.
-    plugin = context.plugin(config, functions=functions)
-    # Call `count_vowels`
-    j = json.loads(plugin.call("count_vowels", data))
-    print("Number of vowels:", j["count"])
+plugin = context.plugin(config, functions=functions)
 ```
-
 
 ### Need help?
 

@@ -26,12 +26,14 @@ go get github.com/extism/extism
 `code.wasm` in this example is our example plugin that counts vowels. If you want to run this, download it first and set the path:
 
 ```
-curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.wasm
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
 ```
 :::
 
 ```c title=main.go
 package main
+
+
 
 import (
 	"encoding/json"
@@ -40,6 +42,12 @@ import (
 
 	"github.com/extism/extism"
 )
+
+/*
+#include <extism.h>
+EXTISM_GO_FUNCTION(hello_world);
+*/
+import "C"
 
 func main() {
 	ctx := extism.NewContext()
@@ -54,10 +62,11 @@ func main() {
 	}
 
 	manifest := extism.Manifest{Wasm: []extism.Wasm{extism.WasmFile{Path: "../wasm/code.wasm"}}}
+	
 	// NOTE: if you encounter an error such as: 
 	// "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
 	// change `false` to `true` in the following function to provide WASI imports to your plugin.
-	plugin, err := ctx.PluginFromManifest(manifest, false)
+	plugin, err := ctx.PluginFromManifest(manifest, []Function{}, false)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -78,6 +87,36 @@ func main() {
 
 	fmt.Println("Count:", dest["count"])
 }
+```
+
+It is also possible to create functions to expose additional functionality from the host. The first step
+is to define a function with the proper signature:
+
+```go
+//export hello_world
+func hello_world(plugin unsafe.Pointer, inputs *C.ExtismVal, nInputs C.ExtismSize, outputs *C.ExtismVal, nOutputs C.ExtismSize, userData uintptr) {
+	fmt.Println("Hello from Go!")
+	s := cgo.Handle(userData)
+	fmt.Println(s.Value().(string))
+	inputSlice := unsafe.Slice(inputs, nInputs)
+	outputSlice := unsafe.Slice(outputs, nOutputs)
+
+	// Get memory pointed to by first element of input slice
+	p := extism.GetCurrentPlugin(plugin)
+	mem := p.Memory(extism.ValGetUInt(unsafe.Pointer(&inputSlice[0])))
+	fmt.Println(string(mem))
+
+	outputSlice[0] = inputSlice[0]
+}
+```
+
+Then add it to the plugin when it's created: 
+
+```go
+// Create host function
+f := extism.NewFunction("hello_world", []extism.ValType{extism.I64}, []extism.ValType{extism.I64}, C.hello_world, "Hello again!")
+defer f.Free()
+plugin, err := ctx.PluginFromManifest(manifest, []Function{f}, false)
 ```
 
 ### Other Documentation

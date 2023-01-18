@@ -76,26 +76,10 @@ int main(int argc, char *argv[]) {
   auto wasm = read("../wasm/code.wasm");
   Context context = Context();
   
-  // A lambda can be used as a host function
-  auto hello_world = [&tmp](CurrentPlugin plugin,
-                            const std::vector<Val> &inputs,
-                            std::vector<Val> &outputs, void *user_data) {
-    std::cout << "Hello from C++" << std::endl;
-    std::cout << (const char *)user_data << std::endl;
-    std::cout << tmp << std::endl;
-    outputs[0].v = inputs[0].v;
-  };
-
-  std::vector<Function> functions = {
-      Function("hello_world", {ValType::I64}, {ValType::I64}, hello_world,
-               (void *)"Hello again!",
-               [](void *x) { std::cout << "Free user data" << std::endl; }),
-  };
-
   // NOTE: if you encounter an error such as: 
   // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
   // set the second argument to `true` in the following function to provide WASI imports to your plugin.
-  Plugin plugin = context.plugin(wasm, false, functions);
+  Plugin plugin = context.plugin(wasm, false);
 
   const char *input = argc > 1 ? argv[1] : "this is a test";
   ExtismSize length = strlen(input);
@@ -105,6 +89,34 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 ```
+
+It is also possible to create functions to expose additional functionality from the host. The first step
+is to define a function with the proper signature:
+
+```cpp
+  // A lambda can be used as a host function
+  auto hello_world = [&tmp](CurrentPlugin plugin,
+                            const std::vector<Val> &inputs,
+                            std::vector<Val> &outputs, void *user_data) {
+    std::cout << "Hello from C++" << std::endl;
+    std::cout << (const char *)user_data << std::endl;
+    std::cout << tmp << std::endl;
+    outputs[0].v = inputs[0].v;
+  };
+```
+
+Then add it to the plugin when it's created: 
+
+```cpp
+  std::vector<Function> functions = {
+      Function("hello_world", {ValType::I64}, {ValType::I64}, hello_world,
+               (void *)"Hello again!",
+               [](void *x) { std::cout << "Free user data" << std::endl; }),
+  };
+  Plugin plugin = context.plugin(wasm, false, functions);
+```
+
+
 
 
 ### Need help?
