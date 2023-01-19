@@ -121,7 +121,7 @@ It's helpful to know where the CLI is locating the Extism shared library, and wh
 ```sh
 extism info
 Prefix  /usr/local
-Version v0.0.1
+Version v0.2.0
 ```
 
 ### Get runtime version
@@ -130,5 +130,5 @@ Use the `version` command to print the version of the Extism runtime installed o
 
 ```sh
 extism version
-v0.1.0
+v0.2.0
 ```
