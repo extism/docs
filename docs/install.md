@@ -73,7 +73,7 @@ extism install latest
 In order to build from source, you must have a recent version of the [Rust toolchain installed](https://rustup.rs/).
 
 ```sh
-extism install git # installs to /usr/lib and /usr/include by default
+extism install git # installs to /usr/local/lib and /usr/local/include by default
 ```
 
 #### Overriding install location
