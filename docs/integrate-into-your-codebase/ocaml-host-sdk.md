@@ -51,6 +51,8 @@ let () =
   Context.free ctx
 ```
 
+### Host Functions
+
 It is also possible to create functions to expose additional functionality from the host. The first step
 is to define a function with the proper signature:
 

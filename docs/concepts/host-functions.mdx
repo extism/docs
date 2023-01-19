@@ -14,7 +14,9 @@ may be the solution.
 Typically, plug-ins will simply take some state from a host, run some logic, and set output for the
 host to read after the plug-in has finished its execution. But, what if you want your plug-in to be
 able to interact more deeply with the host environment. Maybe submit a database query for the host 
-to run on the plug-in's behalf? This is where Host Functions become very powerful. 
+to run on the plug-in's behalf? This is where Host Functions become very powerful, creating a more
+"bi-directional" relationship between host programs and plug-ins. Rather than only the host application
+invoking plug-in code, Host Functions make it possible for a plug-in to invoke host application code.
 
 A Host Function is essentially a custom function that your host "injects" into a plug-in and appears
 to the plug-in a WebAssembly "import" or an `extern` function declaration, for which syntax varies
@@ -39,20 +41,18 @@ listed above.
 
 ### Data Types
 
-Generally, you will need to understand how to think about mapping the data types in your Host Function's
-signature to the ones available in WebAssembly. The following table describes these data types. 
+Generally, you will need to understand how to translate the data types in your Host Function's
+signature to the ones available in a PDK from which the function is called. The following table 
+describes these data types. 
 
-> **NOTE:** The type information may vary slightly per SDK, so check out the SDK-specific documentation
-for more precise mapping.
-
-| Host Function Type | C | C++ | Node | Go | Python | Rust | OCaml |
-| ------------------ | - | --- | ---- | -- | ------ | ---- | ----- |
+| Host Function Type | Rust | Go | Haskell | AssemblyScript | C | Zig | JavaScript |
+| ------------------ | ---- | -- | ------- | -------------- | - | --- | ---------- |
 | `I32` | ? | ? | ? | ? | ? | ? | ? |
 | `I64` | ? | ? | ? | ? | ? | ? | ? |
 | `F32` | ? | ? | ? | ? | ? | ? | ? |
 | `F64` | ? | ? | ? | ? | ? | ? | ? |
 | `V128` | ? | ? | ? | ? | ? | ? | ? |
-| `FuncRef` | ? | ? | ? | ? | ? | ? | ? |
+| `FuncRef` | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
 | `ExternRef` | ? | ? | ? | ? | ? | ? | ? |
 
 ### UserData 
@@ -64,6 +64,22 @@ for more precise mapping.
 Host Functions must be declared as `extern` functions within your plug-in code. Doing so depends on
 the language that the plug-in is developed in. Please see the individual [PDK documentation](/docs/category/write-a-plug-in) pages
 for more information and examples about calling Host Functions from a plug-in.
+
+### Example PDK
+
+Here is an example plug-in in [Go](/docs/write-a-plugin/go-pdk) which calls a Host Function:
+
+```go title=plugin.go
+package main
+
+import (
+    "github.com/extism/go-pdk"
+)
+
+
+func main() {}
+
+```
 
 
 ## Need help?
