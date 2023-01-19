@@ -47,13 +47,15 @@ describes these data types.
 
 | Host Function Type | Rust | Go | Haskell | AssemblyScript | C | Zig | JavaScript |
 | ------------------ | ---- | -- | ------- | -------------- | - | --- | ---------- |
-| `I32` | ? | ? | ? | ? | ? | ? | ? |
-| `I64` | ? | ? | ? | ? | ? | ? | ? |
-| `F32` | ? | ? | ? | ? | ? | ? | ? |
-| `F64` | ? | ? | ? | ? | ? | ? | ? |
-| `V128` | ? | ? | ? | ? | ? | ? | ? |
+| `I32`✝ | `i32`, `isize`, `u32`, `usize` | `int32`, `uint32`, `int` | ? | ? | ? | ? | ? |
+| `I64` | `i64`, `u64` | `int64`, `uint64` | ? | ? | ? | ? | ? |
+| `F32` | `f32` | `float32` | ? | ? | ? | ? | ? |
+| `F64` | `f64` | `float64` | ? | ? | ? | ? | ? |
+| `V128` | `i128`, `u128` | N/A | ? | ? | ? | ? | ? |
 | `FuncRef` | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
-| `ExternRef` | ? | ? | ? | ? | ? | ? | ? |
+| `ExternRef` | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
+
+> ✝ = can also be used for any integer size smaller than 32-bit
 
 ### UserData 
 
