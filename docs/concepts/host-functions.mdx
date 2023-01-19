@@ -80,7 +80,35 @@ import (
 
 
 func main() {}
+package main
 
+import (
+	"strconv"
+
+	"github.com/extism/go-pdk"
+)
+
+//export hello_world
+func hello_world(x uint64) uint64
+
+//export say_hello
+func say_hello() int32 {
+	input := pdk.InputString()
+
+	// Create output, this will be passed through `hello_world`
+	output := "Hello, " + input
+	mem := pdk.AllocateString(output)
+
+	// Call `hello_world` host function, it accepts an offset in memory and
+	// returns an offset in memory
+	offs := hello_world(mem.Offset())
+	mem = pdk.FindMemory(offs)
+
+	pdk.OutputMemory(mem)
+	return 0
+}
+
+func main() {}
 ```
 
 
