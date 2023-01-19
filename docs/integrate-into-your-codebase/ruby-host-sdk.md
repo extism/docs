@@ -19,7 +19,7 @@ The gem is hosted on [RubyGems](https://rubygems.org/gems/extism).
 Put the `extism` gem in your `Gemfile`:
 
 ```rb
-gem "extism", "~> 0.1.0"
+gem "extism", "~> 0.2.0"
 ```
 
 Or install with `gem install` if you are not using bundler:

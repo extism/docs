@@ -21,7 +21,7 @@ First edit `.gitmodules` to point to the tag
 [submodule "extism"]
 	path = extism
 	url = https://github.com/extism/c-pdk
-	tag = v0.1.0
+	tag = v0.2.0
 ```
 
 > **N.B.**: See the [c-pdk releases](https://github.com/extism/c-pdk/releases) page for available versions
@@ -31,7 +31,7 @@ Then update:
 ```
 git submodule foreach --recursive 'git fetch --tags'
 git submodule update --init --recursive --remote
-git commit -am 'Lock extism version to v0.1.0'
+git commit -am 'Lock extism version to v0.2.0'
 ```
 
 :::
