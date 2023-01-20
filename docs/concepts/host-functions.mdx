@@ -89,11 +89,10 @@ describes these data types.
 
 A value that is passed each time a Host Function is invoked from the plug-in.
 
-It is handle to data from the host that's available inside the host function. The host and plug-in 
+It is a handle to data from the host that's available inside the host function. The host and plug-in 
 must agree on the type and functionality of this value. It can be thought of as an opaque pointer.
 
-The `UserData` value must live at least as long as the `Plugin` the function is added to. 
-managed.
+The `UserData` value must live at least as long as the `Plugin` the function is added to.
 
 ## Calling from Plug-ins
 
