@@ -1,0 +1,158 @@
+---
+title: Host Functions
+sidebar_position: 2
+---
+
+import SDKLogoLinks from '@site/src/components/SDKLogoLinks';
+
+# Host Functions
+
+If you find yourself wanting to provide a plug-in with more custom capabilities, beyond what Extism 
+provides by default (loading input, setting output, persisting variables, etc), then Host Functions 
+may be the solution. 
+
+In most cases, plug-ins will take some input state from a host, run some logic, and set output for 
+the host to read after the plug-in has finished its execution. But, what if you want your plug-in to 
+be able to interact more deeply with the host environment; maybe you want your plug-in to query the 
+host's database and receive the results? This is where Host Functions become very powerful, creating 
+a more "bi-directional" relationship between host programs and plug-ins. Rather than only the host 
+application invoking plug-in code, Host Functions make it possible for a plug-in to invoke host 
+application code.
+
+A Host Function is essentially a custom function that your host "injects" into a plug-in and appears
+to the plug-in a WebAssembly "import" or an `extern` function declaration, for which syntax varies
+between programming languages. There are examples in each of the supported SDK documentation pages, 
+so please refer to those for specifics about the SDK language you are using.
+
+## Usage
+
+Currently, the following list of SDKs support Host Functions. Please reach out on [Discord](https://discord.gg/cx3usBCWnc) 
+or open an issue on [GitHub](https://github.com/extism/extism/issues) if you'd like to see support
+added for your language, or if you would like help contributing support!
+
+<div className="sdk-quickstart">
+    <SDKLogoLinks only={["C", "C++", "Go", "Node", "Python", "Rust", "OCaml"]}/>
+</div>
+
+Please refer to the SDK documentation for usage about Host Functions by clicking one of the languages
+listed above.
+
+## Function Signatures
+
+A Host Function is comprised of:
+- **a name**, which identifies the function and is used to call the function from the plug-in
+- **input argument types** (optional, which must map from the Host SDK language type to a WebAssembly type)
+- **output return types** (optional, which also map from host language to WebAssembly types)
+- **user data object** (optional)
+
+Below is a description of the structure of a Host Function in generic pseudo-code:
+
+```js
+HostFunction {
+	// The literal name of the function, how it would be called from a plug-in.
+	name: string, 
+	
+	// The types of the input arguments/parameters the plug-in caller will provide.
+	input_param_types: Array<WasmValueType>, 
+	
+	// The types of the output returned from the host function to the plug-in.
+	output_return_types: Array<WasmValueType>, 	
+
+	// An opaque pointer to an object from the host, accessible to the plug-in.
+	// NOTE: it is the shared responsibility of the host and plug-in to cast/dereference 
+	// this value properly.
+	user_data: void*, 
+}
+```
+
+The `WasmValueType` is described in the Data Types section below. 
+
+### Data Types
+
+Generally, you will need to understand how to translate the data types in your Host Function's
+signature to the ones available in a PDK from which the function is called. The following table 
+describes these data types. 
+
+| Host Function Type | Rust | Go | Haskell | AssemblyScript | C | Zig | JavaScript |
+| ------------------ | ---- | -- | ------- | -------------- | - | --- | ---------- |
+| `I32`&dagger; | `i32`, `isize`, `u32`, `usize` | `int32`, `uint32`, `int` | `Int32`, `Word32` | `i32`, `isize`, `u32`, `usize` | `int32_t`, `uint32_t` | `i32`, `isize`, `u32`, `usize` | ⌛|
+| `I64` | `i64`, `u64` | `int64`, `uint64` | `Int64`, `Word64` | `i64`, `u64` | `int64_t`, `uint64_t` | `i64`, `u64` | ⌛|
+| `F32` | `f32` | `float32` | `Float` | `f32` | `float` | `f32` | ⌛|
+| `F64` | `f64` | `float64` | `Double` | `f64` | `double` | `f64` | ⌛|
+| `V128` | `v128` | N/A | N/A | `v128` | `__uint128_t` | ⌛| ⌛| ⌛|
+| `FuncRef` | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
+| `ExternRef` | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
+
+> &dagger; = can also be used for any integer size smaller than 32-bit
+
+### UserData 
+
+A value that is passed each time a Host Function is invoked from the plug-in.
+
+It is handle to data from the host that's available inside the host function. The host and plug-in 
+must agree on the type and functionality of this value. It can be thought of as an opaque pointer.
+
+The `UserData` value must live at least as long as the `Plugin` the function is added to. 
+managed.
+
+## Calling from Plug-ins
+
+Host Functions must be declared as `extern` functions within your plug-in code. Doing so depends on
+the language that the plug-in is developed in. Please see the official documentation for the language
+for you are using to develop a plug-in.
+
+### Example PDK
+
+Here is an example plug-in in [Go](/docs/write-a-plugin/go-pdk) which calls a Host Function:
+
+```go title=plugin.go
+package main
+
+import (
+    "github.com/extism/go-pdk"
+)
+
+
+func main() {}
+package main
+
+import (
+	"strconv"
+
+	"github.com/extism/go-pdk"
+)
+
+// `hello_world` declared below, is a function provided by the host and is linked as a WebAssembly
+// "import" available to the plug-in. By adding the `export $function_name` annotation, the TinyGo
+// compiler knows that this is an external function.
+
+//export hello_world
+func hello_world(x uint64) uint64
+
+//export say_hello
+func say_hello() int32 {
+	input := pdk.InputString()
+
+	// Create output, this will be passed through `hello_world`
+	output := "Hello, " + input
+	mem := pdk.AllocateString(output)
+
+	// Call `hello_world` host function, it accepts an offset in memory and
+	// returns an offset in memory
+	offs := hello_world(mem.Offset())
+	mem = pdk.FindMemory(offs)
+
+	pdk.OutputMemory(mem)
+	return 0
+}
+
+func main() {}
+```
+
+
+## Need help?
+
+If you've encountered a bug or think something is missing, please open an issue on the [Extism GitHub](https://github.com/extism/extism) repository.
+
+There is an active community on [Discord](https://discord.gg/cx3usBCWnc) where the project maintainers and users can help you. Come hang out!
+

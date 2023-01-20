@@ -21,6 +21,7 @@ CallFunction
 CartDataInput
 CartDataOutput
 cd
+cgo
 cli
 CLI
 cloneable
@@ -58,12 +59,18 @@ eq
 erlang
 ErrorMessage
 exe
+exn
+extern
 extism
 Extism
 ExtismContext
+ExtismCurrentPlugin
+ExtismFunction
 ExtismPlugin
 Extism's
 ExtismSize
+ExtismVal
+ExtismValType
 faq
 fclose
 fd
@@ -79,6 +86,7 @@ FnResult
 fopen
 foreach
 fp
+fputc
 fputs
 fread
 fromByteString
@@ -88,6 +96,7 @@ fseek
 ftell
 func
 functionExists
+fwrite
 GetBytes
 getConfig
 getInput
@@ -106,6 +115,8 @@ heroBanner
 hexdigest
 HomepageFeatures
 HomepageHeader
+host_fn
+HostFunction
 hpp
 hs
 html
@@ -117,6 +128,7 @@ idx
 ifstream
 img
 init
+inputSlice
 inputString
 io
 ios
@@ -137,6 +149,7 @@ lld
 macos
 MacOS
 malloc
+mem
 mkdir
 msg
 mut
@@ -152,8 +165,10 @@ NewHTTPRequest
 newPlugin
 newRequest
 NIF
+nInputs
 nio
 nn
+nOutputs
 npm
 npx
 NuGet
@@ -168,8 +183,10 @@ oss
 outFile
 outputJSON
 outputMemory
+outputSlice
 outputString
 Packagist
+params
 pdk
 PDK
 PDKLogoLinks
@@ -177,6 +194,7 @@ PDKs
 php
 pluginFromManifest
 Println
+ptr
 putStrLn
 px
 py
@@ -209,6 +227,7 @@ src
 standardReleaseOptions
 standardTargetOptions
 stderr
+stdout
 STDOUT
 str
 strconv
@@ -233,11 +252,16 @@ typedef
 typicode
 uint
 Uint
+uintptr
 untrusted
 url
 useDocusaurusContext
+userData
+UserData
 usr
 UTF
+ValType
+ValType
 wasi
 WASI
 wasm

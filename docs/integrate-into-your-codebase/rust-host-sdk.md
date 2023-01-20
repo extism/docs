@@ -50,6 +50,38 @@ fn main() {
 }
 ```
 
+### Host Functions
+
+It is also possible to create functions to expose additional functionality from the host. The first step
+is to define a function with the proper signature:
+
+```rust
+use extism::{Val, CurrentPlugin, UserData};
+fn hello_world(
+    _plugin: &mut CurrentPlugin,
+    inputs: &[Val],
+    outputs: &mut [Val],
+    _user_data: UserData,
+) -> Result<(), Error> {
+    println!("Hello from Rust!");
+    outputs[0] = inputs[0].clone();
+    Ok(())
+}
+```
+Then add it to the plugin when it's created: 
+
+```rust
+use extism::{Function};
+let f = Function::new(
+    "hello_world",
+    [ValType::I64],
+    [ValType::I64],
+    None,
+    hello_world,
+);
+let functions = [&f];
+let mut plugin = Plugin::new(&context, WASM, functions, true).unwrap();
+```
 
 ### Need help?
 
