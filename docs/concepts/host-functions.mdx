@@ -47,11 +47,11 @@ describes these data types.
 
 | Host Function Type | Rust | Go | Haskell | AssemblyScript | C | Zig | JavaScript |
 | ------------------ | ---- | -- | ------- | -------------- | - | --- | ---------- |
-| `I32`✝ | `i32`, `isize`, `u32`, `usize` | `int32`, `uint32`, `int` | ? | ? | ? | ? | ? |
-| `I64` | `i64`, `u64` | `int64`, `uint64` | ? | ? | ? | ? | ? |
-| `F32` | `f32` | `float32` | ? | ? | ? | ? | ? |
-| `F64` | `f64` | `float64` | ? | ? | ? | ? | ? |
-| `V128` | `i128`, `u128` | N/A | ? | ? | ? | ? | ? |
+| `I32`✝ | `i32`, `isize`, `u32`, `usize` | `int32`, `uint32`, `int` | ? | `i32`, `isize`, `u32`, `usize` | `int32_t`, `uint32_t` | `i32`, `isize`, `u32`, `usize` | ⌛|
+| `I64` | `i64`, `u64` | `int64`, `uint64` | ? | `i64`, `u64` | `int64_t`, `uint64_t` | `i64`, `u64` | ⌛|
+| `F32` | `f32` | `float32` | ? | `f32` | `float` | `f32` | ⌛|
+| `F64` | `f64` | `float64` | ? | `f64` | `double` | `f64` | ⌛|
+| `V128` | N/A | N/A | ? | `v128` | `long double` | ⌛| | ⌛|
 | `FuncRef` | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
 | `ExternRef` | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
 
@@ -59,7 +59,13 @@ describes these data types.
 
 ### UserData 
 
-????
+A value that is passed each time a Host Function is invoked from the plug-in.
+
+It is handle to data from the host that's available inside the host function. The host and plug-in 
+must agree on the type and functionality of this value. It can be thought of as an opaque pointer.
+
+The `UserData` value must live at least as long as the `Context` from within which the plug-in is 
+managed.
 
 ## Calling from Plug-ins
 
@@ -87,6 +93,10 @@ import (
 
 	"github.com/extism/go-pdk"
 )
+
+// `hello_world` declared below, is a function provided by the host and is linked as a WebAssembly
+// "import" available to the plug-in. By adding the `export $function_name` annotation, the TinyGo
+// compiler knows that this is an external function.
 
 //export hello_world
 func hello_world(x uint64) uint64
