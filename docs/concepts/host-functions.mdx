@@ -11,17 +11,18 @@ If you find yourself wanting to provide a plug-in with more custom capabilities,
 provides by default (loading input, setting output, persisting variables, etc), then Host Functions 
 may be the solution. 
 
-Typically, plug-ins will simply take some state from a host, run some logic, and set output for the
-host to read after the plug-in has finished its execution. But, what if you want your plug-in to be
-able to interact more deeply with the host environment. Maybe submit a database query for the host 
-to run on the plug-in's behalf? This is where Host Functions become very powerful, creating a more
-"bi-directional" relationship between host programs and plug-ins. Rather than only the host application
-invoking plug-in code, Host Functions make it possible for a plug-in to invoke host application code.
+In most cases, plug-ins will take some input state from a host, run some logic, and set output for 
+the host to read after the plug-in has finished its execution. But, what if you want your plug-in to 
+be able to interact more deeply with the host environment; maybe you want your plug-in to query the 
+host's database and receive the results? This is where Host Functions become very powerful, creating 
+a more "bi-directional" relationship between host programs and plug-ins. Rather than only the host 
+application invoking plug-in code, Host Functions make it possible for a plug-in to invoke host 
+application code.
 
 A Host Function is essentially a custom function that your host "injects" into a plug-in and appears
 to the plug-in a WebAssembly "import" or an `extern` function declaration, for which syntax varies
-between programming languages. There are examples in each of the SDK documentation pages, so please
-refer to those for specifics about the SDK language you are using.
+between programming languages. There are examples in each of the supported SDK documentation pages, 
+so please refer to those for specifics about the SDK language you are using.
 
 ## Usage
 
@@ -33,11 +34,38 @@ added for your language, or if you would like help contributing support!
     <SDKLogoLinks only={["C", "C++", "Go", "Node", "Python", "Rust", "OCaml"]}/>
 </div>
 
-
 Please refer to the SDK documentation for usage about Host Functions by clicking one of the languages
 listed above.
 
 ## Function Signatures
+
+A Host Function is comprised of:
+- **a name**, which identifies the function and is used to call the function from the plug-in
+- **input argument types** (optional, which must map from the Host SDK language type to a WebAssembly type)
+- **output return types** (optional, which also map from host language to WebAssembly types)
+- **user data object** (optional)
+
+Below is a description of the structure of a Host Function in generic pseudo-code:
+
+```js
+HostFunction {
+	// The literal name of the function, how it would be called from a plug-in.
+	name: string, 
+	
+	// The types of the input arguments/parameters the plug-in caller will provide.
+	input_param_types: Array<WasmValueType>, 
+	
+	// The types of the output returned from the host function to the plug-in.
+	output_return_types: Array<WasmValueType>, 	
+
+	// An opaque pointer to an object from the host, accessible to the plug-in.
+	// NOTE: it is the shared responsibility of the host and plug-in to cast/dereference 
+	// this value properly.
+	user_data: void*, 
+}
+```
+
+The `WasmValueType` is described in the Data Types section below. 
 
 ### Data Types
 
@@ -51,7 +79,7 @@ describes these data types.
 | `I64` | `i64`, `u64` | `int64`, `uint64` | `Int64`, `Word64` | `i64`, `u64` | `int64_t`, `uint64_t` | `i64`, `u64` | ⌛|
 | `F32` | `f32` | `float32` | `Float` | `f32` | `float` | `f32` | ⌛|
 | `F64` | `f64` | `float64` | `Double` | `f64` | `double` | `f64` | ⌛|
-| `V128` | ⌛| N/A | N/A | `v128` | `__uint128_t` | ⌛| ⌛| ⌛|
+| `V128` | `v128` | N/A | N/A | `v128` | `__uint128_t` | ⌛| ⌛| ⌛|
 | `FuncRef` | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
 | `ExternRef` | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
 
