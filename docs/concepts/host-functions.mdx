@@ -64,7 +64,7 @@ A value that is passed each time a Host Function is invoked from the plug-in.
 It is handle to data from the host that's available inside the host function. The host and plug-in 
 must agree on the type and functionality of this value. It can be thought of as an opaque pointer.
 
-The `UserData` value must live at least as long as the `Context` from within which the plug-in is 
+The `UserData` value must live at least as long as the `Plugin` the function is added to. 
 managed.
 
 ## Calling from Plug-ins
