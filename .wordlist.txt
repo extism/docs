@@ -21,6 +21,7 @@ CallFunction
 CartDataInput
 CartDataOutput
 cd
+cgo
 cli
 CLI
 cloneable
@@ -59,6 +60,7 @@ erlang
 ErrorMessage
 exe
 exn
+extern
 extism
 Extism
 ExtismContext
@@ -114,6 +116,7 @@ hexdigest
 HomepageFeatures
 HomepageHeader
 host_fn
+HostFunction
 hpp
 hs
 html
@@ -125,6 +128,7 @@ idx
 ifstream
 img
 init
+inputSlice
 inputString
 io
 ios
@@ -161,8 +165,10 @@ NewHTTPRequest
 newPlugin
 newRequest
 NIF
+nInputs
 nio
 nn
+nOutputs
 npm
 npx
 NuGet
@@ -177,6 +183,7 @@ oss
 outFile
 outputJSON
 outputMemory
+outputSlice
 outputString
 Packagist
 params
@@ -245,11 +252,16 @@ typedef
 typicode
 uint
 Uint
+uintptr
 untrusted
 url
 useDocusaurusContext
+userData
+UserData
 usr
 UTF
+ValType
+ValType
 wasi
 WASI
 wasm
