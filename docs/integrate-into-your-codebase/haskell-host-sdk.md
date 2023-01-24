@@ -16,16 +16,6 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 
 ### 1. Install the Haskell library
 
-Install via `cabal` from git:
-
-Add the git repository to your cabal project:
-```title=cabal.project
-source-repository-package
-  type: git
-  location: https://github.com/extism/extism.git
-  subdir: haskell
-```
-
 Add the dependency to your cabal file:
 ```title=example.cabal
 library
