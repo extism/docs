@@ -87,7 +87,7 @@ let functions = [
     "hello_world",
     [ValType.I64],
     [ValType.I64],
-    f,
+    hello_world,
     "Hello again!",
     "Hello once more!",
   )
