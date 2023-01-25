@@ -43,12 +43,6 @@ import (
 	"github.com/extism/extism"
 )
 
-/*
-#include <extism.h>
-EXTISM_GO_FUNCTION(hello_world);
-*/
-import "C"
-
 func main() {
 	ctx := extism.NewContext()
 	defer ctx.Free() // this will free the context and all associated plugins
@@ -92,9 +86,15 @@ func main() {
 ### Host Functions
 
 It is also possible to create functions to expose additional functionality from the host. The first step
-is to define a function with the proper signature:
+is to declare it using `EXTISM_GO_FUNCTION` and define a function with the proper signature:
 
 ```go
+/*
+#include <extism.h>
+EXTISM_GO_FUNCTION(hello_world);
+*/
+import "C"
+
 //export hello_world
 func hello_world(plugin unsafe.Pointer, inputs *C.ExtismVal, nInputs C.ExtismSize, outputs *C.ExtismVal, nOutputs C.ExtismSize, userData uintptr) {
 	fmt.Println("Hello from Go!")
