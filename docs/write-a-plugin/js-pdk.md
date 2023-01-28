@@ -1,6 +1,6 @@
 ---
 title: JavaScript
-sidebar_position: 8
+sidebar_position: 2
 ---
 
 > *Warning*: This PDK is in a beta state may change frequently or be missing key features.

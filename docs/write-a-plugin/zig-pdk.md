@@ -1,6 +1,6 @@
 ---
 title: Zig
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 ## How to install and use the Extism Zig PDK
