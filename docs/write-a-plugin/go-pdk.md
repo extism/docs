@@ -1,6 +1,6 @@
 ---
 title: Go
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 ## How to install and use the Extism Go PDK

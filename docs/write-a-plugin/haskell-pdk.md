@@ -1,6 +1,6 @@
 ---
 title: Haskell
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 ## How to install and use the Extism Haskell PDK

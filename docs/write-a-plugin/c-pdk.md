@@ -1,6 +1,6 @@
 ---
 title: C
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 ## How to install and use the Extism C PDK

@@ -1,6 +1,6 @@
 ---
 title: AssemblyScript
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 ## How to install and use the Extism AssemblyScript PDK
