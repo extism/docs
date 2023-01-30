@@ -13,11 +13,11 @@ may be the solution.
 
 In most cases, plug-ins will take some input state from a host, run some logic, and set output for 
 the host to read after the plug-in has finished its execution. But, what if you want your plug-in to 
-be able to interact more deeply with the host environment; maybe you want your plug-in to query the 
-host's database and receive the results? This is where Host Functions become very powerful, creating 
-a more "bi-directional" relationship between host programs and plug-ins. Rather than only the host 
-application invoking plug-in code, Host Functions make it possible for a plug-in to invoke host 
-application code.
+be able to interact more deeply with the host environment; maybe you want your plug-in to [query the 
+host's database and receive the results](https://github.com/extism/extism-sqlite-host-function)? 
+This is where Host Functions become very powerful, creating a more "bi-directional" relationship 
+between host programs and plug-ins. Rather than only the host application invoking plug-in code, 
+Host Functions make it possible for a plug-in to invoke host application code.
 
 A Host Function is essentially a custom function that your host "injects" into a plug-in and appears
 to the plug-in a WebAssembly "import" or an `extern` function declaration, for which syntax varies
