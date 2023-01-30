@@ -1,3 +1,4 @@
+AaEeIiOoUu
 addExecutable
 af
 alloc
@@ -187,6 +188,7 @@ outputSlice
 outputString
 Packagist
 params
+pathlib
 pdk
 PDK
 PDKLogoLinks
