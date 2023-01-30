@@ -38,31 +38,45 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wa
 
 ```python title=app.py
 import sys
-import os
 import json
 import hashlib
+import pathlib
 
-from extism import Plugin, Context, host_fn
+from extism import Context
 
-if len(sys.argv) > 1:
-    data = sys.argv[1].encode()
-else:
-    data = b"some data from python!"
+# Compare against Python implementation.
+def count_vowels(data):
+    return sum(letter in b"AaEeIiOoUu" for letter in data)
 
-# a Context provides a scope for plugins to be managed within. creating multiple contexts
-# is expected and groups plugins based on source/tenant/lifetime etc.
-with Context() as context:
-    wasm = open("../wasm/code.wasm", 'rb').read()
+
+def main(args):
+    if len(args) > 1:
+        data = args[1].encode()
+    else:
+        data = b"some data from python!"
+
+    wasm_file_path = pathlib.Path(__file__).parent.parent / "wasm" / "code-functions.wasm"
+    wasm = wasm_file_path.read_bytes()
     hash = hashlib.sha256(wasm).hexdigest()
     config = {"wasm": [{"data": wasm, "hash": hash}], "memory": {"max": 5}}
 
-    # NOTE: if you encounter an error such as: 
-    # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-    # pass `wasi=True` in the following function to provide WASI imports to your plugin.
-    plugin = context.plugin(config)
-    # Call `count_vowels`
-    j = json.loads(plugin.call("count_vowels", data))
-    print("Number of vowels:", j["count"])
+    # a Context provides a scope for plugins to be managed within. creating multiple contexts
+    # is expected and groups plugins based on source/tenant/lifetime etc.
+    with Context() as context:
+        # NOTE: if you encounter an error such as: 
+        # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+        # pass `wasi=True` in the following function to provide WASI imports to your plugin.
+        plugin = context.plugin(config)
+        # Call `count_vowels`
+        wasm_vowel_count = json.loads(plugin.call("count_vowels", data))
+
+    print("Number of vowels:", wasm_vowel_count["count"])
+
+    assert wasm_vowel_count["count"] == count_vowels(data)
+
+
+if  __name__ == "__main__":
+    main(sys.argv)
 ```
 
 ### Host Functions
@@ -71,12 +85,14 @@ It is also possible to create functions to expose additional functionality from 
 is to define a function with the proper signature:
 
 ```python
+from extism import host_fn, Function, ValType
+
 @host_fn
-def hello_world(plugin, input, output, a_string, another_string):
+def hello_world(plugin, input_, output, a_string, another_string):
     print("Hello from Python!")
 
     # Print input argument
-    mem = plugin.memory_at_offset(input[0])
+    mem = plugin.memory_at_offset(input_[0])
     print(plugin.memory(mem)[:])
 
     # Print user data
@@ -84,7 +100,7 @@ def hello_world(plugin, input, output, a_string, another_string):
     print(another_string)
 
     # Set output to input 
-    output[0] = input[0]
+    output[0] = input_[0]
 
 
 ```
