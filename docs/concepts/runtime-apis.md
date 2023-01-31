@@ -34,12 +34,16 @@ void extism_context_free(struct ExtismContext *ctx);
 Create a new plugin.
 - `wasm`: is a WASM module (wat or wasm) or a JSON encoded manifest
 - `wasm_size`: the length of the `wasm` parameter
+- `functions`: is an array of `ExtismFunction*`
+- `n_functions`: is the number of functions
 - `with_wasi`: enables/disables WASI
 
 ```c
 ExtismPlugin extism_plugin_new(struct ExtismContext *ctx,
                                const uint8_t *wasm,
                                ExtismSize wasm_size,
+                               const ExtismFunction **functions,
+                               ExtismSize n_functions,
                                bool with_wasi);
 ```
 
@@ -58,6 +62,8 @@ bool extism_plugin_update(struct ExtismContext *ctx,
                           ExtismPlugin index,
                           const uint8_t *wasm,
                           ExtismSize wasm_size,
+                          const ExtismFunction **functions,
+                          ExtismSize n_functions,
                           bool with_wasi);
 ```
 
@@ -175,6 +181,92 @@ const char *extism_version(void);
 
 ---
 
+### `extism_current_plugin_memory`
+
+Returns a pointer to the memory of the currently running plugin
+
+```c
+uint8_t *extism_current_plugin_memory(ExtismCurrentPlugin *plugin);
+```
+
+---
+
+### `extism_current_plugin_memory_alloc`
+
+Allocate a memory block in the currently running plugin
+
+```c
+uint64_t extism_current_plugin_memory_alloc(ExtismCurrentPlugin *plugin, ExtismSize n);
+```
+
+---
+
+### `extism_current_plugin_memory_length`
+
+Get the length of an allocated block
+
+```c
+ExtismSize extism_current_plugin_memory_length(ExtismCurrentPlugin *plugin, ExtismSize n);
+```
+
+---
+
+### `extism_current_plugin_memory_free`
+
+Free an allocated memory block
+
+```c
+void extism_current_plugin_memory_free(ExtismCurrentPlugin *plugin, uint64_t ptr);
+```
+
+---
+
+### `extism_function_new`
+Create a new host function
+- `name`: function name, this should be valid UTF-8
+- `inputs`: argument types
+- `n_inputs`: number of argument types
+- `outputs`: return types
+- `n_outputs`: number of return types
+- `func`: the function to call
+- `user_data`: a pointer that will be passed to the function when it's called
+   this value should live as long as the function exists
+- `free_user_data`: a callback to release the `user_data` value when the resulting
+  `ExtismFunction` is freed.
+
+Returns a new `ExtismFunction` or `null` if the `name` argument is invalid.
+
+```c
+ExtismFunction *extism_function_new(const char *name,
+                                    const ExtismValType *inputs,
+                                    ExtismSize n_inputs,
+                                    const ExtismValType *outputs,
+                                    ExtismSize n_outputs,
+                                    ExtismFunctionType func,
+                                    void *user_data,
+                                    void (*free_user_data)(void *_));
+```
+
+---
+
+### `extism_function_set_namespace`
+
+Set the namespace of an `ExtismFunction`
+
+```c
+void extism_function_set_namespace(ExtismFunction *ptr, const char *namespace_);
+```
+
+---
+
+### `extism_function_free`
+
+Free an `ExtismFunction`
+
+```c
+void extism_function_free(ExtismFunction *ptr);
+```
+
 ## Type definitions: 
 
 ### `ExtismContext`
@@ -199,4 +291,24 @@ typedef int32_t ExtismPlugin;
 
 ```c
 typedef uint64_t ExtismSize;
+```
+
+---
+
+### `ExtismFunction`
+
+`ExtismFunction` is used to register host functions with plugins
+
+```c
+typedef struct ExtismFunction ExtismFunction;
+```
+
+---
+
+### `ExtismCurrentPlugin`
+
+`ExtismCurrentPlugin` provides access to the currently executing plugin from within a host function
+
+```c
+typedef struct ExtismCurrentPlugin ExtismCurrentPlugin;
 ```
