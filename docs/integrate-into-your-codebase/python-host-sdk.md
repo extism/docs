@@ -32,7 +32,7 @@ poetry add extism
 `code.wasm` in this example is our example plugin that counts vowels. If you want to run this, download it first and set the path:
 
 ```
-curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code-functions.wasm
 ```
 :::
 
