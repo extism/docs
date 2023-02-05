@@ -287,7 +287,7 @@ typedef int32_t ExtismPlugin;
 
 ---
 
-### `ExtimsSize`
+### `ExtismSize`
 
 ```c
 typedef uint64_t ExtismSize;
