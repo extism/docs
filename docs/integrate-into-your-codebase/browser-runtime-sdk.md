@@ -36,7 +36,7 @@ const plugin = await ctx.newPlugin(manifest);
 // call the function 'count_vowels' defined in the wasm module
 let output = await plugin.call('count_vowels', 'this is a test');
 
-conosole.log(JSON.parse(new TextDecoder().decode(output)));
+console.log(JSON.parse(new TextDecoder().decode(output)));
 ```
 
 ### Current Plug-in Support
