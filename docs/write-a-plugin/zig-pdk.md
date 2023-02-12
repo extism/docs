@@ -37,7 +37,8 @@ git clone https://github.com/extism/zig-pdk
 Then, update your `build.zig`:
 
 ```zig title=build.zig
-exe.addPackagePath("extism-pdk", "libs/zig-pdk/src/main.zig");
+exe.addAnonymousModule("extism-pdk", .{ .source_file = .{ .path = "libs/zig-pdk/src/main.zig" } });
+exe.rdynamic = true;
 ```
 
 And import it into your program:
@@ -55,7 +56,9 @@ Since WebAssembly is probably the only target for your Extism plug-in, add this 
 `build.zig`:
 
 ```zig title=build.zig
-const target = b.standardTargetOptions(.{ .default_target = .{ .cpu_arch = .wasm32, .os_tag = .freestanding } });
+const target = b.standardTargetOptions(.{ 
+    .default_target = .{ .abi = .musl, .os_tag = .freestanding, .cpu_arch = .wasm32 },
+});
 ```
 
 Then simply run: 
