@@ -85,13 +85,13 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
     const exe = b.addExecutable(.{
         .name = "extism-zig-example", 
-        .root_source_file = "src/main.zig",
+        .root_source_file = .{ .path = "src/main.zig" },        
         .target = target,
         .optimize = optimize,
     });
 
     // Add the `extism` library from the cloned repository
-    exe.addAnonymousModule("extism", .{ .source_file = .{ .path = "src/main.zig" } });
+    exe.addAnonymousModule("extism", .{ .source_file = .{ .path = "libs/extism/zig/src/main.zig" } });    
     exe.linkLibC();
     
     // Ensure the linker can find the installed shared library and headers
@@ -110,9 +110,11 @@ pub fn build(b: *std.Build) void {
     const run_step = b.step("run", "Run the app");
     run_step.dependOn(&run_cmd.step);
 
-    const exe_tests = b.addTest("src/main.zig");
-    exe_tests.setTarget(target);
-    exe_tests.setBuildMode(mode);
+    var exe_tests = b.addTest(.{
+       .root_source_file = .{ .path = "src/main.zig" },
+       .target = target,
+       .optimize = optimize,
+    });
 
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&exe_tests.step);
