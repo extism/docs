@@ -13,9 +13,9 @@ Generally speaking, all configuration is defined at the Host level. As a plug-in
 
 ## Plug-ins
 
-The most typical configuration you may elect to set as a Host is whether or not a plug-in is given access to [`WASI`](https://wasi.dev/) functions - things like making a network request or accessing files on disk. Currently, as a plug-in focused runtime, Extism does not provide disk access to plug-ins at all, regardless of WASI enablement. We are open to feedback here, so please let us know what you think. Please be prepared to provide some additional context around how you would expect to grant granular path/file-based access control as well. 
+The most typical configuration you may elect to set as a Host is whether or not a plug-in is given access to [`WASI`](https://wasi.dev/) functions - things like making a network request or accessing files on disk.
 
-Outside of `WASI` enablement, most plug-in configuration is done using [The Manifest](/docs/concepts/manifest). However, there is another more generic option you can use as well when you don't want to use a manifest: the configuration object. 
+Outside of `WASI` enablement, most plug-in configuration is done using [The Manifest](/docs/concepts/manifest), this includes setting things like which network hosts or file paths a plug-in has access to. However, there is another more generic option you can use as well when you don't want to use a manifest: the configuration object. 
 
 In each [Host SDK](/docs/category/integrate-into-your-codebase/), functionality is provided to allow a Host to pass arbitrary configuration data to plug-ins. This function is called something like `SetConfig`, or this configuration object can be included in the SDKs' `Manifest` equivalent.
 

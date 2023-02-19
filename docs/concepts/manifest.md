@@ -26,7 +26,7 @@ with Context() as context:
 
 ### Schema
 
-```python schema.py
+```python title=schema.py
 {
     # The "wasm" key describes the wasm code needed to build the plugin.
     # There are a few ways to load wasm code:
@@ -83,7 +83,15 @@ with Context() as context:
     "allowed_hosts": [
         "example.com",
         "extism.org",
-    ]
+    ],
+
+    # An optional set of mappings between the host's filesystem and the paths a plugin can access.
+    # This only has an effect if the plugin is provided with WASI capabilities. 
+    # Note: if left empty or `null`, then no file access is granted.
+    "allowed_paths": {
+        "/path/on/disk": "plugin/path",
+        "another/path": "/",
+    },
 
     # The "config" key is a free-form map that can be passed to the plugin.
     # A plugin author must know the arbitrary data this map may contain, so your own documentation should include some information about the "config" passed in.
