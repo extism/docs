@@ -38,6 +38,7 @@ Config
 configurability
 conosole
 const
+constCast
 CountVowels
 cout
 cpp
