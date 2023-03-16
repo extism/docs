@@ -96,6 +96,8 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wa
 
 
 ```java title=App.java
+package example;
+
 import org.extism.sdk.Context;
 import org.extism.sdk.HostFunction;
 import org.extism.sdk.manifest.Manifest;
