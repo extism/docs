@@ -19,7 +19,7 @@ The gem is hosted on [RubyGems](https://rubygems.org/gems/extism).
 Put the `extism` gem in your `Gemfile`:
 
 ```rb
-gem "extism", "~> 0.2.0"
+gem "extism", "~> 0.3.0"
 ```
 
 Or install with `gem install` if you are not using bundler:
@@ -48,7 +48,7 @@ require 'json'
 # If you do you can create a context with `Extism::Context#new`, example: `ctx = Extism::Context.new`
 Extism.with_context do |ctx| 
   manifest = {
-    :wasm => [{:path => "../wasm/code.wasm"}]
+    :wasm => [{:path => "code.wasm"}]
   }
 
 

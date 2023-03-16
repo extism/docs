@@ -55,7 +55,7 @@ func main() {
 		data = []byte("testing from go -> wasm shared memory...")
 	}
 
-	manifest := extism.Manifest{Wasm: []extism.Wasm{extism.WasmFile{Path: "../wasm/code.wasm"}}}
+	manifest := extism.Manifest{Wasm: []extism.Wasm{extism.WasmFile{Path: "code.wasm"}}}
 	
 	// NOTE: if you encounter an error such as: 
 	// "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
@@ -85,9 +85,17 @@ func main() {
 
 ### Host Functions
 
-It is also possible to create functions to expose additional functionality from the host. The first step
+It is also possible to create functions to expose additional functionality from the host by using [Host Functions](/docs/concepts/host-functions/). The first step
 is to declare it using `EXTISM_GO_FUNCTION` and define a function with the proper signature:
 
+:::note Count Vowels Plugin
+To run this example, use the version of the count vowels plugin with the example host function:
+
+```
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
+```
+
+:::
 ```go
 /*
 #include <extism.h>

@@ -123,8 +123,16 @@ pub fn build(b: *std.Build) void {
 
 ### Host Functions
 
-It is also possible to create functions to expose additional functionality from the host. The first step
-is to define a function with the proper signature:
+It is also possible to create functions to expose additional functionality from the host by using [Host Functions](/docs/concepts/host-functions/).
+
+:::note Count Vowels Plugin
+To run this example, use the version of the count vowels plugin with the example host function:
+
+```
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > src/code.wasm
+```
+
+The first step is to define a function with the proper signature:
 
 ```zig
 const sdk = @import("extism");
@@ -147,7 +155,7 @@ Then add it to the plugin when it's created:
 ```zig
 const sdk = @import("extism");
 
-const wasmfile_manifest = sdk.manifest.WasmFile{ .path = "../wasm/code-functions.wasm" };
+const wasmfile_manifest = sdk.manifest.WasmFile{ .path = "code.wasm" };
 const man = .{ .wasm = &[_]sdk.manifest.Wasm{ .{ .wasm_file = wasmfile_manifest }} };
 
 var f = Function.init(

@@ -39,7 +39,7 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.
 use extism::{Context, Plugin};
 
 fn main() {
-    let wasm = include_bytes!("../../wasm/code.wasm");
+    let wasm = include_bytes!("code.wasm");
     let context = Context::new();
     // NOTE: if you encounter an error such as: 
     // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
@@ -52,8 +52,17 @@ fn main() {
 
 ### Host Functions
 
-It is also possible to create functions to expose additional functionality from the host. The first step
-is to define a function with the proper signature:
+
+It is also possible to create functions to expose additional functionality from the host by using [Host Functions](/docs/concepts/host-functions/).
+
+:::note Count Vowels Plugin
+To run this example, use the version of the count vowels plugin with the example host function:
+
+```
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
+```
+
+The first step is to create a function with the proper signature:
 
 ```rust
 use extism::{Val, CurrentPlugin, UserData};
