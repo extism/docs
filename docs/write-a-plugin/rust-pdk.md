@@ -73,6 +73,13 @@ pub fn count_vowels(input: String) -> FnResult<Json<TestOutput>> {
 }
 ```
 
+When running the above example with [extism-cli](https://github.com/extism/cli) you will need to pass
+a configuration value for `thing` - this can be done using the `--config` flag:
+
+```bash
+$ extism-cli code.wasm count_vowels --input "this is a test" --config thing=myValue
+``` 
+
 #### Using Extism built-in HTTP
 
 ```rust title=lib.rs
