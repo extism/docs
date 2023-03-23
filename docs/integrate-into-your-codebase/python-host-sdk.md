@@ -32,7 +32,7 @@ poetry add extism
 `code.wasm` in this example is our example plugin that counts vowels. If you want to run this, download it first and set the path:
 
 ```
-curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code-functions.wasm
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.wasm
 ```
 :::
 
@@ -55,7 +55,7 @@ def main(args):
     else:
         data = b"some data from python!"
 
-    wasm_file_path = pathlib.Path(__file__).parent.parent / "wasm" / "code-functions.wasm"
+    wasm_file_path = pathlib.Path(__file__).parent.parent / "wasm" / "code.wasm"
     wasm = wasm_file_path.read_bytes()
     hash = hashlib.sha256(wasm).hexdigest()
     config = {"wasm": [{"data": wasm, "hash": hash}], "memory": {"max": 5}}
@@ -81,8 +81,14 @@ if  __name__ == "__main__":
 
 ### Host Functions
 
-It is also possible to create functions to expose additional functionality from the host. The first step
-is to define a function with the proper signature:
+It is also possible to create functions to expose additional functionality from the host by using [Host Functions](/docs/concepts/host-functions/).
+
+:::note Count Vowels Plugin
+To run this example, use the version of the count vowels plugin with the example host function:
+
+```
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
+```
 
 ```python
 from extism import host_fn, Function, ValType
@@ -119,7 +125,7 @@ functions = [
     )
 ]
 
-plugin = context.plugin(config, functions=functions)
+plugin = context.plugin(config, wasi=True, functions=functions)
 ```
 
 ### Need help?

@@ -15,7 +15,7 @@ Install via [hex.pm](https://hex.pm/packages/extism):
 For Mix:
 
 ```elixir
-{:extism, "~> 0.2.1"}
+{:extism, "~> 0.3.0"}
 ```
 
 :::note Rust Dependency

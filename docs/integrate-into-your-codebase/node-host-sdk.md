@@ -28,7 +28,7 @@ npm install @extism/extism --save
 `code.wasm` in this example is our example plugin that counts vowels. If you want to run this, download it first and set the path:
 
 ```
-curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.wasm
 ```
 :::
 
@@ -62,8 +62,15 @@ let p = ctx.plugin(wasm);
 
 ### Host Functions
 
-It is also possible to create functions to expose additional functionality from the host. The first step
-is to define a function with the proper signature:
+It is also possible to create functions to expose additional functionality from the host by using [Host Functions](/docs/concepts/host-functions/).
+
+
+:::note Count Vowels Plugin
+To run this example, use the version of the count vowels plugin with the example host function:
+
+```
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
+```
 
 ```javascript
 function hello_world(currentPlugin, inputs, outputs, userData, userData1) {
@@ -94,7 +101,7 @@ let functions = [
 ];
 
 
-let p = context.plugin(wasm, false, functions);
+let p = context.plugin(wasm, true, functions);
 ```
 
 
