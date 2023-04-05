@@ -1,0 +1,59 @@
+---
+slug: extending-fly-io-distributed-game-system-part-2
+title: "Extending Fly.io's Distributed Turn-Based Game System, Part 2: GameBox"
+authors: [ben]
+tags: [WebAssembly, Elixir, Phoenix, Fly.io]
+---
+
+# GameBox Blog Part II
+
+In Part I, we wrote a special [Elixir GenServer](https://hexdocs.pm/elixir/GenServer.html) that allows us to replace any GenServer in our Elixir apps with an Extism Plug-in. Our goal was to build a version of [this turn-based game system](https://fly.io/blog/building-a-distributed-turn-based-game-system-in-elixir/) that allows user’s of the platform to create and upload their own games.
+
+Today we’re announcing the result, GameBox!
+
+![Screenshot 2023-04-04 at 10.11.12 AM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/73191af3-0698-4090-b40f-0471a8deaeb8/Screenshot_2023-04-04_at_10.11.12_AM.png)
+
+## GameBox
+
+[GameBox](https://gamebox.fly.dev/) is hosted on [Fly.io](https://gamebox.fly.dev/) and you can start creating and uploading games today. You can write your game in any language where we have [PDK support](https://extism.org/docs/category/write-a-plug-in). So far we’ve written games in JavaScript, TypeScript, and Rust. And we have people attempting games in Zig and Go.
+
+If you want to see GameBox in action, we played a live game of Trivia with the entire audience at [Wasm/IO in Barcelona](https://wasmio.tech/) this year. See the first few minutes of Steve’s talk here:
+
+[https://youtu.be/pIcnh4Sl_xU](https://youtu.be/pIcnh4Sl_xU)
+
+## How it works
+
+The primary technical concept behind GameBox is, as lifted from the previous post, is about replacing a key GenServer implementation with an Extism plug-in. Like it’s inspiration, GameBox is built with the [Phoenix](https://www.phoenixframework.org/) framework and the GenServer we targeted to extend is [LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#content).  The LiveView module has a pretty simple API:
+
+- [LiveView.mount/3](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#c:mount/3) is called when a user connects to the module
+- [LiveView.handle_info/3](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#c:handle_event/3) is called when an event is triggered in the client
+- [LiveView.render/1](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#c:render/1) is called when the system needs to re-render the client
+
+`mount/3` is hand coded for the most part, but `handle_info/3` and `render/1` are proxied to the game plug-in to handle. You can think of the game as a single state machine. Events come in through `handle_info` and may or may not mutate the state. When the system needs to be redrawn, `render` is called and the game outputs some HTML. 
+
+Events are triggered on the client from [Phoenix bindings](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#module-bindings). The game programmer doesn’t need to code up a javascript front end, they just need to use the HTML bindings provided by Phoenix. For example, in tic tac toe, a button looks like this:
+
+```html
+<button
+  phx-click="cell-clicked"
+  phx-value-cell="3"
+  class="cell winner-true">
+</button>
+```
+
+When the user clicks this button, an event is sent to the handle_info callback of this shape:
+
+```json
+
+{
+  "player_id": "myplayerid",
+  "event_name": "cell-clicked",
+  "value": {
+		"cell": "3"
+  }
+}
+```
+
+The game logic can interpret this message and mutate the state of the board by placing the player’s character (`X` or `O`) at cell index `3`.
+
+
