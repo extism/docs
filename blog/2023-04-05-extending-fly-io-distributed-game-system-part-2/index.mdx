@@ -19,7 +19,6 @@ Today we’re announcing the result, GameBox!
 
 If you want to see GameBox in action, we played a live game of Trivia with the entire audience at [Wasm/IO in Barcelona](https://wasmio.tech/) this year. See the first few minutes of Steve’s talk here:
 
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pIcnh4Sl_xU?start=26" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## How it works
@@ -29,6 +28,10 @@ The primary technical concept behind GameBox is, as lifted from the previous pos
 - [LiveView.mount/3](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#c:mount/3) is called when a user connects to the module
 - [LiveView.handle_info/3](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#c:handle_event/3) is called when an event is triggered in the client
 - [LiveView.render/1](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#c:render/1) is called when the system needs to re-render the client
+
+It's important to learn about [LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html) to understand how the system works and how a game can be created.
+
+### LiveView LifeCycle
 
 `mount/3` is hand coded for the most part, but `handle_info/3` and `render/1` are proxied to the game plug-in to handle. You can think of the game as a single state machine. Events come in through `handle_info` and may or may not mutate the state. When the system needs to be redrawn, `render` is called and the game outputs some HTML. 
 
@@ -56,5 +59,10 @@ When the user clicks this button, an event is sent to the handle_info callback o
 ```
 
 The game logic can interpret this message and mutate the state of the board by placing the player’s character (`X` or `O`) at cell index `3`.
+
+### Game Logic
+
+As mentioned before, the game developer creates a game by satisfying these callbacks. We provide an interface, a number of functions, that the game must export to
+plug-in to the GameBox system. Thanks to Extism, this interface can be implemented in any language we support. In the next post we will look at how to make a game as a plug-in.
 
 
