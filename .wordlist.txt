@@ -108,6 +108,7 @@ GetBytes
 getConfig
 getCurrentPlugin
 getInput
+getHostFunctions
 GetString
 getVar
 ghc
@@ -119,12 +120,14 @@ golang
 gradle
 hashlib
 haskell
+helloWorldFunction
 heroBanner
 hexdigest
 HomepageFeatures
 HomepageHeader
 host_fn
 HostFunction
+HostUserData
 hpp
 hs
 html
@@ -146,6 +149,7 @@ istreambuf
 isVowel
 javascript
 Javascript
+jna
 js
 json
 JSON
@@ -153,6 +157,7 @@ jsonplaceholder
 Kib
 len
 libextism
+LibExtism
 libs
 lineNumber
 lld
@@ -168,6 +173,7 @@ mycode
 mykey
 myplugin
 myvalue
+MyUserData
 namespace
 newContext
 NewContext
@@ -205,6 +211,7 @@ PDKs
 php
 pluginFromManifest
 Println
+println
 ptr
 ptrCast
 ptrCast
@@ -276,6 +283,7 @@ userData
 UserData
 usr
 UTF
+util
 ValType
 ValType
 wasi
