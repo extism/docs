@@ -35,7 +35,7 @@ It's important to learn about [LiveView](https://hexdocs.pm/phoenix_live_view/Ph
 
 `mount/3` is hand coded for the most part, but `handle_info/3` and `render/1` are proxied to the game plug-in to handle. You can think of the game as a single state machine. Events come in through `handle_info` and may or may not mutate the state. When the system needs to be redrawn, `render` is called and the game outputs some HTML. 
 
-Events are triggered on the client from [Phoenix bindings](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#module-bindings). The game programmer doesn’t need to code up a javascript front end, they just need to use the HTML bindings provided by Phoenix. For example, in tic tac toe, a button looks like this:
+Events are defined and triggered on the client using [Phoenix bindings](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#module-bindings). The game programmer doesn’t need to code up a javascript front end, they just need to use the HTML bindings provided by Phoenix. For example, in tic tac toe, a button looks like this:
 
 ```html
 <button
