@@ -59,13 +59,13 @@ The most common use-case is to to install Extism from Github releases, and then 
 ### macos
 
 ```sh
-extism install latest
+sudo extism install latest
 ```
 
 ### Linux
 
 ```sh
-extism install latest
+sudo extism install latest
 ```
 
 #### Build from source
@@ -73,7 +73,7 @@ extism install latest
 In order to build from source, you must have a recent version of the [Rust toolchain installed](https://rustup.rs/).
 
 ```sh
-extism install git # installs to /usr/local/lib and /usr/local/include by default
+sudo extism install git # installs to /usr/local/lib and /usr/local/include by default
 ```
 
 #### Overriding install location
@@ -81,7 +81,7 @@ extism install git # installs to /usr/local/lib and /usr/local/include by defaul
 Pass the `--prefix` argument a path on disk where `extism` CLI will install the system files:
 
 ```sh
-extism --prefix ~/.local install latest
+sudo extism --prefix ~/.local install latest
 ```
 
 ---
