@@ -65,7 +65,7 @@ sudo extism install latest
 ### Linux
 
 ```sh
-sudo extism install latest
+extism install latest
 ```
 
 #### Build from source
@@ -73,7 +73,7 @@ sudo extism install latest
 In order to build from source, you must have a recent version of the [Rust toolchain installed](https://rustup.rs/).
 
 ```sh
-sudo extism install git # installs to /usr/local/lib and /usr/local/include by default
+extism install git # installs to /usr/local/lib and /usr/local/include by default
 ```
 
 #### Overriding install location
@@ -81,7 +81,7 @@ sudo extism install git # installs to /usr/local/lib and /usr/local/include by d
 Pass the `--prefix` argument a path on disk where `extism` CLI will install the system files:
 
 ```sh
-sudo extism --prefix ~/.local install latest
+extism --prefix ~/.local install latest
 ```
 
 ---
