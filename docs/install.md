@@ -59,7 +59,7 @@ The most common use-case is to to install Extism from Github releases, and then 
 ### macos
 
 ```sh
-extism install latest
+sudo extism install latest
 ```
 
 ### Linux
