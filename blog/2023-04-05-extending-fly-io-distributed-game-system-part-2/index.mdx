@@ -24,7 +24,7 @@ If you want to see GameBox in action, we played a live game of Trivia with the e
 
 ## How it works
 
-The primary technical concept behind GameBox is, as lifted from the previous post, is about replacing a key GenServer implementation with an Extism plug-in. Like it’s inspiration, GameBox is built with the [Phoenix](https://www.phoenixframework.org/) framework and the GenServer we targeted to extend is [LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#content).  The LiveView module has a pretty simple API:
+The primary technical concept behind GameBox is, as lifted from the previous post, is about replacing a key GenServer implementation with an Extism plug-in. Like its inspiration, GameBox is built with the [Phoenix](https://www.phoenixframework.org/) framework and the GenServer we targeted to extend is [LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#content).  The LiveView module has a pretty simple API:
 
 - [LiveView.mount/3](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#c:mount/3) is called when a user connects to the module
 - [LiveView.handle_info/3](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#c:handle_event/3) is called when an event is triggered in the client
