@@ -21,14 +21,6 @@ If you want to see GameBox in action, we played a live game of Trivia with the e
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pIcnh4Sl_xU?start=26" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-## Credits
-
-We got a lot of help from the community on this project and we want to thank all the individuals who put so much work into it:
-
-* [Brian Berlin](https://twitter.com/brianberlin) When we came up with the idea, We were a bit overwhelmed jumping back into Phoenix, but luckily Brian's expertise with Elixir got us far. After a week of hacking we had a solid protoype.
-* [Revelry](https://revelry.co/elixir/) When we decided we wanted to step this up and make this a professional app, we turned to Revelry for help. In a few short weeks they were able to polish it into something we can be proud of.
-* [Amy Murphy](https://www.linkedin.com/in/amymurphy114/) We also want to callout Amy on the Revelry team who went above and beyond making what are the coolest games on the platform.
-
 ## How it works
 
 The primary technical concept behind GameBox is, as lifted from the previous post, about replacing a key GenServer implementation with an Extism plug-in. Like its inspiration, GameBox is built with the [Phoenix](https://www.phoenixframework.org/) framework and the GenServer we targeted to extend is [LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html#content).  The LiveView module has a pretty simple API:
@@ -73,4 +65,11 @@ The game logic can interpret this message and mutate the state of the board by p
 As mentioned before, the game developer creates a game by satisfying these callbacks. We provide an interface, a number of functions, that the game must export to
 plug-in to the GameBox system. Thanks to Extism, this interface can be implemented in any language we support. In the next post we will look at how to make a game as a plug-in.
 
+## Credits
+
+We got a lot of help from the community on this project and we want to thank all the individuals who put so much work into it:
+
+* [Brian Berlin](https://twitter.com/brianberlin) When we came up with the idea, We were a bit overwhelmed jumping back into Phoenix, but luckily Brian's expertise with Elixir got us far. After a week of hacking we had a solid protoype.
+* [Revelry](https://revelry.co/elixir/) When we decided we wanted to step this up and make this a professional app, we turned to Revelry for help. In a few short weeks they were able to polish it into something we can be proud of.
+* [Amy Murphy](https://www.linkedin.com/in/amymurphy114/) We also want to callout Amy on the Revelry team who went above and beyond making what are the coolest games on the platform.
 
