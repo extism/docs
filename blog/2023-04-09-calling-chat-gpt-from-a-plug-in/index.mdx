@@ -1,0 +1,124 @@
+---
+slug: calling-chat-gpt-from-a-plug-in
+title: "Calling ChatGPT from a Plug-in"
+authors: [ben]
+tags: [ChatGPT, AI, rust]
+---
+
+We’ve seen a few people try to create Extism plug-ins that make use of [ChatGPT](https://openai.com/blog/chatgpt). The simplest way you can accomplish this is to use Extism’s built-in HTTP host function. A more advanced option would be to create your own [host function](https://extism.org/docs/concepts/host-functions). 
+
+Let’s go the first route and create the simplest possible plug-in that utilizes ChatGPT. We’ll do this in Rust, but the same is possible from our other plug-in languages.
+
+## Project Setup
+
+First let’s initialize our plugin:
+
+```bash
+mkdir chatgpt-plugin
+cd chatgpt-plugin
+cargo init --lib
+cargo add serde serde_json extism-pdk
+```
+
+Now tell cargo we wish to build a shared library by putting this in `Cargo.toml`
+
+```toml
+[lib]
+crate_type = ["cdylib"]
+```
+
+## Writing lib.rs
+
+First we import the code we need into `lib.rs`:
+
+```rust
+use std::str::from_utf8;
+use extism_pdk::*;
+use serde::{Deserialize};
+use serde_json::json;
+```
+
+Then let’s create some structs for the response body. We’re just putting what we need for this example. See [the completion docs](https://platform.openai.com/docs/guides/chat/response-format) for the whole response.
+
+```rust
+#[derive(Deserialize)]
+struct ChatMessage {
+    content: String,
+}
+
+#[derive(Deserialize)]
+struct ChatChoice {
+    message: ChatMessage,
+}
+
+#[derive(Deserialize)]
+struct ChatResult {
+    choices: Vec<ChatChoice>,
+}
+```
+
+Now let’s write our code. We’re going to skip error handling and edge cases as an exercise for the user:
+
+```rust
+#[plugin_fn]
+pub fn call_chat_gpt(input: String) -> FnResult<String> {
+		// put your API key here:
+    let api_key = "sk-<put-your-api-key-here>";
+    let req = HttpRequest::new("https://api.openai.com/v1/chat/completions")
+        .with_header("Authorization", format!("Bearer {}", api_key))
+        .with_header("Content-Type", "application/json")
+        .with_method("POST");
+
+    let req_body = json!({
+        "model": "gpt-3.5-turbo",
+        "temperature": 0.7,
+        "messages": [
+            {
+                "role": "user",
+                "content": input,
+            }
+        ],
+    });
+
+    let res = http::request::<String>(&req, Some(req_body.to_string()))?;
+    let body = res.body();
+    let body = from_utf8(&body)?;
+    let body: ChatResult = serde_json::from_str(body)?;
+
+    Ok(body.choices[0].message.content.clone())
+}
+```
+
+<aside>
+💡 Storing API keys unencrypted is a bad idea for a production system. For secrets there are a couple options:
+
+1. You can use [plug-in configs](https://extism.org/docs/concepts/configuration) and the [runtime function](https://extism.org/docs/concepts/configuration) to update them. If you do this you’ll probably want to assume all configs are secrets and take extra care not to leak configs across customers.
+2. You provide some kind of host function for the plug-in programmer to fetch and decrypt their secrets from a secret provider / manager.
+
+</aside>
+
+## Compiling and Running
+
+We can compile and run this plug-in like we always do:
+
+```bash
+cargo build --release --target wasm32-unknown-unknown
+```
+
+<aside>
+💡 Note we do not need a `wasi` target since we are using Extism’s HTTP host function
+
+</aside>
+
+Now we can use the `extism` cli to test:
+
+```bash
+extism call \
+  target/wasm32-unknown-unknown/release/chatgpt_plugin.wasm \
+  call_chat_gpt \
+  --input="Please write me a haiku about Wasm"
+
+Wasm code compiled,
+Runs in browser, fast and light,
+Web apps flourish bright.
+```
