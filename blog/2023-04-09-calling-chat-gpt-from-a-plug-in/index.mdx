@@ -89,7 +89,7 @@ pub fn call_chat_gpt(input: String) -> FnResult<String> {
 }
 ```
 
-> ⚠️  *Warning*
+> ⚠️  *Warning*:
 > Storing API keys unencrypted is a bad idea for a production system. For secrets there are a couple options:
 >  1. You can use [plug-in configs](https://extism.org/docs/concepts/configuration) and the [runtime function](https://extism.org/docs/concepts/configuration) to update them. If you do this you’ll probably want to assume all configs are secrets and take extra care not to leak configs across customers.
 >  2. You provide some kind of host function for the plug-in programmer to fetch and decrypt their secrets from a secret provider / manager.
@@ -102,7 +102,7 @@ We can compile and run this plug-in like we always do:
 cargo build --release --target wasm32-unknown-unknown
 ```
 
->💡 *Note* we do not need a `wasi` target since we are using Extism’s HTTP host function
+>💡 *Note*: we do not need a `wasi` target since we are using Extism’s HTTP host function
 
 Now we can use the `extism` cli to test:
 
