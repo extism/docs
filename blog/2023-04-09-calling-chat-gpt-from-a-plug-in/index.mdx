@@ -91,7 +91,7 @@ pub fn call_chat_gpt(input: String) -> FnResult<String> {
 }
 ```
 
-:::warn
+:::caution
 
 Storing API keys unencrypted is a bad idea for a production system. For secrets there are a couple options:
  1. You can use [plug-in configs](https://extism.org/docs/concepts/configuration) and the [runtime function](https://extism.org/docs/concepts/configuration) to update them. If you do this you’ll probably want to assume all configs are secrets and take extra care not to leak configs across customers.
