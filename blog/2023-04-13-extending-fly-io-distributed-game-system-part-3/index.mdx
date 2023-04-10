@@ -89,10 +89,9 @@ function init_game() {
 The `version` property here will be incremented every time the game state changes. This will be used to tell the system to re-render the clients.
 :::
 
-Next, the `render` function is called each time the game board needs to be rendered. It's called for each user watching or playing the game. 
-You can render the game depending on who is viewing it by attaching metadata to the user's socket with Assigns. For example, 
-you will render the game differently based on who's turn it is and which screen it's being rendered on. You also probably want to render the 
-game for non-players without the control elements. 
+Next, the `render` function is called each time the game board needs to be rendered. It's called for each user watching or playing the game and each time the state version changes.
+You can render the game depending on who is viewing it by looking at the metadata on the user's socket. This is passed in as an object called `assigns`. For example, 
+you will render the game differently based on who's turn it is and which screen it's being rendered on. By default the assigns will always have the player_id, but you can attach whatever you want to it. Take note this may be called for people who are only viewing the game and not playing, so you may want to conditionally render things like controls for those people.
 
 #### render(Assigns) → String
 
