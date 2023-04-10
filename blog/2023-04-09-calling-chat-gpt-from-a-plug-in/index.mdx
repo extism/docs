@@ -62,13 +62,15 @@ Now let’s write our code. We’re going to skip error handling and edge cases 
 ```rust
 #[plugin_fn]
 pub fn call_chat_gpt(input: String) -> FnResult<String> {
-		// put your API key here:
+    // put your API key here:
     let api_key = "sk-<put-your-api-key-here>";
     let req = HttpRequest::new("https://api.openai.com/v1/chat/completions")
         .with_header("Authorization", format!("Bearer {}", api_key))
         .with_header("Content-Type", "application/json")
         .with_method("POST");
 
+    // We could make our own structs for the body
+    // this is a quick way to make some unstructured JSON
     let req_body = json!({
         "model": "gpt-3.5-turbo",
         "temperature": 0.7,
