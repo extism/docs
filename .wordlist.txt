@@ -288,6 +288,7 @@ ValType
 ValType
 wasi
 WASI
+wasienv
 wasm
 WASM
 wasmfile
