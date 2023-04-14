@@ -21,7 +21,7 @@ First edit `.gitmodules` to point to the tag
 [submodule "extism"]
 	path = extism
 	url = https://github.com/extism/c-pdk
-	tag = v0.2.0
+	tag = v0.3.0
 ```
 
 > **N.B.**: See the [c-pdk releases](https://github.com/extism/c-pdk/releases) page for available versions
@@ -31,17 +31,17 @@ Then update:
 ```
 git submodule foreach --recursive 'git fetch --tags'
 git submodule update --init --recursive --remote
-git commit -am 'Lock extism version to v0.2.0'
+git commit -am 'Lock extism version to v0.3.0'
 ```
 
 :::
 
 ### Compiling to WebAssembly
 
-Download the Emscripten [SDK & toolchain](https://emscripten.org/index.html), and using `emcc`:
+Download the [WASI-SDK](https://github.com/WebAssembly/wasi-sdk) or [wasienv](https://github.com/wasienv/wasienv), using `wasicc`:
 
 ```sh
-emcc -o example.wasm example/count_vowels.c --no-entry -Wl,--export-all -sERROR_ON_UNDEFINED_SYMBOLS=0
+wasicc -o example.wasm -Wl,--export=count_vowels example/count_vowels.c 
 ```
 
 ### Example Usage
