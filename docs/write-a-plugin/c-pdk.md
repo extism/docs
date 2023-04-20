@@ -38,10 +38,15 @@ git commit -am 'Lock extism version to v0.3.0'
 
 ### Compiling to WebAssembly
 
-Download the [WASI-SDK](https://github.com/WebAssembly/wasi-sdk), using `wasicc`:
+Download the [WASI-SDK](https://github.com/WebAssembly/wasi-sdk):
 
 ```sh
-wasicc -o example.wasm -Wl,--export=count_vowels example/count_vowels.c 
+# Configure WASI-SDK compiler
+export WASI_SDK_PATH=/path/to/wasi-sdk
+export WASICC="${WASI_SDK_PATH}/bin/clang --sysroot=${WASI_SDK_PATH}/share/wasi-sysroot"
+
+# Compile example
+$WASICC -o example.wasm -Wl,--export=count_vowels example/count_vowels.c 
 ```
 
 ### Example Usage
