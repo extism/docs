@@ -260,6 +260,7 @@ submodule
 sudo
 svg
 sys
+sysroot
 Sys
 TestOutput
 TextDecoder
@@ -288,7 +289,7 @@ ValType
 ValType
 wasi
 WASI
-wasienv
+WASICC
 wasm
 WASM
 wasmfile
