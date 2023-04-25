@@ -9,7 +9,11 @@ sidebar_position: 2
 
 We have released binaries of the compiler. Check the [releases](https://github.com/extism/js-pdk/releases) page for the latest.
 
-> **Note**: Windows is not currently a supported platform, only mac and linux
+:::note
+
+Windows is not currently a supported platform, only mac and linux
+
+:::
 
 You can use this script as an easy way to install:
 
@@ -22,7 +26,12 @@ sh install.sh
 
 Try it on a script file. Name this `script.js`:
 
-> **Note**: You must use [CJS Module syntax](https://nodejs.org/api/modules.html#modules-commonjs-modules) when not using a bundler.
+:::note CJS vs ESM
+
+You must use [CJS Module syntax](https://nodejs.org/api/modules.html#modules-commonjs-modules) when not using a bundler.
+
+:::
+
 
 ```javascript
 // script.js
