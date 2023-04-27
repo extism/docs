@@ -34,11 +34,11 @@ Let’s start with some helper functions. Currently GameBox expects you, the gam
 This can be accomplished with plug-in variables. So let’s make some helpers to get and set the state into a plug-in variable called “state”:
 
 ```javascript
-function setstate(state) {
+function set_state(state) {
   Var.set('state', JSON.stringify(state))
 }
 
-function getstate() {
+function get_state() {
   return JSON.parse(Var.getString('state'))
 }
 ```
@@ -69,7 +69,7 @@ function get_constraints() {
 ```
 
 Once all players are ready to start the game, GameBox will call `init_game`, passing in information about the players and allowing your game to allocate state, 
-memory, and anything else required. Here we are only interested in the player_ids that are joining the game. We define our state and persist it with our setstate helper:
+memory, and anything else required. Here we are only interested in the player_ids that are joining the game. We define our state and persist it with our `set_state` helper:
 
 #### init_game(GameConfig) -> void
 
@@ -81,7 +81,7 @@ function init_game() {
     events: [],
     version: 0,
   }
-  setstate(state)
+  set_state(state)
 }
 ```
 
@@ -108,7 +108,7 @@ function ui(state, assigns) {
 
 function render() {
   const assigns = JSON.parse(Host.inputString())
-  Host.outputString(ui(getstate(), assigns))
+  Host.outputString(ui(get_state(), assigns))
 }
 ```
 
@@ -134,10 +134,10 @@ it receives to your game through `handle_event` and accept a return value that c
 ```javascript
 function handle_event() {
   const event = JSON.parse(Host.inputString())
-  const state = getstate()
+  const state = get_state()
   state.events.push(event) // we're just pushing the event into this log
   state.version += 1       // tell the system we need to re-render
-  setstate(state)
+  set_state(state)
   // for Assigns here, we only need the version
   Host.outputString(JSON.stringify({ version: state.version }))
 }
