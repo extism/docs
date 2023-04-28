@@ -28,15 +28,15 @@ The bash it generates could do anything on your computer. So this feels like a s
 
 Prompt injection is an ongoing research topic and some believe it will be impossible to prevent. This is perhaps where Wasm can provide some relief. Wasm can create a sandbox for the generated code and you can give it only the capabilities it needs to get the job done.
 
+## Utility Maker in Extism
+
+Let’s build this using Extism. We’ll use [LangChain](https://python.langchain.com/en/latest/index.html) to generate the code based on a description, and we’ll use the [Extism Python SDK](https://extism.org/docs/integrate-into-your-codebase/python-host-sdk) to orchestrate the Wasm module for executing the code. We are going to ask it to generate JavaScript code and run it in a sandbox we create with the [JavaScript PDK](https://extism.org/docs/write-a-plugin/js-pdk). 
+
 :::info
 
 If you want to jump straight to runnable code, we packaged it up here [https://github.com/extism/func-gen](https://github.com/extism/func-gen)
 
 :::
-
-## Utility Maker in Extism
-
-Let’s build this using Extism. We’ll use [LangChain](https://python.langchain.com/en/latest/index.html) to generate the code based on a description, and we’ll use the [Extism Python SDK](https://extism.org/docs/integrate-into-your-codebase/python-host-sdk) to orchestrate the Wasm module for executing the code. We are going to ask it to generate JavaScript code and run it in a sandbox we create with the [JavaScript PDK](https://extism.org/docs/write-a-plugin/js-pdk). 
 
 Let’s start with our plug-in. We’ll create a super simple JavaScript module that has 2 functions: one to store the code for a function in a plug-in variable and one to read it and invoke it. 
 
