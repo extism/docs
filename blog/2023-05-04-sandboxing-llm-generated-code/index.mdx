@@ -28,7 +28,7 @@ The bash it generates could do anything on your computer. So this feels like a s
 
 Prompt injection is an ongoing research topic and some believe it will be impossible to prevent. This is perhaps where Wasm can provide some relief. Wasm can create a sandbox for the generated code and you can give it only the capabilities it needs to get the job done.
 
-::: note
+:::info
 
 If you want to jump straight to runnable code, we packaged it up here [https://github.com/extism/func-gen](https://github.com/extism/func-gen)
 
@@ -58,7 +58,7 @@ function invoke() {
 module.exports = {register_function, invoke}
 ```
 
-::: note
+:::info
 
 This simple plug-in can be re-used in many situations where you want to sandbox some JavaScript code and it works from [any host that Extism supports](https://extism.org/docs/category/integrate-into-your-codebase), including the browser!
 
@@ -130,7 +130,7 @@ def generate_code(description):
 
 Here we use a series of `SystemMessage`s to pre-prompt the model with its goals. We put the user’s description at the end, in the `HumanMessage`.
 
-::: note
+:::info
 
 There are likely more rules you’d want to add to this system, we are not prompt engineers.
 
@@ -149,7 +149,7 @@ def execute_code(code, input):
         return plugin.call("invoke", input)
 ```
 
-::: note
+:::info
 
 You can turn your JS plug-in code into Wasm with the command:
   `extism-js sandbox.js -o sandbox.wasm`
