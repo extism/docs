@@ -49,7 +49,7 @@ console.log(JSON.parse(new TextDecoder().decode(output)));
 
 ### Host Functions
 
-If your plug-in has any [host functions](/docs/concepts/host-functions), you can implement them in JS and pass them in through an object keyed by name:
+If a plug-in expects to call [host functions](/docs/concepts/host-functions), you can implement them in JS using the SDK and pass them in through an object keyed by name:
 
 ```javascript
 let helloWorld = function(index){
