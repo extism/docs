@@ -47,6 +47,18 @@ console.log(JSON.parse(new TextDecoder().decode(output)));
 
 :::
 
+### Host Functions
+
+If your plug-in has any [host functions](/docs/concepts/host-functions), you can implement them in JS and pass them in through an object keyed by name:
+
+```javascript
+let helloWorld = function(index){
+  console.log("Hello, " + this.allocator.getString(index));
+  return index;
+};
+let plugin = await extismContext.newPlugin({ "wasm": [ { "path": url } ] }, {"hello_world": helloWorld});
+```
+
 ### Playground
 
 The [Extism Playground](https://playground.extism.org) is built using the Browser Runtime SDK, and its [source code is available](https://github.com/extism/playground) -- please test it out and use the Playground codebase as a reference in case it is helpful.

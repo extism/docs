@@ -50,12 +50,43 @@ using System.Text;
 
 var context = new Context();
 var wasm = await File.ReadAllBytesAsync("code.wasm");
-using var plugin = context.CreatePlugin(wasm, withWasi: true);
+using var plugin = context.CreatePlugin(wasm, Array.Empty<HostFunction>(), withWasi: true);
 
 var output = Encoding.UTF8.GetString(
     plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
 );
 Console.WriteLine(output); // prints {"count": 3}
+```
+
+### Host Functions
+
+If your plug-in has any [host functions](/docs/concepts/host-functions), you can implement them in Csharp and pass them to the plug-in:
+
+```csharp
+var userData = Marshal.StringToHGlobalAnsi("Hello again!");
+using var helloWorld = new HostFunction(
+    "hello_world",
+    "env",
+    new[] { ExtismValType.I64 },
+    new[] { ExtismValType.I64 },
+    userData,
+    HelloWorld);
+
+using var plugin = context.CreatePlugin(wasm, new[] { helloWorld }, withWasi: true);
+
+void HelloWorld(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs, nint data)
+{
+    Console.WriteLine("Hello from .NET!");
+
+    var text = Marshal.PtrToStringAnsi(data);
+    Console.WriteLine(text);
+
+    var input = plugin.ReadString(new nint(inputs[0].v.i64));
+    Console.WriteLine($"Input: {input}");
+
+    var output = new string(input); // clone the string
+    outputs[0].v.i64 = plugin.WriteString(output);
+}
 ```
 
 ### Need help?
