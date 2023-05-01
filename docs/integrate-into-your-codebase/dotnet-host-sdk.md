@@ -60,7 +60,7 @@ Console.WriteLine(output); // prints {"count": 3}
 
 ### Host Functions
 
-If your plug-in has any [host functions](/docs/concepts/host-functions), you can implement them in Csharp and pass them to the plug-in:
+If a plug-in expects to call any [host functions](/docs/concepts/host-functions), you can implement them in C# and pass them in:
 
 ```csharp
 var userData = Marshal.StringToHGlobalAnsi("Hello again!");
