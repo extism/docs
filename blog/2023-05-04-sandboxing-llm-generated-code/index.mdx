@@ -31,7 +31,9 @@ Prompt injection is an ongoing research topic and some believe it will be imposs
 This is perhaps where Wasm can provide some relief. Wasm can create a sandbox for the generated code and you can give it only the capabilities it needs to get the job done.
 
 :::info
+
 A Wasm sandbox cannot completely save you from all prompt injection attacks if you need to trust the output. But it can prevent the code from accessing capabilities or data that it should not have access to.
+
 :::
 
 ## Utility Maker in Extism
@@ -41,6 +43,14 @@ Let’s build this using Extism. We’ll use [LangChain](https://python.langchai
 :::info
 
 If you want to jump straight to runnable code, we packaged it up here [https://github.com/extism/func-gen](https://github.com/extism/func-gen)
+
+:::
+
+::: info
+
+A demo video can be seen here:
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/d956147a1a7d449391ec0778ebe12918" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 :::
 
