@@ -26,7 +26,13 @@ echo "Hello World" | sh count_vowels.sh
 
 The bash it generates could do anything on your computer. So this feels like a scary idea. Here the worst case scenario is likely that your script is wrong and destroys some state on your machine, but you could see if you had a use case that allowed untrusted input into this code generator, someone could easily craft some malicious actions.
 
-Prompt injection is an ongoing research topic and some believe it will be impossible to prevent. This is perhaps where Wasm can provide some relief. Wasm can create a sandbox for the generated code and you can give it only the capabilities it needs to get the job done.
+
+Prompt injection is an ongoing research topic and some believe it will be impossible to prevent.
+This is perhaps where Wasm can provide some relief. Wasm can create a sandbox for the generated code and you can give it only the capabilities it needs to get the job done.
+
+:::info
+A Wasm sandbox cannot completely save you from all prompt injection attacks if you need to trust the output. But it can prevent the code from accessing capabilities or data that it should not have access to.
+:::
 
 ## Utility Maker in Extism
 
