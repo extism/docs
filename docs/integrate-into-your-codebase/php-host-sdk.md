@@ -55,6 +55,8 @@ $ctx = new \Extism\Context();
 // See the manifest docs for more options https://extism.org/docs/concepts/manifest
 $wasm = (object) [ 'wasm' => [](object) [ 'path'] = './code.wasm']];
 
+// (or, simpler but less efficiently: $wasm = file_get_contents("./code.wasm");
+
 // NOTE: if you encounter an error such as: 
 // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
 // pass `true` after $wasm in the following function to provide WASI imports to your plugin.
@@ -65,7 +67,9 @@ $json = json_decode(pack('C*', ...$output));
 echo "Vowels counted = " . $json->{'count'} . PHP_EOL;
 ```
 
-> **NOTE:** on some MacOS devices (particularly Apple Silicon), you may hit an error regarding the `Security.framework`. We're working on a solution here, but in the meantime, if this happens to you please file an issue or comment here: [https://github.com/extism/extism/issues/96](https://github.com/extism/extism/issues/96).
+:::note
+On some MacOS devices (particularly Apple Silicon), you may hit an error regarding the `Security.framework`. We're working on a solution here, but in the meantime, if this happens to you please file an issue or comment here: [https://github.com/extism/extism/issues/96](https://github.com/extism/extism/issues/96).
+:::
 
 ### Need help?
 
