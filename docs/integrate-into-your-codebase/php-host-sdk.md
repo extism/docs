@@ -53,7 +53,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 $ctx = new \Extism\Context();
 
 // See the manifest docs for more options https://extism.org/docs/concepts/manifest
-$wasm = [ 'wasm' => (object) [ 'path'] = './code.wasm']
+$wasm = (object) [ 'wasm' => [](object) [ 'path'] = './code.wasm']];
 
 // NOTE: if you encounter an error such as: 
 // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
