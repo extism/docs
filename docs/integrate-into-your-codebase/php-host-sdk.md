@@ -51,7 +51,10 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.
 require_once __DIR__ . '/vendor/autoload.php';
 
 $ctx = new \Extism\Context();
-$wasm = file_get_contents("../../wasm/code.wasm");
+
+// See the manifest docs for more options https://extism.org/docs/concepts/manifest
+$wasm = [ 'wasm' => (object) [ 'path'] = './code.wasm']
+
 // NOTE: if you encounter an error such as: 
 // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
 // pass `true` after $wasm in the following function to provide WASI imports to your plugin.
