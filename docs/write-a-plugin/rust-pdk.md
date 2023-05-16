@@ -27,10 +27,12 @@ cargo add extism-pdk
 ### Compiling to WebAssembly
 
 ```sh
-# you may need to install the wasm32-unknown-unknown target with:
-# rustup target add wasm32-unknown-unknown
 cargo build --release --target wasm32-unknown-unknown
 ```
+:::caution
+You may need to install the wasm32-unknown-unknown target with:
+`rustup target add wasm32-unknown-unknown`
+:::
 
 > **NOTE:** `--target wasm32-wasi` is also fully supported
 
