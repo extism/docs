@@ -29,6 +29,10 @@ cargo add extism-pdk
 ```sh
 cargo build --release --target wasm32-unknown-unknown
 ```
+:::caution
+You may need to install the wasm32-unknown-unknown target with:
+`rustup target add wasm32-unknown-unknown`
+:::
 
 > **NOTE:** `--target wasm32-wasi` is also fully supported
 
@@ -73,12 +77,13 @@ pub fn count_vowels(input: String) -> FnResult<Json<TestOutput>> {
 }
 ```
 
-When running the above example with [extism-cli](https://github.com/extism/cli) you will need to pass
+When running the above example with the [Extism CLI](https://github.com/extism/cli) you will need to pass
 a configuration value for `thing` - this can be done using the `--config` flag:
 
 ```bash
-$ extism-cli code.wasm count_vowels --input "this is a test" --config thing=myValue
+$ extism call ./target/wasm32-unknown-unknown/release/{{your-plugin}}.wasm count_vowels --input "this is a test" --config thing=myValue
 ``` 
+> **Note:** This uses the advanced features of the Extism CLI which require Python SDK to be installed: `pip3 install extism`
 
 #### Using Extism built-in HTTP
 
