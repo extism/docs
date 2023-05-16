@@ -81,7 +81,7 @@ a configuration value for `thing` - this can be done using the `--config` flag:
 ```bash
 $ extism call ./target/wasm32-unknown-unknown/release/{{your-plugin}}.wasm count_vowels --input "this is a test" --config thing=myValue
 ``` 
-> **Note:** This requires the advanced features of the Extism CLI which require the Python SDK to be installed: `pip3 install extism`
+> **Note:** This uses the advanced features of the Extism CLI which require Python SDK to be installed: `pip3 install extism`
 
 #### Using Extism built-in HTTP
 
