@@ -44,9 +44,6 @@ import (
 )
 
 func main() {
-	ctx := extism.NewContext()
-	defer ctx.Free() // this will free the context and all associated plugins
-
 	// set some input data to provide to the plugin module
 	var data []byte
 	if len(os.Args) > 1 {
@@ -60,7 +57,9 @@ func main() {
 	// NOTE: if you encounter an error such as: 
 	// "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
 	// change `false` to `true` in the following function to provide WASI imports to your plugin.
-	plugin, err := ctx.PluginFromManifest(manifest, []Function{}, false)
+	plugin, err := extism.NewPluginFromManifest(manifest, []Function{}, false)
+  defer plugin.free()
+
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -126,7 +125,7 @@ Then add it to the plugin when it's created:
 // Create host function
 f := extism.NewFunction("hello_world", []extism.ValType{extism.I64}, []extism.ValType{extism.I64}, C.hello_world, "Hello again!")
 defer f.Free()
-plugin, err := ctx.PluginFromManifest(manifest, []Function{f}, false)
+plugin, err := extism.NewPluginFromManifest(manifest, []Function{f}, false)
 ```
 
 ### Other Documentation

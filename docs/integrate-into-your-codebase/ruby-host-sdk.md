@@ -42,24 +42,18 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.
 require 'extism'
 require 'json'
 
-# a Context provides a scope for plugins to be managed within. creating multiple contexts
-# is expected and groups plugins based on source/tenant/lifetime etc.
-# We recommend you use `Extism.with_context` unless you need to keep your context around.
-# If you do you can create a context with `Extism::Context#new`, example: `ctx = Extism::Context.new`
-Extism.with_context do |ctx| 
-  manifest = {
-    :wasm => [{:path => "code.wasm"}]
-  }
+manifest = {
+  :wasm => [{:path => "code.wasm"}]
+}
 
 
-  # NOTE: if you encounter an error such as: 
-  # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-  # pass `true` after `manifest` in the following function to provide WASI imports to your plugin.
-  plugin = ctx.plugin(manifest)
-  res = JSON.parse(plugin.call("count_vowels", ARGV[0] || "this is a test"))
-  
-  puts res['count']
-end
+# NOTE: if you encounter an error such as: 
+# "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+# pass `true` after `manifest` in the following function to provide WASI imports to your plugin.
+plugin = Extism::Plugin.new(manifest)
+res = JSON.parse(plugin.call("count_vowels", ARGV[0] || "this is a test"))
+
+puts res['count']
 ```
 
 
