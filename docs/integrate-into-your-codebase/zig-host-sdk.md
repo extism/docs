@@ -42,9 +42,6 @@ const std = @import("std");
 const extism = @import("extism");
 
 pub fn main() !void {
-    var ctx = extism.Context.init();
-    defer ctx.deinit();
-
     const wasm_file = extism.manifest.WasmFile{ .path = "code.wasm" };
     const manifest = .{ .wasm = &[_]extism.manifest.Wasm{.{ .wasm_file = wasm_file }} };
 
@@ -54,9 +51,8 @@ pub fn main() !void {
     // NOTE: if you encounter an error such as: 
     // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
     // change `false` to `true` in the following function to provide WASI imports to your plugin.
-    var plugin = try extism.Plugin.initFromManifest(
+    var plugin = try extism.Plugin.createFromManifest(
         allocator,
-        &ctx,
         manifest,
         &[_]extism.Function{},
         false,
@@ -167,7 +163,7 @@ var f = Function.init(
 );
 defer f.deinit();
 
-var plugin = try sdk.Plugin.initFromManifest(allocator, &context, man, &[_]sdk.Function{f}, true);
+var plugin = try sdk.Plugin.createFromManifest(allocator, man, &[_]sdk.Function{f}, true);
 defer plugin.deinit();
 ```
 

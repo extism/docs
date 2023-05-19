@@ -42,7 +42,7 @@ import json
 import hashlib
 import pathlib
 
-from extism import Context
+from extism import Plugin
 
 # Compare against Python implementation.
 def count_vowels(data):
@@ -60,15 +60,12 @@ def main(args):
     hash = hashlib.sha256(wasm).hexdigest()
     config = {"wasm": [{"data": wasm, "hash": hash}], "memory": {"max": 5}}
 
-    # a Context provides a scope for plugins to be managed within. creating multiple contexts
-    # is expected and groups plugins based on source/tenant/lifetime etc.
-    with Context() as context:
-        # NOTE: if you encounter an error such as: 
-        # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-        # pass `wasi=True` in the following function to provide WASI imports to your plugin.
-        plugin = context.plugin(config)
-        # Call `count_vowels`
-        wasm_vowel_count = json.loads(plugin.call("count_vowels", data))
+      # NOTE: if you encounter an error such as: 
+      # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+      # pass `wasi=True` in the following function to provide WASI imports to your plugin.
+      plugin = Plugin(config)
+      # Call `count_vowels`
+      wasm_vowel_count = json.loads(plugin.call("count_vowels", data))
 
     print("Number of vowels:", wasm_vowel_count["count"])
 
@@ -125,7 +122,7 @@ functions = [
     )
 ]
 
-plugin = context.plugin(config, wasi=True, functions=functions)
+plugin = Plugin(config, wasi=True, functions=functions)
 ```
 
 ### Need help?

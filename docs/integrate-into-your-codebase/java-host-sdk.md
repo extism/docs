@@ -48,7 +48,7 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.
 ```java title=App.java
 package example;
 
-import org.extism.sdk.Context;
+import org.extism.sdk.Plugin;
 import org.extism.sdk.manifest.Manifest;
 import org.extism.sdk.wasm.WasmSourceResolver;
 
@@ -64,7 +64,7 @@ public class App
         // NOTE: if you encounter an error such as: 
         // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
         // change `false` to `true` in the following function to provide WASI imports to your plugin.
-        try (var ctx = new Context(); var plugin = ctx.newPlugin(manifest, false, null)) 
+        try (var plugin = new Plugin(manifest, false, null)) 
         {
             var output = plugin.call("count_vowels", "Hello World");
             System.out.println(output);

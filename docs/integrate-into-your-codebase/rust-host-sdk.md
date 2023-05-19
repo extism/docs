@@ -36,15 +36,14 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.
 :::
 
 ```rust title=main.rs
-use extism::{Context, Plugin};
+use extism::{Plugin};
 
 fn main() {
     let wasm = include_bytes!("code.wasm");
-    let context = Context::new();
     // NOTE: if you encounter an error such as: 
     // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
     // change `false` to `true` in the following function to provide WASI imports to your plugin.
-    let mut plugin = Plugin::new(&context, wasm, [], false).unwrap();
+    let mut plugin = Plugin::new(wasm, [], false).unwrap();
     let data = plugin.call("count_vowels", "this is a test").unwrap();
     assert_eq!(data, b"{\"count\": 4}");
 }
@@ -89,7 +88,7 @@ let f = Function::new(
     hello_world,
 );
 let functions = [&f];
-let mut plugin = Plugin::new(&context, WASM, functions, true).unwrap();
+let mut plugin = Plugin::new(WASM, functions, true).unwrap();
 ```
 
 ### Need help?

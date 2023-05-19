@@ -38,15 +38,14 @@ let () =
   let input =
     if Array.length Sys.argv > 1 then Sys.argv.(1) else "this is a test"
   in
-  let ctx = Context.create () in
   let manifest = Manifest.(create [ Wasm.file "../wasm/code.wasm" ]) in
   (* NOTE: if you encounter an error such as: 
      "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
      use [Plugin.of_manifest ~wasi:true] in the following line to provide WASI imports to your plugin. *)
-  let plugin = Plugin.of_manifest ctx manifest |> Error.unwrap in
+  let plugin = Plugin.of_manifest manifest |> Error.unwrap in
   let res = Plugin.call plugin ~name:"count_vowels" input |> Error.unwrap in
   print_endline res;
-  Context.free ctx
+  Plugin.free ctx
 ```
 
 ### Host Functions
@@ -78,7 +77,7 @@ Then add it to the plugin when it's created:
 
 ```ocaml
 let functions = [ hello_world ] in
-let plugin = Plugin.of_manifest ~functions ctx manifest |> Error.unwrap in
+let plugin = Plugin.of_manifest ~functions manifest |> Error.unwrap in
 ```
 
 ### Need help?

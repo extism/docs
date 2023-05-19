@@ -42,7 +42,9 @@ constCast
 CountVowels
 cout
 cpp
+createFromManifest
 CreatePlugin
+createPluginFromManifest
 csharp
 css
 ctx

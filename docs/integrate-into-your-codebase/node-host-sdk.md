@@ -33,31 +33,23 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.
 :::
 
 ```javascript title=index.js
-const { withContext, Context } = require('@extism/extism');
+const { Plugin } = require('@extism/extism');
 const { readFileSync } = require('fs');
 
-withContext(async function (context) {
-  let wasm = readFileSync('../wasm/code.wasm');
-  // NOTE: if you encounter an error such as: 
-  // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-  // change the second parameter to `true` in the following function to provide WASI imports to your plugin.
-  let p = context.plugin(wasm, false, functions);
+const wasm = readFileSync('../wasm/code.wasm');
+// NOTE: if you encounter an error such as: 
+// "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+// change the second parameter to `true` in the following function to provide WASI imports to your plugin.
+const p = new Plugin(wasm, false, functions);
 
-  if (!p.functionExists('count_vowels')) {
-    console.log("no function 'count_vowels' in wasm");
-    process.exit(1);
-  }
+if (!p.functionExists('count_vowels')) {
+  console.log("no function 'count_vowels' in wasm");
+  process.exit(1);
+}
 
-  let buf = await p.call('count_vowels', process.argv[2] || 'this is a test');
-  console.log(JSON.parse(buf.toString())['count']);
-  p.free();
-});
-
-// or, use a context like this:
-let ctx = new Context();
-let wasm = readFileSync('../wasm/code.wasm');
-let p = ctx.plugin(wasm);
-// ... where the context can be passed around to various functions etc. 
+let buf = await p.call('count_vowels', process.argv[2] || 'this is a test');
+console.log(JSON.parse(buf.toString())['count']);
+p.free();
 ```
 
 ### Host Functions
@@ -101,7 +93,7 @@ let functions = [
 ];
 
 
-let p = context.plugin(wasm, true, functions);
+let p = new Plugin(wasm, true, functions);
 ```
 
 
