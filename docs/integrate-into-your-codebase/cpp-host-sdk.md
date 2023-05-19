@@ -74,12 +74,11 @@ std::vector<uint8_t> read(const char *filename) {
 
 int main(int argc, char *argv[]) {
   auto wasm = read("../wasm/code.wasm");
-  Context context = Context();
-  
+ 
   // NOTE: if you encounter an error such as: 
   // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
   // set the second argument to `true` in the following function to provide WASI imports to your plugin.
-  Plugin plugin = context.plugin(wasm, false);
+  Plugin plugin(wasm, false);
 
   const char *input = argc > 1 ? argv[1] : "this is a test";
   ExtismSize length = strlen(input);
@@ -115,7 +114,7 @@ Then add it to the plugin when it's created:
                (void *)"Hello again!",
                [](void *x) { std::cout << "Free user data" << std::endl; }),
   };
-  Plugin plugin = context.plugin(wasm, false, functions);
+  Plugin plugin(wasm, false, functions);
 ```
 
 
