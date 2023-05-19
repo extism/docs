@@ -46,7 +46,7 @@ main = do
   -- NOTE: if you encounter an error such as: 
   -- "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
   -- change `False` to `True` in the following function to provide WASI imports to your plugin.
-  plugin <- unwrap <$> Extism.pluginFromManifest (manifest [wasmFile "../wasm/code.wasm"]) False 
+  plugin <- unwrap <$> Extism.createPluginFromManifest (manifest [wasmFile "../wasm/code.wasm"]) False 
   res <- unwrap <$> Extism.call plugin "count_vowels" (Extism.toByteString "this is a test")
   putStrLn (Extism.fromByteString res)
   Extism.free plugin
