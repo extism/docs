@@ -19,6 +19,8 @@ Use the AssemblyScript compiler, `asc`:
 npx asc example.ts --outFile example.wasm --use abort=example/myAbort
 ```
 
+The `--maxMemory` flag can be used to limit the amount of memory available to an individual module.
+
 ### Example Usage
 
 ```typescript title=example.ts

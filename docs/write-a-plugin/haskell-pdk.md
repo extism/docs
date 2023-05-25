@@ -32,6 +32,13 @@ plugin's executable stanza:
     -optl -Wl,--export=myFunction
 ```
 
+Or to limit the amount of memory available to an individual module:
+
+```
+  ghc-options:
+    -optl -Wl,--max-memory=65536
+```
+
 ### Compiling to WebAssembly
 
 Install the `wasm`-ready version of the Haskell toolchain, following [these instructions](https://gitlab.haskell.org/ghc/ghc-wasm-meta), and run:

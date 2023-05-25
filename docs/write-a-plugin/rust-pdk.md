@@ -36,6 +36,13 @@ You may need to install the wasm32-unknown-unknown target with:
 
 > **NOTE:** `--target wasm32-wasi` is also fully supported
 
+To limit the amount of memory available to an individual module, create a `.cargo/config` file:
+
+```toml
+[target.wasm32-unknown-unknown]
+rustflags = ["-Clink-args=--max-memory=65536"]
+```
+
 ### Latest Docs
 
 [https://docs.rs/extism-pdk](https://docs.rs/extism-pdk)

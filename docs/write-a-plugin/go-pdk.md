@@ -22,6 +22,19 @@ tinygo build -o example.wasm -target wasi main.go
 > **NOTE:** Currently all Go plugins must be compiled targeting `WASI`. Active work is being done to 
 remove this requirement.
 
+To limit the amount of memory available to an individual module, create a `target.json` file:
+
+```json
+{
+    "inherits": [ "wasm" ],
+    "ldflags": [
+        "--max-memory=65536",
+    ]
+}
+```
+
+and compile with `tinygo -target ./target.json`
+
 
 ### Latest Docs
 

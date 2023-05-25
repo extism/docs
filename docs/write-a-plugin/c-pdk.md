@@ -49,6 +49,8 @@ export WASICC="${WASI_SDK_PATH}/bin/clang --sysroot=${WASI_SDK_PATH}/share/wasi-
 $WASICC -o example.wasm -Wl,--export=count_vowels example/count_vowels.c 
 ```
 
+Using `-Wl,--max-memory` you can limit the amount of memory available to an individual module
+
 ### Example Usage
 ```c title=main.c
 #include "extism/extism-pdk.h"
