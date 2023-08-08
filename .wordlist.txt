@@ -23,6 +23,7 @@ callconv
 CallFunction
 CartDataInput
 CartDataOutput
+ccall
 cd
 cgo
 CJS
@@ -39,6 +40,7 @@ configurability
 conosole
 const
 constCast
+countVowels
 CountVowels
 cout
 cpp
@@ -135,6 +137,7 @@ hpp
 hs
 html
 http
+httpGet
 HTTPGet
 HttpRequest
 https
@@ -169,6 +172,7 @@ macos
 MacOS
 malloc
 mem
+mexec
 mkdir
 msg
 mut
