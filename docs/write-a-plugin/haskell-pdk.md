@@ -21,7 +21,7 @@ source-repository-package
 
 package my-package
   ghc-options:
-    -optl -Wl,--export=hs_init -optl -Wl,--export=hs_exit -optl -Wl,--allow-undefined 
+    -optl -Wl,--export=hs_init -optl -Wl,--allow-undefined -no-hs-main -optl-mexec-model=reactor 
 ```
 
 To export a specific function using `foreign export` you should also include the following in your
@@ -47,7 +47,7 @@ wasm32-wasi-cabal build
 #### Using JSON
 
 ```haskell title=CountVowels.hs
-module Main where
+module CountVowels where
 
 import Extism.PDK
 import Extism.PDK.JSON
@@ -59,24 +59,26 @@ isVowel c =
   c == 'o' || c == 'O' ||
   c == 'u' || c == 'U'
 
-main = do
+countVowels = do
   -- Get input string from Extism host
   s <- inputString
   -- Calculate the number of vowels
   let count = length (filter isVowel s)
   -- Return a JSON object {"count": count} back to the host
   outputJSON $ object ["count" .= count]
+
+foreign export ccall "count_vowels" countVowels ::  IO ()
 ```
 
 #### Using Extism built-in HTTP
 
 ```haskell title=HTTPGet.hs
-module Main where
+module HTTPGet where
 
 import Extism.PDK
 import Extism.PDK.HTTP
 
-main = do
+httpGet = do
   -- Get URL from the host
   url <- inputString
   -- Create a new 'Request'
@@ -85,12 +87,14 @@ main = do
   res <- sendRequest req Nothing
   -- Save response body to memory
   outputMemory (memory res)
+
+foreign export ccall "http_get" httpGet ::  IO ()
 ```
 
 #### Using I/O
 
 ```haskell title=Hello.hs
-module Main where
+module Hello where
 
 import Extism.PDK
 import Data.Maybe
@@ -98,11 +102,13 @@ import Data.Maybe
 greet g n =
   outputString $ g ++ ", " ++ n
 
-main = do
+hello = do
   -- Get a name from the Extism runtime
   name <- inputString
   -- Get  configured greeting
   greeting <- getConfig "greeting"
   -- Greet the user, if no greeting is configured then "Hello" is used
   greet (fromMaybe "Hello" greeting) name
+
+foreign export ccall "hello" hello ::  IO ()
 ```

@@ -21,7 +21,7 @@ First edit `.gitmodules` to point to the tag
 [submodule "extism"]
 	path = extism
 	url = https://github.com/extism/c-pdk
-	tag = v0.3.0
+	tag = v0.4.0
 ```
 
 > **N.B.**: See the [c-pdk releases](https://github.com/extism/c-pdk/releases) page for available versions
@@ -31,7 +31,7 @@ Then update:
 ```
 git submodule foreach --recursive 'git fetch --tags'
 git submodule update --init --recursive --remote
-git commit -am 'Lock extism version to v0.3.0'
+git commit -am 'Lock extism version to v0.4.0'
 ```
 
 :::
@@ -46,11 +46,11 @@ export WASI_SDK_PATH=/path/to/wasi-sdk
 export WASICC="${WASI_SDK_PATH}/bin/clang --sysroot=${WASI_SDK_PATH}/share/wasi-sysroot"
 
 # Compile example
-$WASICC -o example.wasm -Wl,--export=count_vowels example/count_vowels.c 
+$WASICC -o example.wasm -Wl,--export=count_vowels example/count_vowels.c -mexec-model=reactor 
 ```
 
 ### Example Usage
-```c title=main.c
+```c title=count-vowels.c
 #include "extism/extism-pdk.h"
 
 #include <stdio.h>
