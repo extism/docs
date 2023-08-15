@@ -17,7 +17,7 @@ Please be sure you've [installed Extism](/docs/install) before continuing with t
 
 Install via `go get`:
 ```sh
-go get github.com/extism/extism
+go get github.com/extism/go-sdk
 ```
 
 ### 2. Import the module and use the APIs
@@ -25,22 +25,27 @@ go get github.com/extism/extism
 :::note Count Vowels Plugin
 `code.wasm` in this example is our example plugin that counts vowels. If you want to run this, download it first and set the path:
 
+On Linux and Mac:
+```sh
+curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.wasm
 ```
-curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
+
+On Windows:
+```pwsh
+Invoke-WebRequest -URI https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm -OutFile code.wasm
 ```
 :::
 
-```c title=main.go
+```go title=main.go
 package main
 
-
-
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
 
-	"github.com/extism/extism"
+	extism "github.com/extism/go-sdk"
 )
 
 func main() {
@@ -52,25 +57,33 @@ func main() {
 		data = []byte("testing from go -> wasm shared memory...")
 	}
 
-	manifest := extism.Manifest{Wasm: []extism.Wasm{extism.WasmFile{Path: "code.wasm"}}}
-	
-	// NOTE: if you encounter an error such as: 
+	manifest := extism.Manifest{
+		Wasm: []extism.Wasm{
+			extism.WasmFile{
+				Path: "code.wasm",
+			},
+		},
+	}
+
+	ctx := context.Background()
+	config := extism.PluginConfig{
+		EnableWasi: false,
+	}
+
+	// NOTE: if you encounter an error such as:
 	// "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-	// change `false` to `true` in the following function to provide WASI imports to your plugin.
-	plugin, err := extism.NewPluginFromManifest(manifest, []Function{}, false)
-  defer plugin.free()
+	// make sure extism.PluginConfig is set to `true` to provide WASI imports to your plugin.
+	plugin, err := extism.NewPlugin(ctx, manifest, config, []extism.HostFunction{})
 
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("Failed to initialize plugin: %v\n", err)
 		os.Exit(1)
 	}
 
-	// use the extism Go library to provide the input data to the plugin, execute it, and then
-	// collect the plugin state and error if present
-	out, err := plugin.Call("count_vowels", data)
+	exit, out, err := plugin.Call("count_vowels", data)
 	if err != nil {
 		fmt.Println(err)
-		os.Exit(1)
+		os.Exit(int(exit))
 	}
 
 	// "out" is []byte type, and the plugin sends back json, so deserialize it into a map.
@@ -80,6 +93,7 @@ func main() {
 
 	fmt.Println("Count:", dest["count"])
 }
+
 ```
 
 ### Host Functions
@@ -90,42 +104,47 @@ is to declare it using `EXTISM_GO_FUNCTION` and define a function with the prope
 :::note Count Vowels Plugin
 To run this example, use the version of the count vowels plugin with the example host function:
 
-```
+On Linux and Mac:
+```sh
 curl https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm > code.wasm
 ```
 
+On Windows:
+```pwsh
+Invoke-WebRequest -URI https://raw.githubusercontent.com/extism/extism/main/wasm/code-functions.wasm -OutFile code.wasm
+```
 :::
 ```go
-/*
-#include <extism.h>
-EXTISM_GO_FUNCTION(hello_world);
-*/
-import "C"
+hf := extism.HostFunction{
+	Name:      "hello_world",
+	Namespace: "env",
+	Callback: func(ctx context.Context, p *extism.CurrentPlugin, userData interface{}, stack []uint64) {
+		fmt.Printf("Hello from Go! User data: %s\n", userData)
 
-//export hello_world
-func hello_world(plugin unsafe.Pointer, inputs *C.ExtismVal, nInputs C.ExtismSize, outputs *C.ExtismVal, nOutputs C.ExtismSize, userData uintptr) {
-	fmt.Println("Hello from Go!")
-	s := cgo.Handle(userData)
-	fmt.Println(s.Value().(string))
-	inputSlice := unsafe.Slice(inputs, nInputs)
-	outputSlice := unsafe.Slice(outputs, nOutputs)
+		offset := stack[0]
+		text, err := p.ReadString(offset)
+		if err != nil {
+			panic(err)
+		}
 
-	// Get memory pointed to by first element of input slice
-	p := extism.GetCurrentPlugin(plugin)
-	mem := p.Memory(extism.ValGetUInt(unsafe.Pointer(&inputSlice[0])))
-	fmt.Println(string(mem))
+		fmt.Println(text)
 
-	outputSlice[0] = inputSlice[0]
+		stack[0] = offset
+	},
+	Params:   []byte{api.ValueTypeI64},
+	Results:  []byte{api.ValueTypeI64},
+	UserData: "user data",
 }
 ```
 
 Then add it to the plugin when it's created: 
 
 ```go
-// Create host function
-f := extism.NewFunction("hello_world", []extism.ValType{extism.I64}, []extism.ValType{extism.I64}, C.hello_world, "Hello again!")
-defer f.Free()
-plugin, err := extism.NewPluginFromManifest(manifest, []Function{f}, false)
+config := extism.PluginConfig{
+	EnableWasi: true,
+}
+
+plugin, err := extism.NewPlugin(ctx, manifest, config, []extism.HostFunction{hf})
 ```
 
 ### Other Documentation
@@ -134,7 +153,7 @@ See the module documentation at: https://pkg.go.dev/github.com/extism/extism
 
 ### Need help?
 
-If you've encountered a bug or think something is missing, please open an issue on the [Extism GitHub](https://github.com/extism/extism) repository.
+If you've encountered a bug or think something is missing, please open an issue on the [Extism GitHub](https://github.com/extism/go-sdk) repository.
 
 There is an active community on [Discord](https://discord.gg/cx3usBCWnc) where the project maintainers and users can help you. Come hang out!
 
