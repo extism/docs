@@ -149,7 +149,7 @@ plugin, err := extism.NewPlugin(ctx, manifest, config, []extism.HostFunction{hf}
 
 ### Other Documentation
 
-See the module documentation at: https://pkg.go.dev/github.com/extism/extism
+See the module documentation at: https://pkg.go.dev/github.com/extism/go-sdk
 
 ### Need help?
 
