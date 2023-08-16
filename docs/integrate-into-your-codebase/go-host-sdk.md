@@ -72,7 +72,7 @@ func main() {
 
 	// NOTE: if you encounter an error such as:
 	// "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-	// make sure extism.PluginConfig is set to `true` to provide WASI imports to your plugin.
+	// make sure extism.PluginConfig.EnableWasi is set to `true` to provide WASI imports to your plugin.
 	plugin, err := extism.NewPlugin(ctx, manifest, config, []extism.HostFunction{})
 
 	if err != nil {
