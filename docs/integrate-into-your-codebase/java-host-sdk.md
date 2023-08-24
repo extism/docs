@@ -24,14 +24,14 @@ For maven, add to your `pom.xml`:
 <dependency>
   <groupId>org.extism.sdk</groupId>
   <artifactId>extism</artifactId>
-  <version>0.4.0</version>
+  <version>0.5.0</version>
 </dependency>
 ```
 
 For gradle, add to your `build.gradle`:
 
 ```
-implementation 'org.extism.sdk:extism:0.4.0'
+implementation 'org.extism.sdk:extism:0.5.0'
 ```
 
 
