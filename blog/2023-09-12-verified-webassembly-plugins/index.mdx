@@ -1,0 +1,130 @@
+---
+slug: verified-webassembly-plugins
+title: "Formally verified WebAssembly plugins using Coq and Extism"
+authors: [zach]
+tags: [WebAssembly, Coq, formal verification]
+---
+
+Formal verification is still very much a field of active research but it seems like a potentially exciting way to help developers increase our trust in software and escape some of the pitfalls of the software development process. When used combination in with WebAssembly, formally verified software can be executed in a sandboxed environment providing strong guarantees around both the correctness and safety of an application. For instance, [Coq](https://github.com/coq/coq) requires all programs to terminate, which is a pretty stringent requirement for typical programming environments, but when targeting Wasm running embedded in another application it is often important to ensure the guest code doesn’t run forever.
+
+Throughout the development of [Extism](https://github.com/extism/extism), we have used `count-vowels.wasm` as our trusty test plugin - it is a module that has a single function export named `count_vowels` that takes an input string and returns a JSON encoded string like `{"count": 4}` with the number of vowels contained in the input. Our finely-tuned [C implementation](https://github.com/extism/c-pdk/blob/main/examples/count-vowels/count-vowels.c) is very reliable, but I only know this from running it manually on lots of different inputs and observing the outputs, it would be nice to have some evidence that our program is counting vowels correctly!
+
+[Coq](https://coq.inria.fr/) is a “formal proof management system” that can be used to write programs and proofs about those programs. The code can then be [extracted](https://coq.inria.fr/refman/addendum/extraction.html) to OCaml, Haskell, or Scheme allowing it to be integrated into larger applications in those languages. For example, writing a `count_vowels` function in Coq allows us to write proofs about the implementation of our algorithm to ensure the vowels are being counted correctly. These proofs are similar to tests in other languages but they describe mathematical facts about the code - if something is implemented incorrectly then it won’t be possible to come up with a valid proof.
+
+Using Coq extracted to Haskell with the [Extism Haskell PDK](https://github.com/extism/haskell-pdk) we can create verified algorithms that get converted to Haskell code wrapped into an [Extism](https://github.com/extism/exitsm) plugin and compiled to WebAssembly using [wasi32-wasi-ghc](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/wasm.html). Since Extism has support for [15+ host languages](https://extism.org), this formally verified Haskell code can be executed in programs written in languages from Rust to Elixir to PHP!
+
+As a starting point, we can take a look at the [C implementation](https://github.com/extism/c-pdk/blob/main/examples/count-vowels/count-vowels.c), which keeps a running total and sums up the number of vowels it encounters:
+
+```c
+int32_t count_vowels() {
+  uint64_t count = 0;
+  uint8_t ch = 0;
+  uint64_t length = extism_input_length();
+
+  for (uint64_t i = 0; i < length; i++) {
+    ch = extism_input_load_u8(i);
+    count += (ch == 'A') + (ch == 'a') + (ch == 'E') + (ch == 'e') +
+             (ch == 'I') + (ch == 'i') + (ch == 'O') + (ch == 'o') +
+             (ch == 'U') + (ch == 'u');
+  }
+
+	...
+
+```
+
+Other than counting vowels, it uses some Extism PDK functions to get the input from the host, this part of our module will be written in Haskell, since Coq doesn’t have bindings to the Extism runtime. 
+
+The Coq implementation ends up being similar to a recursive version of the C implementation:
+
+```coq
+Definition is_vowel (b: byte) :=
+  match b with
+    | "A" | "a" | "E" | "e" | "I" | "i" | "O" | "o" | "U" | "u" => true
+    | _ => false
+    end.
+
+Fixpoint count_vowels (s: string) : nat :=
+  match s with
+  | "" => 0
+  | String x s' =>
+    if is_vowel (byte_of_ascii x) then count_vowels s' + 1
+    else count_vowels s'
+  end.
+
+```
+
+From here, we can build up some facts about the algorithm, like “when a vowel is added to a string, the count increases by 1”:
+
+```coq
+Theorem count_vowels_plus_vowel:
+  forall x c,
+	  is_vowel c = true ->
+		  count_vowels (String (ascii_of_byte c) x) = count_vowels x + 1.
+Proof.
+  intros.
+  unfold count_vowels.
+  rewrite byte_of_ascii_of_byte.
+  rewrite H.
+  reflexivity.
+Qed.
+```
+
+Then extract the Haskell source:
+
+```coq
+Extraction Language Haskell.
+Extraction "src/CountVowels.hs" count_vowels.
+```
+
+The above proof serves as validation of the generated code too, so whatever we prove in Coq holds true in our Haskell code as well. We have a guarantee that when a new vowel is added, our Haskell function will increase the vowel count by 1 - If we introduce a bug into our algorithm that alters the vowel count somehow then we’ll get an error when checking that proof. 
+
+The extracted Haskell code looks surprisingly idiomatic:
+
+```haskell
+is_vowel :: Prelude.Char -> Prelude.Bool
+is_vowel b =
+  case b of {
+   'A' -> Prelude.True;
+   'E' -> Prelude.True;
+   'I' -> Prelude.True;
+   'O' -> Prelude.True;
+   'U' -> Prelude.True;
+   'a' -> Prelude.True;
+   'e' -> Prelude.True;
+   'i' -> Prelude.True;
+   'o' -> Prelude.True;
+   'u' -> Prelude.True;
+   _ -> Prelude.False}
+
+count_vowels :: Prelude.String -> Prelude.Int
+count_vowels s =
+  case s of {
+   ([]) -> 0;
+   (:) x s' ->
+    case is_vowel ((\\x -> x) x) of {
+     Prelude.True -> (Prelude.+) (count_vowels s') (Prelude.succ 0);
+     Prelude.False -> count_vowels s'}}
+
+```
+
+Finally, we can wrap that code into a plugin with the same interface as our other implementation:
+
+```haskell
+import CountVowels
+import Extism.PDK
+import Extism.PDK.JSON
+
+countVowels :: IO ()
+countVowels = do
+  -- Get input string from Extism host
+  s <- inputString
+  -- Calculate the number of vowels
+  let count = count_vowels s
+  -- Return a JSON object {"count": count} back to the host
+  outputJSON $ object ["count" .= count]
+
+```
+
+Once we compile the code, all we have to do is replace the original `count-vowels.wasm` with the resulting `verified-count-vowels.wasm`, and suddenly we have our formally verified code written in Coq, extracted to Haskell, compiled to Wasm, running in a sandbox, embedded in the legacy application of your choice!
+
+The full source is available on [GitHub](https://github.com/extism/verified-count-vowels)
