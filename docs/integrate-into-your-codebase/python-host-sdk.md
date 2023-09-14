@@ -55,17 +55,17 @@ def main(args):
     else:
         data = b"some data from python!"
 
-    wasm_file_path = pathlib.Path(__file__).parent.parent / "wasm" / "code.wasm"
+    wasm_file_path = pathlib.Path(__file__).parent / "code.wasm"
     wasm = wasm_file_path.read_bytes()
     hash = hashlib.sha256(wasm).hexdigest()
-    config = {"wasm": [{"data": wasm, "hash": hash}], "memory": {"max": 5}}
+    config = {"wasm": [{"data": wasm, "hash": hash}]}
 
-      # NOTE: if you encounter an error such as: 
-      # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-      # pass `wasi=True` in the following function to provide WASI imports to your plugin.
-      plugin = Plugin(config)
-      # Call `count_vowels`
-      wasm_vowel_count = json.loads(plugin.call("count_vowels", data))
+    # NOTE: if you encounter an error such as: 
+    # "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
+    # pass `wasi=True` in the following function to provide WASI imports to your plugin.
+    plugin = Plugin(config)
+    # Call `count_vowels`
+    wasm_vowel_count = json.loads(plugin.call("count_vowels", data))
 
     print("Number of vowels:", wasm_vowel_count["count"])
 

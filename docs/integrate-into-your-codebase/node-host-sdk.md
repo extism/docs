@@ -36,11 +36,11 @@ curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.
 const { Plugin } = require('@extism/extism');
 const { readFileSync } = require('fs');
 
-const wasm = readFileSync('../wasm/code.wasm');
+const wasm = readFileSync('code.wasm');
 // NOTE: if you encounter an error such as: 
 // "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
 // change the second parameter to `true` in the following function to provide WASI imports to your plugin.
-const p = new Plugin(wasm, false, functions);
+const p = new Plugin(wasm, false);
 
 if (!p.functionExists('count_vowels')) {
   console.log("no function 'count_vowels' in wasm");
