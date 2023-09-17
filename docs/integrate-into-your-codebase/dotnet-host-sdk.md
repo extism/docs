@@ -49,10 +49,10 @@ using Extism.Sdk.Native;
 using System.Text;
 
 var wasm = await File.ReadAllBytesAsync("code.wasm");
-using var plugin = Plugin.Create(wasm, withWasi: true);
+using var plugin = Plugin.Create(wasm, Array.Empty<HostFunction>(), withWasi: true);
 
 var output = Encoding.UTF8.GetString(
-    plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
+    plugin.CallFunction("count_vowels",  Encoding.UTF8.GetBytes("Hello World!"))
 );
 Console.WriteLine(output); // prints {"count": 3}
 ```
