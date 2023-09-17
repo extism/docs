@@ -30,7 +30,7 @@ We provide a [native package for Windows](https://www.nuget.org/packages/Extism.
 You can install with:
 
 ```
-dotnet add package Extism.runtime.win-x64
+dotnet add package Extism.runtime.win-x64 --version 0.6.0
 ```
 :::
 
