@@ -3,10 +3,9 @@ title: Installing Extism
 sidebar_position: 2
 ---
 
-The `extism` CLI is used to manage [Extism](https://github.com/extism/extism) installations. In order to run Extism, your system must be able to locate the `libextism.so` (on Linux) or `libextism.dylib` (on macos). Windows support is coming soon.
+The `extism` [CLI](https://github.com/extism/cli) is used to manage [Extism](https://github.com/extism/extism) installations and execute plugins from the command-line. In order to run Extism, your system must be able to locate the `libextism.so` (on Linux), `extism.dll` (on Windows) or `libextism.dylib` (on macos).
 
 > **Note:** If you are using the [Rust Host SDK](/docs/integrate-into-your-codebase/rust-host-sdk), this is not the case, and can use Extism as a [crate dependency](https://crates.io/crates/extism) in your `Cargo.toml`. 
-
 
 ---
 
@@ -14,66 +13,30 @@ The following instructions will walk you through how to install the Extism CLI, 
 
 ## Install the Extism CLI
 
-### macos
-
-Using pip: <small><em>(recommended)</em></small>
+Using go: <small><em>(recommended)</em></small>
 
 ```sh
-pip3 install poetry
-pip3 install git+https://github.com/extism/cli
+go install github.com/extism/cli/extism
 ```
 
-Using curl:
-
-```sh
-sh <(curl https://raw.githubusercontent.com/extism/cli/main/install.sh) /usr/local/bin
-
-# To use advanced features of the CLI, install the Extism Python SDK:
-# pip3 install extism
-```
-
-### Linux
-
-Using pip:
-
-```sh
-pip3 install poetry
-pip3 install git+https://github.com/extism/cli
-```
-
-Using curl:
-
-```sh
-curl https://raw.githubusercontent.com/extism/cli/main/install.sh | sh
-
-# To use advanced features of the CLI, install the Extism Python SDK:
-# pip3 install extism
-```
+There are also releases available on Github: https://github.com/extism/cli/releases
 
 ---
 
 ## Using the Extism CLI
 
-The most common use-case is to to install Extism from Github releases, and then install the library and header file into the installation prefix of your choice.
-
-### macos
+The most common use-case is to to install Extism from Github releases, and then install the library and header file into the installation prefix of your choice. The default prefix is `/usr/local`, so libraries will be installed to `/usr/local/lib` and the header will be installed to `/usr/local/include`.
 
 ```sh
-sudo extism install latest
+sudo extism lib install
 ```
 
-### Linux
+#### Installing the latest from git
+
+It's also possible to install the latest build from the `main` git branch:
 
 ```sh
-extism install latest
-```
-
-#### Build from source
-
-In order to build from source, you must have a recent version of the [Rust toolchain installed](https://rustup.rs/).
-
-```sh
-extism install git # installs to /usr/local/lib and /usr/local/include by default
+sudo extism lib install --version git
 ```
 
 #### Overriding install location
@@ -81,7 +44,7 @@ extism install git # installs to /usr/local/lib and /usr/local/include by defaul
 Pass the `--prefix` argument a path on disk where `extism` CLI will install the system files:
 
 ```sh
-extism --prefix ~/.local install latest
+extism lib install --prefix ~/.local
 ```
 
 ---
@@ -89,18 +52,24 @@ extism --prefix ~/.local install latest
 ## Other CLI Features
 
 ```sh
-usage: extism [-h] [--quiet] [--prefix PREFIX] [--github-token GITHUB_TOKEN] [--sudo] {build,version,install,fetch,uninstall,link,info,call} ...
 
-options:
-  -h, --help            show this help message and exit
-  --quiet               Limit output to errors
-  --prefix PREFIX       Installation prefix
-  --github-token GITHUB_TOKEN
-                        Github token
-  --sudo                Use sudo to install files
+Usage:
+  extism [command]
 
-command:
-  {build,version,install,fetch,uninstall,link,info,call}
+Available Commands:
+  call        Call a plugin function
+  completion  Generate the autocompletion script for the specified shell
+  help        Help about any command
+  lib         Manage libextism
+
+Flags:
+      --github-token string   Github access token, can also be set using the $GITHUB_TOKEN env variable
+  -h, --help                  help for extism
+  -q, --quiet                 Enable additional logging
+  -v, --verbose               Enable additional logging
+      --version               version for extism
+
+Use "extism [command] --help" for more information about a command.
 ```
 
 ### Call plug-in functions
@@ -112,23 +81,11 @@ extism call --input "this is a test" test/code.wasm count_vowels
 {"count": 4}
 ```
 
-> **Note:** if you encounter the error `Could not find extism on this machine`, please install the Extism Python SDK by running: `pip3 install extism`
+### Check installed version
 
-### Get installation info
-
-It's helpful to know where the CLI is locating the Extism shared library, and which version of the runtime it's using.
+The CLI can also be used to get information about the installed version of libextism:
 
 ```sh
-extism info
-Prefix  /usr/local
-Version v0.2.0
-```
-
-### Get runtime version
-
-Use the `version` command to print the version of the Extism runtime installed on your machine:
-
-```sh
-extism version
-v0.2.0
+extism lib check
+v0.5.0
 ```
