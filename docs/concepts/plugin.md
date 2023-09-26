@@ -9,6 +9,8 @@ A plug-in is a code module that conforms to the interface of your [Plug-in Syste
 
 WebAssembly modules, `.wasm files`, are a binary representation of your code module. Like all programming languages, WebAssembly modules are composed of functions. Some of these functions functions are internal, some can be *exported* to your application so that you can invoke them.
 
+## Exports
+
 You can think of them like a JavaScript module. Functions defined in the file can't be seen or invoked from the outside. It must export a function to be used:
 
 ```javascript mymodule.js
@@ -29,6 +31,8 @@ export function countVowels(input) {
 ```
 
 Of course, what is unique about Extism plug-ins is the language you wrote the plug-in in doesn't matter. We can use any [Host SDK](/concepts/host-sdk) to load these modules and call these exports.
+
+## Imports
 
 Like JavaScript modules, WebAssembly modules also have the ability to *import* functions. This is useful because WebAssembly code, on its own, is basically a sandboxed calculator. It can only see the world inside its own memory and doesn't have access to the underlying system. For example, it cannot read from the file system or from the processes memory, or anything that would require a syscall.
 
