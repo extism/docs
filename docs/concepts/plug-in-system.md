@@ -7,7 +7,7 @@ sidebar_position: 0
 
 Plug-ins can be a fuzzy concept to grasp. The most accurate description is also the most abstract: *A Plug-in is a software component that can extend the functionality of your application*. But how is this different from any other piece of code?
 
-We think the best way to understand it is through the view of your application. Your application can implement a *Plug-in System*. A plug-in system is simply an *interface* that you define that allows someone else to *hook into* your application to add their own functionality. That implementation is called a plug-in.
+We think the best way to understand it is through the view of your application. Your application can implement a *Plug-in System*. A plug-in system is simply an *interface* that you define that allows someone else to implement their own functionality in your application. That implementation is called a plug-in.
 
 Extism is an ecosystem of tools that help you create these plug-in systems in your app.
 What makes Extism unique is that, through the use of WebAssembly, your plug-ins can be written in any language and run inside of any language.
