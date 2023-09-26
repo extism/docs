@@ -64,11 +64,11 @@ Now let's suppose the merchant wants to apply a discount of 20%, but only if the
 
 ```rust title=discount.rs
 #[plugin_fn]
-pub fn before_checkout(Json(checkout_data): Json<Cart>) -> FnResult<Json<Discount>> {
+pub fn before_checkout(Json(cart): Json<Cart>) -> FnResult<Json<Discount>> {
     let mut discount = Discount { discount_percent: 0.0 };
 
     // merchant decides what to do here
-    if checkout_data.is_new_customer && checkout_data.cart_total_in_cents >= 10000 { // new customer & $100+ spend, give a 20% discount
+    if cart.is_new_customer && cart.cart_total_in_cents >= 10000 { // new customer & $100+ spend, give a 20% discount
         discount.discount_percent = 20.0
     }
 
