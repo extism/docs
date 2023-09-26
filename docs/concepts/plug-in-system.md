@@ -33,9 +33,9 @@ Let's suppose this is the object that describes our shopping cart:
 
 ```typescript title=types.d.ts
 interface Cart {
-    total_in_cents: number,
-    new_customer: boolean,
-    provided_email: boolean,
+    totalInCents: number,
+    newCustomer: boolean,
+    providedEmail: boolean,
 }
 ```
 
@@ -52,8 +52,8 @@ async function processCart(cart: Cart) {
     const res = await plugin.call("before_checkout", new TextEncoder().encode(input));
     const discount: Discount = JSON.parse(res)
 
-    if (discount.discount_percentage > 0.0) {
-        checkoutCart(cart, discount.discount_percentage)
+    if (discount.discountPercentage > 0.0) {
+        checkoutCart(cart, discount.discountPercentage)
     } else {
         checkoutCart(cart)
     }
