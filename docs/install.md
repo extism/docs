@@ -11,24 +11,6 @@ The `extism` [CLI](https://github.com/extism/cli) is used to manage [Extism](htt
 
 The following instructions will walk you through how to install the Extism CLI, and then the installation of the shared library which a [Host SDK](/docs/concepts/host-sdk) will look for automatically.
 
-## Uninstalling the old CLI
-
-If you're already using the old Python CLI, you will need to uninstall it using `pip`:
-
-```sh
-pip3 uninstall extism_cli
-```
-
-Note: you may also need to use the `--break-system-packages` flag
-
-Now verify that it has been removed:
-
-```sh
-which extism
-```
-
-There should be nothing printed after the call to `which`. If a path *is* listed then you should remove it.
-
 ## Install the Extism CLI
 
 Using go: <small><em>(recommended)</em></small>
@@ -38,6 +20,12 @@ go install github.com/extism/cli/extism
 ```
 
 There are also releases available on Github: https://github.com/extism/cli/releases
+
+> **Note**: If you have installed the old cli via python, you may need to remove it:
+>   ```sh
+>   pip3 uninstall extism_cli --break-system-packages
+>   which extism # shouldn't print anything, if it does, delete it
+>   ```
 
 ---
 
