@@ -57,8 +57,8 @@ func main() {
 	// NOTE: if you encounter an error such as: 
 	// "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
 	// change `false` to `true` in the following function to provide WASI imports to your plugin.
-	plugin, err := extism.NewPluginFromManifest(manifest, []Function{}, false)
-  defer plugin.free()
+	plugin, err := extism.NewPluginFromManifest(manifest, []extism.Function{}, false)
+  	defer plugin.Free()
 
 	if err != nil {
 		fmt.Println(err)
