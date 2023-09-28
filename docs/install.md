@@ -16,7 +16,7 @@ The following instructions will walk you through how to install the Extism CLI, 
 Using go: <small><em>(recommended)</em></small>
 
 ```sh
-go install github.com/extism/cli/extism
+go install github.com/extism/cli/extism@latest
 ```
 
 There are also releases available on Github: https://github.com/extism/cli/releases
@@ -37,6 +37,9 @@ The most common use-case is to to install Extism from Github releases, and then 
 sudo extism lib install
 ```
 
+:::note
+`sudo` may use a different path than your user. If so, you may need to tell sudo to use the PATH defined for your user with: `sudo -E env "PATH=$PATH" extism lib install`
+:::
 #### Installing the latest from git
 
 It's also possible to install the latest build from the `main` git branch:
