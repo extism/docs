@@ -16,7 +16,7 @@ package my-project-name
 ```
 
 To export a specific function using `foreign export` you should also include the following in your
-plugin's executable stanza:
+`cabal` file:
 
 ```
 executable my-project-name
