@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # What is a Plug-in?
 
-A plug-in is a code module that conforms to the interface of your [Plug-in System](/concepts/plug-in-system). In Extism, a plug-in is ultimately a WebAssembly Module that can be created using one of our [PDKs](/concept/pdk) in the language of your choice.
+A plug-in is a code module that conforms to the interface of your [Plug-in System](/docs/concepts/plug-in-system). In Extism, a plug-in is ultimately a WebAssembly Module that can be created using one of our [PDKs](/concept/pdk) in the language of your choice.
 
 WebAssembly modules, `.wasm files`, are a binary representation of your code module. Like all programming languages, WebAssembly modules are composed of functions. Some of these functions functions are internal, some can be *exported* to your application so that you can invoke them.
 
@@ -30,7 +30,7 @@ export function countVowels(input) {
 }
 ```
 
-Of course, what is unique about Extism plug-ins is the language you wrote the plug-in in doesn't matter. We can use any [Host SDK](/concepts/host-sdk) to load these modules and call these exports.
+Of course, what is unique about Extism plug-ins is the language you wrote the plug-in in doesn't matter. We can use any [Host SDK](/docs/concepts/host-sdk) to load these modules and call these exports.
 
 ## Imports
 
@@ -38,6 +38,6 @@ Like JavaScript modules, WebAssembly modules also have the ability to *import* f
 
 So any of this functionality must be imported and implemented by the application. Though, you do not need to implement these yourself. Extism provides the module with some of its own imports to facilitate communication. There are also standards like [WASI](https://wasi.dev/) which can give your module some of the POSIX-like capabilities you expect in a normal programming environment (like reading files or doing I/O).
 
-That said, these imports can be very powerful as they allow you to selectively imbue your plug-ins with the capabilities and APIs of your application itself. This is what [Host Functions](/concepts/host-functions) offer. Like the module has the ability to export a function in a language agnostic way, host functions give you a way to import a function into your plug-in in a language agnostic way. If my application is written in python for example, I could pass a python host function to a plug-in that can say read from my database, or call internal APIs. Host Functions truly unlock the power of a plug-in system as they can, selectively, give your plug-in the same capabilities as your internal application code.
+That said, these imports can be very powerful as they allow you to selectively imbue your plug-ins with the capabilities and APIs of your application itself. This is what [Host Functions](/docs/concepts/host-functions) offer. Like the module has the ability to export a function in a language agnostic way, host functions give you a way to import a function into your plug-in in a language agnostic way. If my application is written in python for example, I could pass a python host function to a plug-in that can say read from my database, or call internal APIs. Host Functions truly unlock the power of a plug-in system as they can, selectively, give your plug-in the same capabilities as your internal application code.
 
 
