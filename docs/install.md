@@ -1,6 +1,6 @@
 ---
-title: Installing Extism
-sidebar_position: 2
+title: Extism CLI
+sidebar_position: 5
 ---
 
 The `extism` [CLI](https://github.com/extism/cli) is used to manage [Extism](https://github.com/extism/extism) installations and execute plugins from the command-line. In order to run Extism, your system must be able to locate the `libextism.so` (on Linux), `extism.dll` (on Windows) or `libextism.dylib` (on macos).
