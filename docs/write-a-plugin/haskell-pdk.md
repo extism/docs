@@ -10,7 +10,7 @@ sidebar_position: 4
 Add to your `cabal.project` file:
 
 ```
-package my-package
+package my-project-name
   ghc-options:
     -optl -Wl,--export=hs_init -optl -Wl,--allow-undefined -no-hs-main -optl-mexec-model=reactor 
 ```
@@ -19,9 +19,10 @@ To export a specific function using `foreign export` you should also include the
 plugin's executable stanza:
 
 ```
+executable my-project-name
   build-depends: extism-pdk
   ghc-options:
-    -optl -Wl,--export=myFunction
+    -optl -Wl,--export=myFunctionToExport
 ```
 
 ### Compiling to WebAssembly
