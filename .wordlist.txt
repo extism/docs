@@ -80,6 +80,7 @@ Extism
 ExtismContext
 ExtismCurrentPlugin
 ExtismFunction
+ExtismHost
 ExtismPlugin
 Extism's
 ExtismSize

@@ -110,3 +110,12 @@ extern "C" {
     fn hello_world(ptr: i64) -> i64;
 }
 ```
+
+Using the `host_fn` macro and `extern "ExtismHost"` will allow you to express the host signature in higher level types:
+
+```rust
+#[host_fn]
+extern "ExtismHost" {
+    fn hello_world(input: String) -> Json<Output>;
+}
+```
