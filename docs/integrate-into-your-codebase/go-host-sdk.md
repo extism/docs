@@ -220,8 +220,12 @@ exit, out, err = plugin.Call("count_vowels", []byte("Hello, World!"))
 ```
 
 ## Build example plugins
-Since our [example plugins](./plugins/) are also written in Go, for compiling them we use [TinyGo](https://tinygo.org/):
+Since our [example plugins](https://github.com/extism/go-sdk/tree/main/plugins) are also written in Go, for compiling them we use [TinyGo](https://tinygo.org/):
 ```sh
+git clone git@github.com:extism/go-sdk.git
+cd go-sdk
+
+# build the `config` example plugin
 cd plugins/config
 tinygo build -target wasi -o ../wasm/config.wasm main.go
 ```
