@@ -20,5 +20,5 @@ Practically speaking, you can't predict all the ways users will want to work wit
 
 When using Extism, your job is to determine where in your application some arbitrary code should run, what data that code should be provided, and the data the plug-in should return. 
 
-With Extism, you would locate a spot in your codebase, before some event or function such as `charge_credit_card()`, and run a function from a plug-in that is dynamically loaded and possibly from a third party. Extism is built on top of WebAssembly, which makes untrusted code execution like this [safe to do](https://webassembly.org/docs/security/) via isolation and sandboxing!
+See our [Plug-in Systems concept page](/docs/concepts/plug-in-system) to learn more.
 
