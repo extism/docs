@@ -26,7 +26,6 @@ Practically speaking, you can't predict all the ways users will want to work wit
 
 ## Example Plug-in Systems
 
-
 Let's pretend for a moment that we are creating an e-commerce platform in Typescript. We want to give our merchants (our customers who run their stores in our application) the ability to customize give discounts to their customers. We could come up with a convoluted set of configuration pages that the merchant could statically configure, or we could just let the merchant express to us, in a Turing-complete language, how they want their discounts to work.
 
 Let's suppose this is the object that describes our shopping cart:
