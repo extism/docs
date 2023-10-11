@@ -7,7 +7,15 @@ matrix:
     wordlists:
       - .wordlist.txt
   pipeline:
+  # ignore the docasaurus "title" custom code fence attribute
+  - pyspelling.filters.context:
+      context_visible_first: true
+      delimiters:
+        - open: '(?<=^```)(.*) title=.*'
+          close: '$'
   - pyspelling.filters.markdown:
+      markdown_extensions:
+        - markdown.extensions.fenced_code
   - pyspelling.filters.html:
       comments: false
       ignores:
