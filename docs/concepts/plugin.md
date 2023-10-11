@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # What is a Plug-in?
 
-A plug-in is a code module that conforms to the interface of your [Plug-in System](/docs/concepts/plug-in-system). In Extism, a plug-in is ultimately a WebAssembly Module that can be created using one of our [PDKs](/concept/pdk) in the language of your choice.
+A plug-in is a code module that conforms to the interface of your [Plug-in System](/docs/concepts/plug-in-system). In Extism, a plug-in is ultimately a WebAssembly Module that can be created using one of our [PDKs](/docs/concepts/pdk) in the language of your choice.
 
 WebAssembly modules, `.wasm files`, are a binary representation of your code module. Like all programming languages, WebAssembly modules are composed of functions. Some of these functions functions are internal, some can be *exported* to your application so that you can invoke them.
 

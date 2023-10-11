@@ -7,7 +7,7 @@ sidebar_position: 0
 
 Plug-ins can be a fuzzy concept to grasp. The most accurate description is also the most abstract: *A Plug-in is a software component that can extend the functionality of your application*. But how is this different from any other piece of code?
 
-We think the best way to understand it is through the view of your application. Your application can implement a *Plug-in System*. A plug-in system is simply an *interface* that you define that allows someone else to implement their own functionality in your application. That implementation of the plug-in system is called a [plug-in](/docs/concepts/plug-in).
+We think the best way to understand it is through the view of your application. Your application can implement a *Plug-in System*. A plug-in system is simply an *interface* that you define that allows someone else to implement their own functionality in your application. That implementation of the plug-in system is called a [plug-in](/docs/concepts/plugin).
 
 Extism is an ecosystem of tools that help you create these plug-in systems in your app.
 What makes Extism unique is that, through the use of WebAssembly, your plug-ins can be written in any language and embedded in any language.
@@ -39,7 +39,7 @@ interface Cart {
 ```
 
 We can define a function `processCart(Cart)` that runs the merchant's code
-on the customer's cart before checkout. We use a [Host SDK](/concept/host-sdk), the [Extism JavaScript SDK](https://github.com/extism/js-pdk) to load and execute the merchant's code in our application:
+on the customer's cart before checkout. We use a [Host SDK](/docs/concepts/host-sdk), the [Extism JavaScript SDK](https://github.com/extism/js-pdk) to load and execute the merchant's code in our application:
 
 ```typescript title=checkout.ts
 async function processCart(cart: Cart) {
@@ -59,7 +59,7 @@ async function processCart(cart: Cart) {
 }
 ```
 
-Now let's suppose the merchant wants to apply a discount of 20%, but only if the customer is a new customer and they are spending over $100. They can write a plug-in using one of our [PDKs](/concept/pdk) that implements `before_checkout`. In this case they are using the [Rust PDK](https://github.com/extism/rust-pdk).
+Now let's suppose the merchant wants to apply a discount of 20%, but only if the customer is a new customer and they are spending over $100. They can write a plug-in using one of our [PDKs](/docs/concepts/pdk) that implements `before_checkout`. In this case they are using the [Rust PDK](https://github.com/extism/rust-pdk).
 
 ```rust title=discount.rs
 #[plugin_fn]
