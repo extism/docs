@@ -121,7 +121,7 @@ if err != nil {
     fmt.Println(err)
     os.Exit(int(exit))
 }
-// => {"count": 4, "total": 4, "vowels": "aeiouAEIOUY"}
+// => {"count": 4, "total": 4, "vowels": "aeiouyAEIOUY"}
 ```
 
 ### Host Functions
