@@ -1,6 +1,6 @@
 ---
 title: Runtime APIs
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 The Extism runtime is implemented as a Rust crate, from which we [generate C headers](https://github.com/extism/extism/blob/main/runtime/extism.h) so that any language with a C-compatible FFI can bind functions to the runtime itself and embed Extism. This is how the [official SDKs](/docs/concepts/host-sdk) are created.
