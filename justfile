@@ -1,7 +1,7 @@
 set export
 
 _help:
-  just --list
+  @just --list
 
 _edit:
   @$EDITOR {{justfile()}}
@@ -43,6 +43,7 @@ run *args: _prepare
 
 spellcheck: _prepare
   #!/bin/bash
+  . .venv/bin/activate
   pyspelling -c .spellcheck.yml
 
 test: spellcheck
