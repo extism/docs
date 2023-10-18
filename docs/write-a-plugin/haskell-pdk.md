@@ -10,26 +10,19 @@ sidebar_position: 4
 Add to your `cabal.project` file:
 
 ```
-source-repository-package
-  type: git
-  location: https://github.com/extism/extism.git
-  subdir: haskell/manifest
-
-source-repository-package
-  type: git
-  location: https://github.com/extism/haskell-pdk.git
-
-package my-package
+package my-project-name
   ghc-options:
     -optl -Wl,--export=hs_init -optl -Wl,--allow-undefined -no-hs-main -optl-mexec-model=reactor 
 ```
 
 To export a specific function using `foreign export` you should also include the following in your
-plugin's executable stanza:
+`cabal` file:
 
 ```
+executable my-project-name
+  build-depends: extism-pdk
   ghc-options:
-    -optl -Wl,--export=myFunction
+    -optl -Wl,--export=myFunctionToExport
 ```
 
 ### Compiling to WebAssembly
@@ -91,7 +84,7 @@ httpGet = do
 foreign export ccall "http_get" httpGet ::  IO ()
 ```
 
-#### Using I/O
+#### Using `Config`
 
 ```haskell title=Hello.hs
 module Hello where

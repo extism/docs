@@ -39,7 +39,11 @@ interface Cart {
 ```
 
 We can define a function `processCart(Cart)` that runs the merchant's code
+<<<<<<< HEAD
 on the customer's cart before checkout. We use a [Host SDK](/concept/host-sdk), the [Extism JavaScript SDK](https://github.com/extism/js-pdk) to load and execute the merchant's code in our application:
+=======
+on the customer's cart before checkout. We use a [Host SDK](/docs/concepts/host-sdk), the [Extism JavaScript SDK](https://github.com/extism/js-pdk) to load and execute the merchant's code in our application:
+>>>>>>> main
 
 ```typescript title=checkout.ts
 async function processCart(cart: Cart) {
@@ -59,7 +63,7 @@ async function processCart(cart: Cart) {
 }
 ```
 
-Now let's suppose the merchant wants to apply a discount of 20%, but only if the customer is a new customer and they are spending over $100. They can write a plug-in using one of our [PDKs](/concept/pdk) that implements `before_checkout`. In this case they are using the [Rust PDK](https://github.com/extism/rust-pdk).
+Now let's suppose the merchant wants to apply a discount of 20%, but only if the customer is a new customer and they are spending over $100. They can write a plug-in using one of our [PDKs](/docs/concepts/pdk) that implements `before_checkout`. In this case they are using the [Rust PDK](https://github.com/extism/rust-pdk).
 
 ```rust title=discount.rs
 #[plugin_fn]
