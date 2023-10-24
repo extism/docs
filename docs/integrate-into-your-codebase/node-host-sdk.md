@@ -5,7 +5,7 @@ tags:
     - host sdk
 ---
 
-::: caution This Library is Deprecated
+:::caution This Library is Deprecated
 This library is deprecated and you should instead look to integrate with our [universal JavaScript host SDK](https://github.com/extism/js-sdk).
 :::
 
