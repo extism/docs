@@ -8,6 +8,10 @@ tags:
     - runtime
 ---
 
+::: caution This Library is Deprecated
+This library is deprecated and you should instead look to integrate with our [universal JavaScript host SDK](https://github.com/extism/js-sdk).
+:::
+
 # Using the Browser Runtime SDK
 
 ### 1. Install the Javascript library
