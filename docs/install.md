@@ -11,6 +11,12 @@ The `extism` [CLI](https://github.com/extism/cli) is used to manage [Extism](htt
 
 The following instructions will walk you through how to install the Extism CLI, and then the installation of the shared library which a [Host SDK](/docs/concepts/host-sdk) will look for automatically.
 
+:::note
+Depending on the SDK you use, you may or may not need to install the runtime library on your machine.
+Check the documentation for your language's SDK for more info on what steps are needed.
+:::
+
+
 ## Install the Extism CLI
 
 Using go: <small><em>(recommended)</em></small>
@@ -32,10 +38,6 @@ There are also releases available on Github: https://github.com/extism/cli/relea
 ## Using the Extism CLI
 
 The most common use-case is to to install Extism from Github releases, and then install the library and header file into the installation prefix of your choice. The default prefix is `/usr/local`, so libraries will be installed to `/usr/local/lib` and the header will be installed to `/usr/local/include`.
-
-:::note
-Depending on the SDK you use, you may or may not need to install the runtime on your machine like this. Check the docuemntation for your language's SDK for more info on what steps are needed.
-:::
 
 ```sh
 sudo extism lib install
