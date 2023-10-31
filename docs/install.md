@@ -33,6 +33,10 @@ There are also releases available on Github: https://github.com/extism/cli/relea
 
 The most common use-case is to to install Extism from Github releases, and then install the library and header file into the installation prefix of your choice. The default prefix is `/usr/local`, so libraries will be installed to `/usr/local/lib` and the header will be installed to `/usr/local/include`.
 
+:::note
+Depending on the SDK you use, you may or may not need to install the runtime on your machine like this. Check the docuemntation for your language's SDK for more info on what steps are needed.
+:::
+
 ```sh
 sudo extism lib install
 ```
