@@ -1,5 +1,6 @@
 ---
 title: Quickstart
+toc_max_heading_level: 2
 tags:
     - host sdk
     - runtime
@@ -24,7 +25,7 @@ import TabItem from '@theme/TabItem';
 <Tabs>
   <TabItem value="ruby" label="Ruby" default>
 
-## Install the Dependency
+### Install the Dependency
 
 The ruby gem is hosted on [RubyGems](https://rubygems.org/gems/extism).
 Put the `extism` gem in your `Gemfile`:
@@ -39,7 +40,7 @@ Or install with `gem install` if you are not using bundler:
 gem install extism --pre
 ```
 
-## Require the library and load a plug-in
+### Require the library and load a plug-in
 
 Let's now run a plug-in from ruby. We suggest you copy paste the following code here
 into an irb or pry shell:
@@ -57,7 +58,7 @@ manifest = Extism::Manifest.from_url(url)
 plugin = Extism::Plugin.new(manifest)
 ```
 
-## Call an export function
+### Call an export function
 
 Let's call the "count_vowels" export function on the plugin. This counts the number
 of vowels in the string we pass in and returns a JSON encoded result.
@@ -67,7 +68,7 @@ plugin.call("count_vowels", "Hello, World!")
 # => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 ```
 
-## Documentation
+### Documentation
 
 Congrats! You just ran your first Extism plug-in. To learn more about what this
 ruby library can do, see the [ruby-sdk README and reference docs](https://github.com/extism/ruby-sdk).
@@ -78,7 +79,7 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
   </TabItem>
   <TabItem value="python" label="Python">
 
-## Install the Dependency
+### Install the Dependency
 
 Install this package from [PyPI](https://pypi.org/project/extism/):
 
@@ -90,7 +91,7 @@ $ pip install extism==1.0.0rc0 --pre
 $ poetry add extism=^1.0.0rc0 --allow-prereleases
 ```
 
-## Require the library and load a plug-in
+### Require the library and load a plug-in
 
 Let's now run a plug-in from python. We suggest you copy paste the following code here
 into a python interpreter:
@@ -108,7 +109,7 @@ manifest = {"wasm": [{"url": url}]}
 plugin = extism.Plugin(manifest):
 ```
 
-## Call an export function
+### Call an export function
 
 Let's call the "count_vowels" export function on the plugin. This counts the number
 of vowels in the string we pass in and returns a JSON encoded result.
@@ -122,7 +123,7 @@ print(wasm_vowel_count)
 # => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 ```
 
-## Documentation
+### Documentation
 
 Congrats! You just ran your first Extism plug-in. To learn more about what this
 ruby library can do, see the [python-sdk README and reference docs](https://github.com/extism/python-sdk).
@@ -158,7 +159,7 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
 </Tabs>
 
 
-### Need help?
+## Need help?
 
 If you've encountered a bug or think something is missing, please open an issue on the [Extism GitHub](https://github.com/extism/extism) repository.
 
