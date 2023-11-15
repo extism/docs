@@ -77,6 +77,59 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
 
   </TabItem>
   <TabItem value="python" label="Python">
+
+## Install the Dependency
+
+Install this package from [PyPI](https://pypi.org/project/extism/):
+
+```bash
+# using pip
+$ pip install extism==1.0.0rc0 --pre
+
+# using poetry
+$ poetry add extism=^1.0.0rc0 --allow-prereleases
+```
+
+## Require the library and load a plug-in
+
+Let's now run a plug-in from python. We suggest you copy paste the following code here
+into a python interpreter:
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+```python title=python.py
+import extism
+
+url = "https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"
+manifest = {"wasm": [{"url": url}]}
+plugin = extism.Plugin(manifest):
+```
+
+## Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+```python title=python.py
+wasm_vowel_count = plugin.call(
+    "count_vowels",
+    "hello world"
+)
+print(wasm_vowel_count)
+# => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
+```
+
+## Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+ruby library can do, see the [python-sdk README and reference docs](https://github.com/extism/python-sdk).
+
+TODO fix link:
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+
   </TabItem>
   <TabItem value="haskell" label="Haskell">
   </TabItem>
