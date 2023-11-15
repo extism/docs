@@ -1,21 +1,79 @@
 ---
-title: Host Quickstart
+title: Quickstart
 tags:
-    - web
-    - javascript
-    - browser
     - host sdk
     - runtime
 ---
 
+# Quickstart
 
-# Host Quickstart
+The following provides a minimal guide to running an Extism plug-in in your language
+and platform of choice. This document should get you from 0 to "hello, world!" as quick
+as possible.
+
+
+## Choose A Language
+
+In Extism parlance, your normal (non-wasm) application is known as the "host".
+We offer a variety of libraries, which we call "Host SDKs", to help you embed
+Extism into your language. First choose a language:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs>
   <TabItem value="ruby" label="Ruby" default>
+
+## Install the Dependency
+
+The ruby gem is hosted on [RubyGems](https://rubygems.org/gems/extism).
+Put the `extism` gem in your `Gemfile`:
+
+```rb
+gem 'extism', '1.0.0.pre.rc.4'
+```
+
+Or install with `gem install` if you are not using bundler:
+
+```sh
+gem install extism --pre
+```
+
+## Require the library and load a plug-in
+
+Let's now run a plug-in from ruby. We suggest you copy paste the following code here
+into an irb or pry shell:
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+```ruby title=irb.rb
+require 'extism'
+
+url = "https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"
+manifest = Extism::Manifest.from_url(url)
+plugin = Extism::Plugin.new(manifest)
+```
+
+## Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+```ruby title=irb.rb
+plugin.call("count_vowels", "Hello, World!")
+# => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
+```
+
+## Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+ruby library can do, see the [ruby-sdk README and reference docs](https://github.com/extism/ruby-sdk).
+
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/todo).
+
   </TabItem>
   <TabItem value="python" label="Python">
   </TabItem>
@@ -44,58 +102,6 @@ import TabItem from '@theme/TabItem';
   <TabItem value="Node" label="Node">
   </TabItem>
 </Tabs>
-
-
-The following provides a minimal guide to get going with Extism quickly using a Ruby host application. For a more in depth guide, see [here](https://github.com/extism/ruby-sdk)
-
-:::caution Check your installation
-
-Please be sure you've [installed Extism](/docs/install) before continuing with this guide.
-
-:::
-
-### 1. Install the Ruby gem
-
-The gem is hosted on [RubyGems](https://rubygems.org/gems/extism).
-Put the `extism` gem in your `Gemfile`:
-
-```rb
-gem "extism", "~> 0.5.0"
-```
-
-Or install with `gem install` if you are not using bundler:
-
-```sh
-gem install extism
-```
-
-### 2. Require the library and use the APIs
-
-:::note Count Vowels Plugin
-`code.wasm` in this example is our example plugin that counts vowels. If you want to run this, download it first and set the path:
-
-```
-curl https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm > code.wasm
-```
-:::
-
-```ruby title=app.rb
-require 'extism'
-require 'json'
-
-manifest = {
-  :wasm => [{:path => "code.wasm"}]
-}
-
-
-# NOTE: if you encounter an error such as: 
-# "Unable to load plugin: unknown import: wasi_snapshot_preview1::fd_write has not been defined"
-# pass `true` after `manifest` in the following function to provide WASI imports to your plugin.
-plugin = Extism::Plugin.new(manifest)
-res = JSON.parse(plugin.call("count_vowels", ARGV[0] || "this is a test"))
-
-puts res['count']
-```
 
 
 ### Need help?
