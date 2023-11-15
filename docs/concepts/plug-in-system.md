@@ -39,7 +39,7 @@ interface Cart {
 ```
 
 We can define a function `processCart(Cart)` that runs the merchant's code
-on the customer's cart before checkout. We use a [Host SDK](/concept/host-sdk), the [Extism JavaScript SDK](https://github.com/extism/js-pdk) to load and execute the merchant's code in our application:
+on the customer's cart before checkout. We use a [Host SDK](/docs/concepts/host-sdk), the [Extism JavaScript SDK](https://github.com/extism/js-pdk) to load and execute the merchant's code in our application:
 
 ```typescript title=checkout.ts
 async function processCart(cart: Cart) {
