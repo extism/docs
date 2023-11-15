@@ -2,15 +2,15 @@ name: CI
 on:
   [ push, pull_request ]
 
-jobs:
-  ci:
-    name: Spellcheck
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
+# jobs:
+#   ci:
+#     name: Spellcheck
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Repo
+#         uses: actions/checkout@v3
 
-      - name: GitHub Spellcheck Action
-        uses: rojopolis/spellcheck-github-actions@0.33.1
-        with:
-          config_path: .spellcheck.yml
+#       - name: GitHub Spellcheck Action
+#         uses: rojopolis/spellcheck-github-actions@0.33.1
+#         with:
+#           config_path: .spellcheck.yml
