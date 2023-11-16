@@ -1,5 +1,5 @@
 ---
-title: Quickstart
+title: Run a Plug-in
 toc_max_heading_level: 2
 tags:
     - host sdk
@@ -73,8 +73,7 @@ plugin.call("count_vowels", "Hello, World!")
 Congrats! You just ran your first Extism plug-in. To learn more about what this
 ruby library can do, see the [ruby-sdk README and reference docs](https://github.com/extism/ruby-sdk).
 
-TODO fix link:
-If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+If you're interested in learning how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
   </TabItem>
   <TabItem value="python" label="Python">
