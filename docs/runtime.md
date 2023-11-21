@@ -5,8 +5,6 @@ sidebar_position: 6
 
 The `extism` [CLI](https://github.com/extism/cli) is used to manage [Extism](https://github.com/extism/extism) installations and execute plugins from the command-line. In order to run Extism, your system must be able to locate the `libextism.so` (on Linux), `extism.dll` (on Windows) or `libextism.dylib` (on macos).
 
-> **Note:** If you are using the [Rust Host SDK](/docs/integrate-into-your-codebase/rust-host-sdk), this is not the case, and can use Extism as a [crate dependency](https://crates.io/crates/extism) in your `Cargo.toml`. 
-
 ---
 
 The following instructions will walk you through how to install the Extism CLI, and then the installation of the shared library which a [Host SDK](/docs/concepts/host-sdk) will look for automatically.

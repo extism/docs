@@ -8,7 +8,7 @@ Extism is a plug-in system for everyone. We've carefully designed it to be flexi
 
 ![Extism, universal plug-in system](/img/extism-language-support.png)
 
-You can use Extism in your codebase, regardless of the programming language. We support several environments through our official [Host SDKs](/docs/category/integrate-into-your-codebase), and are adding more language support all the time. Let us know if we're missing yours by opening an [issue on GitHub](https://github.com/extism/extism/issues), or talk to us in our [Discord](https://discord.gg/cx3usBCWnc) server.
+You can use Extism in your codebase, regardless of the programming language. We support several environments through our official [Host SDKs](/docs/quickstart/host-quickstart), and are adding more language support all the time. Let us know if we're missing yours by opening an [issue on GitHub](https://github.com/extism/extism/issues), or talk to us in our [Discord](https://discord.gg/cx3usBCWnc) server.
 
 ## Why use a plug-in system?
 

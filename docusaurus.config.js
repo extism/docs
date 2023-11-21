@@ -85,8 +85,8 @@ const config = {
                 to: '/docs/overview',
               },
               { to: '/docs/install', label: 'Installation' },
-              { to: '/docs/category/write-a-plug-in', label: 'Write a Plug-in' },
-              { to: '/docs/quickstart', label: 'Quickstart' },
+              { to: '/docs/quickstart/host-quickstart', label: 'Quickstart' },
+              { to: '/docs/quickstart/plugin-quickstart', label: 'Write a Plug-in' },
             ],
           },
           {

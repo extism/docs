@@ -38,7 +38,7 @@ A Wasm sandbox cannot completely save you from all prompt injection attacks if y
 
 ## Utility Maker in Extism
 
-Let’s build this using Extism. We’ll use [LangChain](https://python.langchain.com/en/latest/index.html) to generate the code based on a description, and we’ll use the [Extism Python SDK](https://extism.org/docs/integrate-into-your-codebase/python-host-sdk) to orchestrate the Wasm module for executing the code. We are going to ask it to generate JavaScript code and run it in a sandbox we create with the [JavaScript PDK](https://extism.org/docs/write-a-plugin/js-pdk). 
+Let’s build this using Extism. We’ll use [LangChain](https://python.langchain.com/en/latest/index.html) to generate the code based on a description, and we’ll use the [Extism Python SDK](https://github.com/extism/python-sdk) to orchestrate the Wasm module for executing the code. We are going to ask it to generate JavaScript code and run it in a sandbox we create with the [JavaScript PDK](https://github.com/extism/js-pdk). 
 
 :::info
 
@@ -70,7 +70,7 @@ module.exports = {register_function, invoke}
 
 :::info
 
-This simple plug-in can be re-used in many situations where you want to sandbox some JavaScript code and it works from [any host that Extism supports](https://extism.org/docs/category/integrate-into-your-codebase), including the browser!
+This simple plug-in can be re-used in many situations where you want to sandbox some JavaScript code and it works from [any host that Extism supports](/docs/quickstart/host-quickstart), including the browser!
 
 :::
 

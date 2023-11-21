@@ -2,22 +2,21 @@ import React from 'react';
 
 export default function SDKLogoLinks({ only }) {
   let sdks = [
-    { name: "Browser", path: "/docs/integrate-into-your-codebase/browser-runtime-sdk", logo: "/img/sdk-languages/browser.svg" },
-    { name: "C", path: "/docs/integrate-into-your-codebase/c-host-sdk", logo: "/img/sdk-languages/c.svg" },
-    { name: "C++", path: "/docs/integrate-into-your-codebase/cpp-host-sdk", logo: "/img/sdk-languages/cpp.svg" },
-    { name: "Elixir", path: "/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk", logo: "/img/sdk-languages/elixir.svg" },
-    { name: "Erlang", path: "/docs/integrate-into-your-codebase/elixir-or-erlang-host-sdk", logo: "/img/sdk-languages/erlang.svg" },
-    { name: "Go", path: "/docs/integrate-into-your-codebase/go-host-sdk", logo: "/img/sdk-languages/go.svg" },
-    { name: "Haskell", path: "/docs/integrate-into-your-codebase/haskell-host-sdk", logo: "/img/sdk-languages/haskell.svg" },
-    { name: "Java", path: "/docs/integrate-into-your-codebase/java-host-sdk", logo: "/img/sdk-languages/java-android.svg" },
-    { name: ".NET", path: "/docs/integrate-into-your-codebase/dotnet-host-sdk", logo: "/img/sdk-languages/dotnet.svg" },
-    { name: "Node", path: "/docs/integrate-into-your-codebase/node-host-sdk", logo: "/img/sdk-languages/node.svg" },
-    { name: "OCaml", path: "/docs/integrate-into-your-codebase/ocaml-host-sdk", logo: "/img/sdk-languages/ocaml.svg" },
-    { name: "PHP", path: "/docs/integrate-into-your-codebase/php-host-sdk", logo: "/img/sdk-languages/php.svg" },
-    { name: "Python", path: "/docs/integrate-into-your-codebase/python-host-sdk", logo: "/img/sdk-languages/python.svg" },
-    { name: "Ruby", path: "/docs/integrate-into-your-codebase/ruby-host-sdk", logo: "/img/sdk-languages/ruby.svg" },
-    { name: "Rust", path: "/docs/integrate-into-your-codebase/rust-host-sdk", logo: "/img/sdk-languages/rust.svg" },
-    { name: "Zig", path: "/docs/integrate-into-your-codebase/zig-host-sdk", logo: "/img/sdk-languages/zig.svg" },
+    { name: "Browser", path: "https://github.com/extism/js-sdk", logo: "/img/sdk-languages/browser.svg" },
+    { name: "C", path: "https://github.com/extism/tree/main/libextism", logo: "/img/sdk-languages/c.svg" },
+    { name: "C++", path: "https://github.com/extism/cpp-sdk", logo: "/img/sdk-languages/cpp.svg" },
+    { name: "Elixir", path: "https://github.com/extism/elixir-sdk", logo: "/img/sdk-languages/elixir.svg" },
+    { name: "Go", path: "https://github.com/extism/go-sdk", logo: "/img/sdk-languages/go.svg" },
+    { name: "Haskell", path: "https://github.com/extism/haskell-sdk", logo: "/img/sdk-languages/haskell.svg" },
+    { name: "Java", path: "https://github.com/extism/java-sdk", logo: "/img/sdk-languages/java-android.svg" },
+    { name: ".NET", path: "https://github.com/extism/dotnet-sdk", logo: "/img/sdk-languages/dotnet.svg" },
+    { name: "Node", path: "https://github.com/extism/js-sdk", logo: "/img/sdk-languages/node.svg" },
+    { name: "OCaml", path: "https://github.com/extism/ocaml-sdk", logo: "/img/sdk-languages/ocaml.svg" },
+    { name: "PHP", path: "https://github.com/extism/php-sdk", logo: "/img/sdk-languages/php.svg" },
+    { name: "Python", path: "https://github.com/extism/python-sdk", logo: "/img/sdk-languages/python.svg" },
+    { name: "Ruby", path: "https://github.com/extism/ruby-sdk", logo: "/img/sdk-languages/ruby.svg" },
+    { name: "Rust", path: "https://github.com/extism/extism/tree/main/runtime", logo: "/img/sdk-languages/rust.svg" },
+    { name: "Zig", path: "https://github.com/extism/zig-sdk", logo: "/img/sdk-languages/zig.svg" },
   ]
 
   if (only) {
