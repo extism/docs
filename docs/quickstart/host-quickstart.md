@@ -3,7 +3,7 @@ title: Run a Plug-in
 toc_max_heading_level: 2
 tags:
     - host sdk
-    - runtime
+    - quickstart
 ---
 
 # Quickstart
@@ -613,6 +613,8 @@ TODO fix link:
 If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
 
   </TabItem>
+  <TabItem value="Zig" label="Zig">
+  </TabItem>
   <TabItem value="haskell" label="Haskell">
   </TabItem>
   <TabItem value="C" label="C">
@@ -622,8 +624,6 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
   <TabItem value="OCaml" label="OCaml">
   </TabItem>
   <TabItem value="PHP" label="PHP">
-  </TabItem>
-  <TabItem value="Zig" label="Zig">
   </TabItem>
 </Tabs>
 
