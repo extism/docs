@@ -23,7 +23,151 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs>
-  <TabItem value="ruby" label="Ruby" default>
+  <TabItem value="javascript" label="JavaScript" default>
+
+### Install the Dependency
+
+The module is hosted on [npm](https://www.npmjs.com/package/@extism/extism).
+Put the `@extism/extism` dependency in your `package.json`:
+
+```bash
+npm install @extism/extism --save
+```
+
+### Require the library and load a plug-in
+
+Let's now run a plug-in from inside of [node.js](https://nodejs.org/en/).
+
+:::note Supported Runtimes
+This library is also compatible with [Browsers, Deno, and Bun](https://github.com/extism/js-sdk#compatibility).
+:::
+
+We suggest you copy paste the following code here into a node.js shell:
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+```javascript title=repl.js
+const createPlugin = require("@extism/extism")
+
+const plugin = await createPlugin(
+    'https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm',
+    { useWasi: true }
+);
+```
+
+### Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+```javascript title=repl.js
+let out = await plugin.call("count_vowels", "Hello, World!");
+console.log(out.text())
+// => '{"count":3,"total":3,"vowels":"aeiouAEIOU"}'
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+ruby library can do, see the [js-sdk README](https://github.com/extism/js-sdk#readme) and [reference docs](https://extism.github.io/js-sdk/).
+
+If you're interested in learning how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
+
+  </TabItem>
+  <TabItem value="go" label="Go">
+
+### Install the Dependency
+
+Install via go get:
+
+```bash
+go get github.com/extism/go-sdk
+```
+
+### Require the library and load a plug-in
+
+Let's now run a plug-in in Go.
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+Copy paste this into a main function in `main.go`:
+
+```go title=main.go
+package main
+
+import (
+	"context"
+	"fmt"
+	"github.com/extism/go-sdk"
+	"os"
+)
+
+func main() {
+	manifest := extism.Manifest{
+		Wasm: []extism.Wasm{
+			extism.WasmUrl{
+				Url: "https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm",
+			},
+		},
+	}
+
+	ctx := context.Background()
+	config := extism.PluginConfig{}
+	plugin, err := extism.NewPlugin(ctx, manifest, config, []extism.HostFunction{})
+
+	if err != nil {
+		fmt.Printf("Failed to initialize plugin: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+```
+
+### Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+Copy-paste this code to the end of your main func:
+
+```go title=main.go
+func main() {
+    // ...
+
+	data := []byte("Hello, World!")
+	exit, out, err := plugin.Call("count_vowels", data)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(int(exit))
+	}
+
+	response := string(out)
+	fmt.Println(response)
+}
+```
+
+Run the program:
+
+```bash
+$ go run main.go
+# => {"count":3,"total":3,"vowels":"aeiouAEIOU"}
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+ruby library can do, see the [go-sdk README](https://github.com/extism/go-sdk#readme) and [reference docs](https://pkg.go.dev/github.com/extism/go-sdk).
+
+If you're interested in learning how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
+
+  </TabItem>
+  <TabItem value="ruby" label="Ruby">
 
 ### Install the Dependency
 
@@ -71,7 +215,7 @@ plugin.call("count_vowels", "Hello, World!")
 ### Documentation
 
 Congrats! You just ran your first Extism plug-in. To learn more about what this
-ruby library can do, see the [ruby-sdk README and reference docs](https://github.com/extism/ruby-sdk).
+ruby library can do, see the [ruby-sdk README](https://github.com/extism/ruby-sdk) and [reference docs](https://extism.github.io/ruby-sdk/).
 
 If you're interested in learning how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
