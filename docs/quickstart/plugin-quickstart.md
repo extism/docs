@@ -90,9 +90,142 @@ Congrats! You just wrote your first Extism plug-in! To learn more about what thi
 rust library can do, see the [rust-pdk README](https://github.com/extism/rust-pdk#readme) and [reference docs](https://docs.rs/extism-pdk/latest/extism_pdk/).
 
   </TabItem>
-  <TabItem value="Javascript" label="Javascript">
+  <TabItem value="JavaScript" label="JavaScript">
+
+### Install the Dependency
+
+First install the Extism JS compiler with this install script:
+
+```bash
+curl -O https://raw.githubusercontent.com/extism/js-pdk/main/install.sh
+sh install.sh
+```
+
+Then run command with no args to see the help:
+
+```bash
+extism-js
+error: The following required arguments were not provided:
+    <input>
+
+USAGE:
+    extism-js <input> -o <output>
+
+For more information try --help
+```
+
+:::note Mac Quarantine
+If you are using mac, you may need to tell your security system this unsigned binary is fine.
+:::
+
+### Create an Export
+
+The primary means of interacting with this plug-in is an export function that can be called by the outside world.
+Let's create a simple greeting plug-in. Just like a normal JS module, any function we
+export will be accessible to the outside world:
+
+```javascript
+function greet() {
+    const name = Host.inputString()
+    Host.outputString(`Hello, ${name}`)
+}
+
+module.exports = {greet}
+```
+
+### Compile the Plug-in
+
+Now we must compile this plug-in to wasm:
+
+```bash
+extism-js plugin.js -o plugin.wasm
+```
+
+### Running the Plug-In
+
+We can now test it using the [Extism CLI](https://github.com/extism/cli)'s `run`
+command:
+
+```bash
+extism call plugin.wasm greet --input "Benjamin" --wasi
+# => Hello, Benjamin!
+```
+
+:::note Wasi 
+At this time, all js plug-ins need WASI to run
+:::
+
+### Documentation
+
+Congrats! You just wrote your first Extism plug-in! To learn more about what this
+js library can do, see the [js-pdk README](https://github.com/extism/js-pdk#readme).
+
   </TabItem>
   <TabItem value="Go" label="Go">
+
+### Install the Dependency
+
+Include the library with Go get:
+
+```bash
+go get github.com/extism/go-pdk
+```
+
+### Create an Export
+
+The primary means of interacting with this plug-in is an export function that can be called by the outside world.
+Let's create a simple greeting plug-in.
+
+
+```go
+package main
+
+import (
+	"github.com/extism/go-pdk"
+)
+
+//export greet
+func greet() int32 {
+	input := pdk.Input()
+	greeting := `Hello, ` + string(input) + `!`
+	pdk.OutputString(greeting)
+	return 0
+}
+
+func main() {}
+```
+
+:::note Magic Comment
+The magic comment `//export` is what exports the function to the outside world:
+:::
+
+### Compile the Plug-in
+
+Now we must compile this plug-in to wasm. Currently the best way to do this is with [tinygo](https://tinygo.org/):
+
+```bash
+tinygo build -o plugin.wasm -target wasi main.go
+```
+
+### Running the Plug-In
+
+We can now test it using the [Extism CLI](https://github.com/extism/cli)'s `run`
+command:
+
+```bash
+extism call plugin.wasm greet --input "Benjamin" --wasi
+# => Hello, Benjamin!
+```
+
+:::note Wasi 
+At this time, all Go plug-ins need WASI to run
+:::
+
+### Documentation
+
+Congrats! You just wrote your first Extism plug-in! To learn more about what this
+go library can do, see the [go-pdk README](https://github.com/extism/go-pdk#readme).
+
   </TabItem>
   <TabItem value="C" label="C">
   </TabItem>
