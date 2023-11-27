@@ -34,13 +34,12 @@ Put the `@extism/extism` dependency in your `package.json`:
 npm install @extism/extism --save
 ```
 
-### Require the library and load a plug-in
-
-Let's now run a plug-in from inside of [node.js](https://nodejs.org/en/).
-
 :::note Supported Runtimes
-This library is also compatible with [Browsers, Deno, and Bun](https://github.com/extism/js-sdk#compatibility).
+This library is also compatible with [Browsers, Deno, and Bun](https://github.com/extism/js-sdk#compatibility)
+but this guide will assume we're running in node.js.
 :::
+
+### Require the library and load a plug-in
 
 We suggest you copy paste the following code here into a node.js shell:
 
