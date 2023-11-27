@@ -167,6 +167,70 @@ ruby library can do, see the [go-sdk README](https://github.com/extism/go-sdk#re
 If you're interested in learning how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
   </TabItem>
+  <TabItem value="Rust" label="Rust">
+
+### Install the Dependency
+
+To use the [extism crate](https://crates.io/crates/extism), you can add it to your Cargo file:
+
+```toml
+[dependencies]
+extism = "^1.0.0-rc3"
+```
+
+### Require the library and load a plug-in
+
+Let's now run a plug-in in Rust.
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+Copy paste this into a main function in `main.rs`. This will load an Extism plug-in from the web:
+
+```rust title=main.rs
+use extism::*;
+
+fn main() {
+  let url = Wasm::url(
+    "https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"
+  );
+  let manifest = Manifest::new([url]);
+  let mut plugin = Plugin::new(&manifest, [], true).unwrap();
+}
+```
+
+### Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+Copy-paste this code to the end of your main function:
+
+```rust title=main.rs
+fn main() {
+    // ...
+    let res = plugin.call::<&str, &str>("count_vowels", "Hello, world!").unwrap();
+    println!("{}", res);
+}
+```
+
+Run the program:
+
+```bash
+$ cargo run
+# => {"count":3,"total":3,"vowels":"aeiouAEIOU"}
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+ruby library can do, see the [rust-sdk README](https://github.com/extism/extism/runtime#readme) and [reference docs](https://docs.rs/extism/latest/extism/).
+
+If you're interested in learning how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
+
+  </TabItem>
   <TabItem value="ruby" label="Ruby">
 
 ### Install the Dependency
@@ -277,8 +341,6 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
   </TabItem>
   <TabItem value="haskell" label="Haskell">
   </TabItem>
-  <TabItem value="Go" label="Go">
-  </TabItem>
   <TabItem value="C" label="C">
   </TabItem>
   <TabItem value="C++" label="C++">
@@ -287,8 +349,6 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
   </TabItem>
   <TabItem value="PHP" label="PHP">
   </TabItem>
-  <TabItem value="Rust" label="Rust">
-  </TabItem>
   <TabItem value="Zig" label="Zig">
   </TabItem>
   <TabItem value=".NET" label=".NET">
@@ -296,8 +356,6 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
   <TabItem value="Elixir/Erlang" label="Elixir/Erlang">
   </TabItem>
   <TabItem value="Java" label="Java">
-  </TabItem>
-  <TabItem value="Node" label="Node">
   </TabItem>
 </Tabs>
 
