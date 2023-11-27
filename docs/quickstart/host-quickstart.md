@@ -72,7 +72,7 @@ console.log(out.text())
 ### Documentation
 
 Congrats! You just ran your first Extism plug-in. To learn more about what this
-ruby library can do, see the [js-sdk README](https://github.com/extism/js-sdk#readme) and [reference docs](https://extism.github.io/js-sdk/).
+javascript library can do, see the [js-sdk README](https://github.com/extism/js-sdk#readme) and [reference docs](https://extism.github.io/js-sdk/).
 
 If you're interested in learning how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
@@ -162,7 +162,7 @@ $ go run main.go
 ### Documentation
 
 Congrats! You just ran your first Extism plug-in. To learn more about what this
-ruby library can do, see the [go-sdk README](https://github.com/extism/go-sdk#readme) and [reference docs](https://pkg.go.dev/github.com/extism/go-sdk).
+go library can do, see the [go-sdk README](https://github.com/extism/go-sdk#readme) and [reference docs](https://pkg.go.dev/github.com/extism/go-sdk).
 
 If you're interested in learning how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
@@ -226,7 +226,7 @@ $ cargo run
 ### Documentation
 
 Congrats! You just ran your first Extism plug-in. To learn more about what this
-ruby library can do, see the [rust-sdk README](https://github.com/extism/extism/runtime#readme) and [reference docs](https://docs.rs/extism/latest/extism/).
+rust library can do, see the [rust-sdk README](https://github.com/extism/extism/runtime#readme) and [reference docs](https://docs.rs/extism/latest/extism/).
 
 If you're interested in learning how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
@@ -333,7 +333,137 @@ print(wasm_vowel_count)
 ### Documentation
 
 Congrats! You just ran your first Extism plug-in. To learn more about what this
-ruby library can do, see the [python-sdk README and reference docs](https://github.com/extism/python-sdk).
+python library can do, see the [python-sdk README and reference docs](https://github.com/extism/python-sdk).
+
+TODO fix link:
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+
+  </TabItem>
+  <TabItem value="C#" label="C#">
+
+### Install the Dependency
+
+This library depends on the native Extism runtime, we provide [native runtime packages](https://www.nuget.org/packages/Extism.runtime.all) for all supported operating systems. You can install with:
+<img src="https://img.shields.io/nuget/vpre/Extism.runtime.all" />
+```
+dotnet add package Extism.runtime.win-64 --prerelease
+```
+
+Then, add the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.Sdk) to your project:
+<img src="https://img.shields.io/nuget/vpre/Extism.Sdk" />
+```
+dotnet add package Extism.Sdk
+```
+
+### Require the library and load a plug-in
+
+Let's now run a plug-in from C#. We suggest you copy paste the following code here
+into a main `Progam.cs`file:
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+```csharp title=Program.cs
+using System;
+
+using Extism.Sdk;
+using Extism.Sdk.Native;
+
+var manifest = new Manifest(new UrlWasmSource("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"));
+using var plugin = new Plugin(manifest, new HostFunction[] { });
+```
+
+### Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+Add these next lines to your `Program.cs` file:
+
+```csharp title=Program.cs
+var output = plugin.Call("count_vowels", "Hello, World!");
+Console.WriteLine(output)
+```
+
+Run using `dotnet`:
+
+```bash
+dotnet run
+# => {"count":3,"total":3,"vowels":"aeiouAEIOU"}
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+dotnet library can do, see the [dotnet-sdk README and reference docs](https://github.com/extism/dotnet-sdk).
+
+TODO fix link:
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+
+  </TabItem>
+  <TabItem value="F#" label="F#">
+
+### Install the Dependency
+
+This library depends on the native Extism runtime, we provide [native runtime packages](https://www.nuget.org/packages/Extism.runtime.all) for all supported operating systems. You can install with:
+<img src="https://img.shields.io/nuget/vpre/Extism.runtime.all" />
+```
+dotnet add package Extism.runtime.win-64 --prerelease
+```
+
+Then, add the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.Sdk) to your project:
+<img src="https://img.shields.io/nuget/vpre/Extism.Sdk" />
+```
+dotnet add package Extism.Sdk
+```
+
+### Require the library and load a plug-in
+
+Let's now run a plug-in from F#. We suggest you copy paste the following code here
+into a main `Progam.fs`file:
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+```fsharp title=Program.fs
+open System
+
+open Extism.Sdk
+open Extism.Sdk.Native
+
+let uri = Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")
+let manifest = Manifest(new UrlWasmSource(uri))
+
+use plugin = Plugin(manifest, Array.Empty<HostFunction>(), withWasi = true)
+```
+
+### Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+Add these next lines to your `Program.fs` file:
+
+```fsharp title=Program.fs
+let output = plugin.Call("count_vowels", "Hello, World!")
+System.Console.WriteLine(output)
+```
+
+Run using `dotnet`:
+
+```bash
+dotnet run
+# => {"count":3,"total":3,"vowels":"aeiouAEIOU"}
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+dotnet library can do, see the [dotnet-sdk README and reference docs](https://github.com/extism/dotnet-sdk).
 
 TODO fix link:
 If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
