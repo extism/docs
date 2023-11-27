@@ -227,6 +227,186 @@ Congrats! You just wrote your first Extism plug-in! To learn more about what thi
 go library can do, see the [go-pdk README](https://github.com/extism/go-pdk#readme).
 
   </TabItem>
+  <TabItem value="C#" label="C#">
+
+
+### Prerequisites
+
+1. .NET SDK 8: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+2. WASI Workload:
+```
+dotnet workload install wasi-experimental
+```
+3. WASI SDK: https://github.com/WebAssembly/wasi-sdk/releases
+
+
+### Install the Dependency
+
+Create a new project and add this nuget package to your project:
+
+```
+dotnet new wasiconsole -o MyPlugin
+cd MyPlugin
+dotnet add package Extism.Pdk --prerelease
+```
+
+Update your `MyPlugin.csproj` as follows:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
+    <OutputType>Exe</OutputType>
+    <PublishTrimmed>true</PublishTrimmed>
+
+    <!-- Make sure we create a standalone wasm file for our plugin -->
+    <WasmSingleFileBundle>true</WasmSingleFileBundle>
+    <WasmBuildNative>true</WasmBuildNative>
+  </PropertyGroup>
+</Project>
+```
+
+### Create an Export
+
+The primary means of interacting with this plug-in is an export function that can be called by the outside world.
+Let's create a simple greeting plug-in.
+
+```csharp
+using System;
+using System.Runtime.InteropServices;
+using System.Text.Json;
+using Extism;
+
+namespace MyPlugin;
+public class Functions
+{
+    [UnmanagedCallersOnly(EntryPoint = "greet")]
+    public static int Greet()
+    {
+        var name = Pdk.GetInputString();
+        var greeting = $"Hello, {name}!";
+        Pdk.SetOutput(greeting);
+
+        return 0;
+    }
+
+    // Note: a `Main` method is required for the app to compile
+    public static void Main() {}
+}
+```
+
+### Compile the Plug-in
+
+Compile as normal with dotnet:
+
+```bash
+dotnet build
+```
+
+### Running the Plug-In
+
+This will create a `MyPlugin.wasm` file in `bin/Debug/net8.0/wasi-wasm/AppBundle`. Now, you can try out your plugin by using any of the [Extism SDKs](https://extism.org/docs/category/integrate-into-your-codebase) or by using [Extism CLI](https://extism.org/docs/install)'s `run` command:
+
+```bash
+extism call .\bin\Debug\net8.0\wasi-wasm\AppBundle\MyPlugin.wasm greet --input "Benjamin" --wasi
+# => Hello, Benjamin!
+```
+
+### Documentation
+
+Congrats! You just wrote your first Extism plug-in! To learn more about what this
+dotnet library can do, see the [dotet-pdk README](https://github.com/extism/dotnet-pdk#readme).
+
+  </TabItem>
+  <TabItem value="F#" label="F#">
+
+
+### Prerequisites
+
+1. .NET SDK 8: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+2. WASI Workload:
+```
+dotnet workload install wasi-experimental
+```
+3. WASI SDK: https://github.com/WebAssembly/wasi-sdk/releases
+
+
+### Install the Dependency
+
+Create a new project and add this nuget package to your project:
+
+```
+dotnet new wasiconsole -lang "F#" -o MyPlugin
+cd MyPlugin
+dotnet add package Extism.Pdk --prerelease
+```
+
+Update your `MyPlugin.fsproj` as follows:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
+    <OutputType>Exe</OutputType>
+    <PublishTrimmed>true</PublishTrimmed>
+
+    <!-- Make sure we create a standalone wasm file for our plugin -->
+    <WasmSingleFileBundle>true</WasmSingleFileBundle>
+    <WasmBuildNative>true</WasmBuildNative>
+  </PropertyGroup>
+</Project>
+```
+
+### Create an Export
+
+The primary means of interacting with this plug-in is an export function that can be called by the outside world.
+Let's create a simple greeting plug-in.
+
+```fsharp
+module MyPlugin
+
+open System
+open System.Runtime.InteropServices
+open Extism
+
+[<UnmanagedCallersOnly(EntryPoint = "greet")>]
+let Greet () : int32 =
+    let name = Pdk.GetInputString()
+    let greeting = $"Hello, {name}!"
+    Pdk.SetOutput(greeting)
+    0
+    
+[<EntryPoint>]
+let Main args  =
+    // Note: an `EntryPoint` function is required for the app to compile
+    0
+```
+
+### Compile the Plug-in
+
+Compile as normal with dotnet:
+
+```bash
+dotnet build
+```
+
+### Running the Plug-In
+
+This will create a `MyPlugin.wasm` file in `bin/Debug/net8.0/wasi-wasm/AppBundle`. Now, you can try out your plugin by using any of the [Extism SDKs](https://extism.org/docs/category/integrate-into-your-codebase) or by using [Extism CLI](https://extism.org/docs/install)'s `run` command:
+
+```bash
+extism call .\bin\Debug\net8.0\wasi-wasm\AppBundle\MyPlugin.wasm greet --input "Benjamin" --wasi
+# => Hello, Benjamin!
+```
+
+### Documentation
+
+Congrats! You just wrote your first Extism plug-in! To learn more about what this
+dotnet library can do, see the [dotet-pdk README](https://github.com/extism/dotnet-pdk#readme).
+
+  </TabItem>
   <TabItem value="C" label="C">
   </TabItem>
   <TabItem value="C++" label="C++">
@@ -234,10 +414,6 @@ go library can do, see the [go-pdk README](https://github.com/extism/go-pdk#read
   <TabItem value="Haskell" label="Haskell">
   </TabItem>
   <TabItem value="Zig" label="Zig">
-  </TabItem>
-  <TabItem value="C#" label="C#">
-  </TabItem>
-  <TabItem value="F#" label="F#">
   </TabItem>
 </Tabs>
 
