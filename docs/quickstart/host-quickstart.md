@@ -469,6 +469,147 @@ TODO fix link:
 If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
 
   </TabItem>
+  <TabItem value="Java" label="Java">
+
+### Install the Dependency
+
+For this library, you first need to install the Extism Runtime. You can [download the shared object directly from a release](https://github.com/extism/extism/releases) or use the [Extism CLI](https://github.com/extism/cli) to install it:
+
+```bash
+sudo extism lib install latest
+
+#=> Fetching https://github.com/extism/extism/releases/download/v0.5.2/libextism-aarch64-apple-darwin-v0.5.2.tar.gz
+#=> Copying libextism.dylib to /usr/local/lib/libextism.dylib
+#=> Copying extism.h to /usr/local/include/extism.h
+```
+
+Once this is done, you can install the jar.
+
+#### Maven
+
+To use the Extism java-sdk with maven you need to add the following dependency to your `pom.xml` file:
+
+```xml
+<dependency>
+    <groupId>org.extism.sdk</groupId>
+    <artifactId>extism</artifactId>
+    <version>1.0.0-rc1</version>
+</dependency>
+```
+
+#### Gradle
+
+To use the Extism java-sdk with maven you need to add the following dependency to your `build.gradle` file:
+
+```
+implementation 'org.extism.sdk:extism:1.0.0-rc1'
+```
+
+### Require the library and load a plug-in
+
+Let's now run a plug-in from Java. We suggest you copy paste the following code here
+into a main function in a `Main.java`file:
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+```java title=Main.java
+import org.extism.sdk.manifest.Manifest;
+import org.extism.sdk.wasm.UrlWasmSource;
+import org.extism.sdk.Plugin;
+
+public static void main(String[] args) {
+    var url = "https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm";
+    var manifest = new Manifest(List.of(UrlWasmSource.fromUrl(url)));
+    var plugin = new Plugin(manifest, false, null);
+}
+```
+
+### Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+Add these next lines to your main function:
+
+```java title=Main.java
+public static void main(String[] args) {
+    // ...
+    var output = plugin.call("count_vowels", "Hello, World!");
+    System.out.println(output);
+}
+```
+
+Running this should yield the vowel report:
+
+```bash
+mvn compile exec:java -Dexec.mainClass="com.dylibso.myapp.Main"
+# => {"count":3,"total":3,"vowels":"aeiouAEIOU"}
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+java library can do, see the [java-sdk README and reference docs](https://github.com/extism/java-sdk).
+
+TODO fix link:
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+
+  </TabItem>
+  <TabItem value="Elixir" label="Elixir">
+
+### Install the Dependency
+
+You can find this package on hex.pm [![hex.pm](https://img.shields.io/hexpm/v/extism.svg)](https://hex.pm/packages/extism)
+
+```elixir
+def deps do
+  [
+    {:extism, "1.0.0-rc2"}
+  ]
+end
+```
+> **Note**: You do not need to install the Extism Runtime shared object, but you will need a rust toolchain installed to build this package. See [Install Rust](https://www.rust-lang.org/tools/install) to install for your platform.
+
+### Require the library and load a plug-in
+
+Let's now run a plug-in from Elixir. We suggest you copy paste the following code here
+into a main function in an Elixir repl using `iex -S mix`:
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+```elixir title=repl.ex
+url = "https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"
+manifest = %{wasm: [%{url: url}]}
+{:ok, plugin} = Extism.Plugin.new(manifest, false)
+```
+
+### Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+Paste in these lines next and it should print out the vowel report:
+
+```elixir title=repl.ex
+{:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "Hello, World!")
+# => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+Elixir library can do, see the [elixr-sdk README and reference docs](https://github.com/extism/elixir-sdk).
+
+TODO fix link:
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+
+  </TabItem>
   <TabItem value="haskell" label="Haskell">
   </TabItem>
   <TabItem value="C" label="C">
@@ -480,12 +621,6 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
   <TabItem value="PHP" label="PHP">
   </TabItem>
   <TabItem value="Zig" label="Zig">
-  </TabItem>
-  <TabItem value=".NET" label=".NET">
-  </TabItem>
-  <TabItem value="Elixir/Erlang" label="Elixir/Erlang">
-  </TabItem>
-  <TabItem value="Java" label="Java">
   </TabItem>
 </Tabs>
 
