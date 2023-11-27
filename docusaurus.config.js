@@ -53,7 +53,6 @@ const config = {
         },
         items: [
           { type: 'doc', docId: 'overview', position: 'left', label: 'Overview' },
-          { to: '/docs/install', label: 'Installation', position: 'left' },
           { to: '/docs/category/quickstart', label: 'Quickstart', position: 'left' },
           { to: '/docs/category/concepts', label: 'Concepts', position: 'left' },
           { to: '/blog', label: 'Blog', position: 'left' },
