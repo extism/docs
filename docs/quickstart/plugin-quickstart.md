@@ -8,14 +8,15 @@ tags:
 
 # Quickstart
 
-The following provides a minimal guide to running writing Extism plug-in in your language
-of choice. This document should get you from 0 to "hello, world!" as quick as possible.
+The following is a minimal guide to running writing an Extism plug-in in your language
+of choice. This document should get you from `0` to `"Hello, World!"` as quickly as possible.
 
 ## Choose A Language
 
 In Extism, your plug-in code is compiled to a binary Wasm module.
 We offer a variety of libraries, which we call PDKs (Plug-in Development Kits), to help you compile
 your code to a Wasm module that can be embedded in any Host SDK.
+
 First choose a language for your plug-in:
 
 import Tabs from '@theme/Tabs';

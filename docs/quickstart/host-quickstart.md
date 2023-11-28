@@ -8,16 +8,18 @@ tags:
 
 # Quickstart
 
-The following provides a minimal guide to running an Extism plug-in in your language
-and platform of choice. This document should get you from 0 to "hello, world!" as quick
-as possible.
+The following is a minimal guide to running an Extism plug-in in your language
+and platform of choice. This document should get you from `0` to `"Hello, World!"`
+as quickly as possible.
 
 
 ## Choose A Language
 
 In Extism parlance, your normal (non-wasm) application is known as the "host".
 We offer a variety of libraries, which we call "Host SDKs", to help you embed
-Extism into your language. First choose a language:
+Extism plug-ins into your application.
+
+First choose the language of your application:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
