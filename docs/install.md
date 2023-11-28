@@ -14,7 +14,7 @@ The following instructions will walk you through how to install the Extism CLI, 
 
 ## Install the Extism CLI
 
-Using go: <small><em>(recommended)</em></small>
+Using go: **(recommended)**
 
 ```sh
 go install github.com/extism/cli/extism@latest
@@ -22,13 +22,13 @@ go install github.com/extism/cli/extism@latest
 
 There are also releases available on Github: https://github.com/extism/cli/releases
 
-> **Warning**: If you have installed the old cli via python, you may need to remove it:
+:::warning Remove old installation
+If you have installed the old cli via python, you may need to remove it:
 >   ```sh
 >   pip3 uninstall extism_cli --break-system-packages
 >   which extism # shouldn't print anything, if it does, delete it
 >   ```
-
----
+:::
 
 ## Using the Extism CLI
 
@@ -68,7 +68,6 @@ extism lib install --prefix ~/.local
 ## Other CLI Features
 
 ```sh
-
 Usage:
   extism [command]
 
