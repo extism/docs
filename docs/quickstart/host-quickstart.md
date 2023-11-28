@@ -88,7 +88,7 @@ go get github.com/extism/go-sdk
 
 ### Import the library and load a plug-in
 
-Let's now run a plug-in in Go.
+Let's now load a plug-in in Go.
 
 :::note Count Vowels Plugin
 `count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
@@ -179,7 +179,7 @@ extism = "^1.0.0-rc3"
 
 ### Import the library and load a plug-in
 
-Let's now run a plug-in in Rust.
+Let's now load a plug-in in Rust.
 
 :::note Count Vowels Plugin
 `count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
@@ -249,7 +249,7 @@ gem install extism --pre
 
 ### Import the library and load a plug-in
 
-Let's now run a plug-in from ruby. We suggest you copy paste the following code here
+Let's now load a plug-in from ruby. We suggest you copy paste the following code here
 into an irb or pry shell:
 
 :::note Count Vowels Plugin
@@ -299,7 +299,7 @@ $ poetry add extism=^1.0.0rc0 --allow-prereleases
 
 ### Import the library and load a plug-in
 
-Let's now run a plug-in from python. We suggest you copy paste the following code here
+Let's now load a plug-in from python. We suggest you copy paste the following code here
 into a python interpreter:
 
 :::note Count Vowels Plugin
@@ -358,7 +358,7 @@ dotnet add package Extism.Sdk
 
 ### Import the library and load a plug-in
 
-Let's now run a plug-in from C#. We suggest you copy paste the following code here
+Let's now load a plug-in from C#. We suggest you copy paste the following code here
 into a main `Progam.cs`file:
 
 :::note Count Vowels Plugin
@@ -424,7 +424,7 @@ dotnet add package Extism.Sdk
 
 ### Import the library and load a plug-in
 
-Let's now run a plug-in from F#. We suggest you copy paste the following code here
+Let's now load a plug-in from F#. We suggest you copy paste the following code here
 into a main `Progam.fs`file:
 
 :::note Count Vowels Plugin
@@ -510,7 +510,7 @@ implementation 'org.extism.sdk:extism:1.0.0-rc1'
 
 ### Import the library and load a plug-in
 
-Let's now run a plug-in from Java. We suggest you copy paste the following code here
+Let's now load a plug-in from Java. We suggest you copy paste the following code here
 into a main function in a `Main.java`file:
 
 :::note Count Vowels Plugin
@@ -578,7 +578,7 @@ end
 
 ### Import the library and load a plug-in
 
-Let's now run a plug-in from Elixir. We suggest you copy paste the following code here
+Let's now load a plug-in from Elixir. We suggest you copy paste the following code here
 into a main function in an Elixir repl using `iex -S mix`:
 
 :::note Count Vowels Plugin
@@ -629,7 +629,7 @@ sudo extism lib install latest
 
 ### Import the library and load a plug-in
 
-Let's now run a plug-in from C. We suggest you copy paste the following code here
+Let's now load a plug-in from C. We suggest you copy paste the following code here
 into a main function in a `main.c` file:
 
 :::note Count Vowels Plugin
