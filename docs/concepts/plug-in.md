@@ -14,7 +14,6 @@ WebAssembly modules, `.wasm files`, are a binary representation of your code mod
 You can think of them like a JavaScript module. Functions defined in the file can't be seen or invoked from the outside. It must export a function to be used:
 
 ```javascript mymodule.js
-
 // this const and function are private
 const VOWELS = "aeiou";
 function isVowel(char) {
