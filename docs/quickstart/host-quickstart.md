@@ -39,7 +39,7 @@ This library is also compatible with [Browsers, Deno, and Bun](https://github.co
 but this guide will assume we're running in node.js.
 :::
 
-### Require the library and load a plug-in
+### Import the library and load a plug-in
 
 We suggest you copy paste the following code here into a node.js shell:
 
@@ -86,7 +86,7 @@ Install via go get:
 go get github.com/extism/go-sdk
 ```
 
-### Require the library and load a plug-in
+### Import the library and load a plug-in
 
 Let's now run a plug-in in Go.
 
@@ -177,7 +177,7 @@ To use the [extism crate](https://crates.io/crates/extism), you can add it to yo
 extism = "^1.0.0-rc3"
 ```
 
-### Require the library and load a plug-in
+### Import the library and load a plug-in
 
 Let's now run a plug-in in Rust.
 
@@ -247,7 +247,7 @@ Or install with `gem install` if you are not using bundler:
 gem install extism --pre
 ```
 
-### Require the library and load a plug-in
+### Import the library and load a plug-in
 
 Let's now run a plug-in from ruby. We suggest you copy paste the following code here
 into an irb or pry shell:
@@ -297,7 +297,7 @@ $ pip install extism==1.0.0rc0 --pre
 $ poetry add extism=^1.0.0rc0 --allow-prereleases
 ```
 
-### Require the library and load a plug-in
+### Import the library and load a plug-in
 
 Let's now run a plug-in from python. We suggest you copy paste the following code here
 into a python interpreter:
@@ -356,7 +356,7 @@ Then, add the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.S
 dotnet add package Extism.Sdk
 ```
 
-### Require the library and load a plug-in
+### Import the library and load a plug-in
 
 Let's now run a plug-in from C#. We suggest you copy paste the following code here
 into a main `Progam.cs`file:
@@ -422,7 +422,7 @@ Then, add the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.S
 dotnet add package Extism.Sdk
 ```
 
-### Require the library and load a plug-in
+### Import the library and load a plug-in
 
 Let's now run a plug-in from F#. We suggest you copy paste the following code here
 into a main `Progam.fs`file:
@@ -508,7 +508,7 @@ To use the Extism java-sdk with maven you need to add the following dependency t
 implementation 'org.extism.sdk:extism:1.0.0-rc1'
 ```
 
-### Require the library and load a plug-in
+### Import the library and load a plug-in
 
 Let's now run a plug-in from Java. We suggest you copy paste the following code here
 into a main function in a `Main.java`file:
@@ -576,7 +576,7 @@ end
 ```
 > **Note**: You do not need to install the Extism Runtime shared object, but you will need a rust toolchain installed to build this package. See [Install Rust](https://www.rust-lang.org/tools/install) to install for your platform.
 
-### Require the library and load a plug-in
+### Import the library and load a plug-in
 
 Let's now run a plug-in from Elixir. We suggest you copy paste the following code here
 into a main function in an Elixir repl using `iex -S mix`:
@@ -613,11 +613,104 @@ TODO fix link:
 If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
 
   </TabItem>
+  <TabItem value="C" label="C">
+
+### Install the Dependency
+
+For this library, you need to install the Extism Runtime. You can [download the shared object directly from a release](https://github.com/extism/extism/releases) or use the [Extism CLI](https://github.com/extism/cli) to install it:
+
+```bash
+sudo extism lib install latest
+
+#=> Fetching https://github.com/extism/extism/releases/download/v0.5.2/libextism-aarch64-apple-darwin-v0.5.2.tar.gz
+#=> Copying libextism.dylib to /usr/local/lib/libextism.dylib
+#=> Copying extism.h to /usr/local/include/extism.h
+```
+
+### Import the library and load a plug-in
+
+Let's now run a plug-in from C. We suggest you copy paste the following code here
+into a main function in a `main.c` file:
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+```c title=main.c
+#include <extism.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+int main(void) {
+  const char *manifest = "{\"wasm\": [{\"url\": "
+                         "\"https://github.com/extism/plugins/releases/latest/"
+                         "download/count_vowels.wasm\"}]}";
+
+  char *errmsg = NULL;
+  ExtismPlugin *plugin = extism_plugin_new(
+      (const uint8_t *)manifest, strlen(manifest), NULL, 0, true, &errmsg);
+  if (plugin == NULL) {
+    fprintf(stderr, "ERROR: %s\n", errmsg);
+    extism_plugin_new_error_free(errmsg);
+    exit(1);
+  }
+
+  // ...
+}
+```
+
+### Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+Here we add a `print_plugin_output` function and the remainder of the main implementation:
+
+```c title=main.c
+void print_plugin_output(ExtismPlugin *plugin, int32_t rc) {
+  if (rc != EXTISM_SUCCESS) {
+    fprintf(stderr, "ERROR: %s\n", extism_plugin_error(plugin));
+    return;
+  }
+
+  size_t outlen = extism_plugin_output_length(plugin);
+  const uint8_t *out = extism_plugin_output_data(plugin);
+  write(STDOUT_FILENO, out, outlen);
+}
+
+int main(void) {
+  // ...
+
+  const char *input = "Hello, world!";
+  print_plugin_output(plugin, extism_plugin_call(plugin, "count_vowels",
+                                                 (const uint8_t *)input,
+                                                 strlen(input)));
+  extism_plugin_free(plugin);
+  return 0;
+}
+```
+
+```bash
+gcc -g -o example main.c -lextism
+./example
+# => {"count":3,"total":3,"vowels":"aeiouAEIOU"}
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+C library can do, see the [libextism README and reference docs](https://github.com/extism/extism/tree/main/libextism#readme).
+
+TODO fix link:
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+
+  </TabItem>
   <TabItem value="Zig" label="Zig">
   </TabItem>
   <TabItem value="haskell" label="Haskell">
-  </TabItem>
-  <TabItem value="C" label="C">
   </TabItem>
   <TabItem value="C++" label="C++">
   </TabItem>
