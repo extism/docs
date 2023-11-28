@@ -708,6 +708,85 @@ TODO fix link:
 If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
 
   </TabItem>
+  <TabItem value="PHP" label="PHP">
+
+### Install the Dependency
+
+For this library, you need to install the Extism Runtime. You can [download the shared object directly from a release](https://github.com/extism/extism/releases) or use the [Extism CLI](https://github.com/extism/cli) to install it:
+
+```bash
+sudo extism lib install latest
+
+#=> Fetching https://github.com/extism/extism/releases/download/v0.5.2/libextism-aarch64-apple-darwin-v0.5.2.tar.gz
+#=> Copying libextism.dylib to /usr/local/lib/libextism.dylib
+#=> Copying extism.h to /usr/local/include/extism.h
+```
+
+Install via [Packagist](https://packagist.org/):
+
+```sh
+composer require extism/extism
+```
+
+:::note Minimum-Stability
+For the time being you may need to add a minimum-stability of "dev" to your composer.json
+> ```json
+> {
+>    "minimum-stability": "dev",
+> }
+> ```
+:::
+
+### Import the library and load a plug-in
+
+Let's now load a plug-in from php. We suggest you copy paste the following code here
+into in `index.php` file:
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+
+```php title=index.php
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+$wasm = (object) [ 'wasm' => [](object) [ 'url'] = 'https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm']];
+$plugin = new \Extism\Plugin($wasm);
+```
+
+### Call an export function
+
+Let's call the "count_vowels" export function on the plugin. This counts the number
+of vowels in the string we pass in and returns a JSON encoded result.
+
+```php title=index.php
+<?php
+
+// ...
+
+$output = $plugin->call("count_vowels", "this is an example");
+$json = json_decode(pack('C*', ...$output));
+echo "Vowels counted = " . $json->{'count'} . PHP_EOL;
+```
+
+The run it:
+
+```bash
+php index.php
+# => '{"count":3,"total":3,"vowels":"aeiouAEIOU"}'
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+php library can do, see the [php-sdk README and reference docs](https://github.com/extism/php-sdk#readme).
+
+TODO fix link:
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+
+  </TabItem>
   <TabItem value="Zig" label="Zig">
   </TabItem>
   <TabItem value="haskell" label="Haskell">
@@ -715,8 +794,6 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
   <TabItem value="C++" label="C++">
   </TabItem>
   <TabItem value="OCaml" label="OCaml">
-  </TabItem>
-  <TabItem value="PHP" label="PHP">
   </TabItem>
 </Tabs>
 
