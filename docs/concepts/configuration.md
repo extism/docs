@@ -3,12 +3,6 @@ title: Configuration
 sidebar_position: 6
 ---
 
-:::info Feedback Wanted
-
-Configuration for both Host and Plug-in environments is still being worked on, and we expect to collaborate with users on exactly how it should be done. Please reach out on [GitHub](https://github.com/extism/extism) or join the [Discord](https://discord.gg/cx3usBCWnc) and share your thoughts.
-
-:::
-
 Generally speaking, all configuration is defined at the Host level. As a plug-in, you are able to configuration data that has been provided by a Host, but you cannot edit runtime configuration. The sections below go into further detail about configurability, as well as some advanced functionality which require Extism to be built from source with specific feature flags.
 
 ## Plug-ins
