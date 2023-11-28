@@ -475,13 +475,19 @@ c library can do, see the [c-pdk README](https://github.com/extism/extism/libext
 
   </TabItem>
   <TabItem value="C++" label="C++">
+
   See the [README](https://github.com/extism/cpp-pdk)
+
   </TabItem>
   <TabItem value="Haskell" label="Haskell">
+
   See the [README](https://github.com/extism/haskell-pdk)
+
   </TabItem>
   <TabItem value="Zig" label="Zig">
+
   See the [README](https://github.com/extism/zig-pdk)
+
   </TabItem>
 </Tabs>
 
