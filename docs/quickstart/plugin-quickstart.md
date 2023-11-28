@@ -408,6 +408,71 @@ dotnet library can do, see the [dotet-pdk README](https://github.com/extism/dotn
 
   </TabItem>
   <TabItem value="C" label="C">
+
+### Install the Dependency
+
+The quickest way to getting started is to vendor the source for the PDK as a git submodule:
+
+```bash
+git submodule add https://github.com/extism/c-pdk extism-pdk
+```
+
+### Create an Export
+
+The primary means of interacting with this plug-in is an export function that can be called by the outside world.
+Let's create a simple greeting plug-in.
+
+```c title=main.c
+#include "extism-pdk.h"
+
+const char *greeting = "Hello, ";
+uint64_t greetingLen = 7;
+
+int32_t greet() {
+  uint64_t inputLen = extism_input_length();
+
+  // Load input
+  uint8_t inputData[inputLen];
+  extism_load_input(inputData, inputLen);
+
+  // Allocate a new offset used to store greeting and name
+  uint64_t outputLen = greetingLen + inputLen;
+  ExtismPointer offs = extism_alloc(outputLen);
+  extism_store(offs, (const uint8_t *)greeting, greetingLen);
+  extism_store(offs + greetingLen, inputData, inputLen);
+
+  // Set output
+  extism_output_set(offs, outputLen);
+  return 0;
+}
+```
+
+### Compile the Plug-in
+
+Compile with clang and target `wasm32-unknown-unknown`:
+
+```bash
+clang -o plugin.wasm --target=wasm32-unknown-unknown -nostdlib -Wl,--no-entry -Wl,--export=greet main.c
+```
+
+:::note Exports
+Note that we must explicitly export the `greet` function at compile time.
+:::
+
+### Running the Plug-In
+
+This will create a `plugin.wasm` file. Now, you can try out your plugin by using any of the [Extism SDKs](https://extism.org/docs/category/integrate-into-your-codebase) or by using [Extism CLI](https://extism.org/docs/install)'s `run` command:
+
+```bash
+extism call plugin.wasm greet --input "Benjamin"
+# => Hello, Benjamin!
+```
+
+### Documentation
+
+Congrats! You just wrote your first Extism plug-in! To learn more about what this
+c library can do, see the [c-pdk README](https://github.com/extism/extism/libextism#readme).
+
   </TabItem>
   <TabItem value="C++" label="C++">
   </TabItem>
