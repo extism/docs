@@ -312,7 +312,7 @@ import extism
 
 url = "https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"
 manifest = {"wasm": [{"url": url}]}
-plugin = extism.Plugin(manifest):
+plugin = extism.Plugin(manifest)
 ```
 
 ### Call an export function
