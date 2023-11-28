@@ -334,8 +334,7 @@ print(wasm_vowel_count)
 Congrats! You just ran your first Extism plug-in. To learn more about what this
 python library can do, see the [python-sdk README and reference docs](https://github.com/extism/python-sdk).
 
-TODO fix link:
-If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
   </TabItem>
   <TabItem value="C#" label="C#">
@@ -400,8 +399,7 @@ dotnet run
 Congrats! You just ran your first Extism plug-in. To learn more about what this
 dotnet library can do, see the [dotnet-sdk README and reference docs](https://github.com/extism/dotnet-sdk).
 
-TODO fix link:
-If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
   </TabItem>
   <TabItem value="F#" label="F#">
@@ -468,8 +466,7 @@ dotnet run
 Congrats! You just ran your first Extism plug-in. To learn more about what this
 dotnet library can do, see the [dotnet-sdk README and reference docs](https://github.com/extism/dotnet-sdk).
 
-TODO fix link:
-If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
   </TabItem>
   <TabItem value="Java" label="Java">
@@ -557,8 +554,7 @@ mvn compile exec:java -Dexec.mainClass="com.dylibso.myapp.Main"
 Congrats! You just ran your first Extism plug-in. To learn more about what this
 java library can do, see the [java-sdk README and reference docs](https://github.com/extism/java-sdk).
 
-TODO fix link:
-If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
   </TabItem>
   <TabItem value="Elixir" label="Elixir">
@@ -609,8 +605,7 @@ Paste in these lines next and it should print out the vowel report:
 Congrats! You just ran your first Extism plug-in. To learn more about what this
 Elixir library can do, see the [elixr-sdk README and reference docs](https://github.com/extism/elixir-sdk).
 
-TODO fix link:
-If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
   </TabItem>
   <TabItem value="C" label="C">
@@ -704,8 +699,7 @@ gcc -g -o example main.c -lextism
 Congrats! You just ran your first Extism plug-in. To learn more about what this
 C library can do, see the [libextism README and reference docs](https://github.com/extism/extism/tree/main/libextism#readme).
 
-TODO fix link:
-If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
   </TabItem>
   <TabItem value="PHP" label="PHP">
@@ -783,8 +777,7 @@ php index.php
 Congrats! You just ran your first Extism plug-in. To learn more about what this
 php library can do, see the [php-sdk README and reference docs](https://github.com/extism/php-sdk#readme).
 
-TODO fix link:
-If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
   </TabItem>
   <TabItem value="OCaml" label="OCaml">
