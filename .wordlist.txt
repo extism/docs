@@ -12,6 +12,7 @@ CountVowels
 CreatePlugin
 CurrentPlugin
 DLL
+Deno
 Deserialize
 EOL
 ESM
@@ -63,10 +64,13 @@ Packagist
 PluginConfig
 Printf
 Println
+PyPI
+Quickstart
 README
 ReadAllBytesAsync
 ReadString
 Runtime
+Runtimes
 SDK
 SDKLogoLinks
 SDKs
@@ -74,6 +78,7 @@ STDOUT
 SetConfig
 SetHeader
 Sys
+TabItem
 TestOutput
 TextDecoder
 TextEncoder
@@ -208,6 +213,7 @@ inputSlice
 inputString
 io
 ios
+irb
 isVowel
 istreambuf
 javascript
@@ -248,6 +254,7 @@ nio
 nn
 npm
 npx
+nuget
 ocaml
 ok
 optl
@@ -272,8 +279,11 @@ putStrLn
 px
 py
 qualCast
+quickstart
 rb
 readFileSync
+readme
+repl
 req
 rubyGems
 runtime
@@ -310,12 +320,14 @@ sudo
 svg
 sys
 syscall
+syscalls
 sysroot
 thomasdarimont
 tinygo
 toByteString
 toLowerCase
 toString
+toc
 todos
 toolchain
 typedef

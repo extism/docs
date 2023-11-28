@@ -3,14 +3,10 @@ title: Extism CLI
 sidebar_position: 5
 ---
 
-
 The `extism` [CLI](https://github.com/extism/cli) is a useful but optional tool for developing on Extism.
 It handles a few things such as installing the shared library (Extism Runtime), or invoking plug-ins from the command line.
 
----
-
 The following instructions will walk you through how to install the Extism CLI, and then the installation of the shared library which a [Host SDK](/docs/concepts/host-sdk) will look for automatically.
-
 
 ## Install the Extism CLI
 
@@ -47,6 +43,7 @@ sudo extism lib install
 :::note
 `sudo` may use a different path than your user. If so, you may need to tell sudo to use the PATH defined for your user with: `sudo -E env "PATH=$PATH" extism lib install`
 :::
+
 #### Installing the latest from git
 
 It's also possible to install the latest build from the `main` git branch:
@@ -62,8 +59,6 @@ Pass the `--prefix` argument a path on disk where `extism` CLI will install the 
 ```sh
 extism lib install --prefix ~/.local
 ```
-
----
 
 ## Other CLI Features
 

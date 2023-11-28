@@ -20,7 +20,7 @@ export default function SDKLogoLinks({ only }) {
   ]
 
   if (only) {
-    sdks = sdks.filter(lang => only.includes(lang.name))
+    sdks = sdks.filter(language => only.includes(language.name))
   }
 
   return (
