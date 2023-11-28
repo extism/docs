@@ -787,13 +787,17 @@ TODO fix link:
 If you're interested in writing how to write a plug-in, see the [plugin quickstart](/).
 
   </TabItem>
-  <TabItem value="Zig" label="Zig">
+  <TabItem value="OCaml" label="OCaml">
+  See the [README](https://github.com/extism/ocaml-sdk)
   </TabItem>
-  <TabItem value="haskell" label="Haskell">
+  <TabItem value="Zig" label="Zig">
+  See the [README](https://github.com/extism/zig-sdk)
+  </TabItem>
+  <TabItem value="Haskell" label="Haskell">
+  See the [README](https://github.com/extism/haskell-sdk)
   </TabItem>
   <TabItem value="C++" label="C++">
-  </TabItem>
-  <TabItem value="OCaml" label="OCaml">
+  See the [README](https://github.com/extism/cpp-sdk)
   </TabItem>
 </Tabs>
 
