@@ -47,7 +47,7 @@ async function processCart(cart: Cart) {
         path: "/path/to/customer-discount-plugin.wasm"
     }
     const plugin = await ExtismPlugin.new(wasm)
-    const input = JSON.stringify()
+    const input = JSON.stringify(cart)
     const res = await plugin.call("before_checkout", new TextEncoder().encode(input));
     const discount: Discount = JSON.parse(res)
 
