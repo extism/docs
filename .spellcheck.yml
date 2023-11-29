@@ -22,7 +22,7 @@ matrix:
       - pre
       - code
   sources:
-  - 'docs/**/*'
+  - 'docs/**'
   - 'src/components/**'
   - 'src/pages/**'
   default_encoding: utf-8
