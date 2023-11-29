@@ -472,17 +472,92 @@ extism call plugin.wasm greet --input "Benjamin"
 ### Documentation
 
 Congrats! You just wrote your first Extism plug-in! To learn more about what this
-c library can do, see the [c-pdk README](https://github.com/extism/extism/libextism#readme).
-
-  </TabItem>
-  <TabItem value="C++" label="C++">
-
-  See the [README](https://github.com/extism/cpp-pdk)
+C library can do, see the [c-pdk README](https://github.com/extism/c-pdk#readme).
 
   </TabItem>
   <TabItem value="Haskell" label="Haskell">
 
-  See the [README](https://github.com/extism/haskell-pdk)
+### Install the Dependency
+
+# Extism Haskell PDK
+
+This library can be used to write [Extism Plug-ins](https://extism.org/docs/concepts/plug-in) in Haskell.
+
+Docs are available on Hackage: [https://hackage.haskell.org/package/extism-pdk](https://hackage.haskell.org/package/extism-pdk)
+
+## Install
+
+Make sure you have [wasm32-wasi-ghc](https://gitlab.haskell.org/ghc/ghc-wasm-meta) installed, then generate an `Executable` project with cabal:
+
+```bash
+cabal init
+```
+
+Add the library from [Hackage](https://hackage.haskell.org/package/extism-pdk) to your cabal file:
+
+```bash
+build-depends: extism-pdk
+```
+
+We will also need to add some additional ghc options to expose the correct functions:
+
+```
+ghc-options:
+  -optl -Wl,--export=greet -optl -Wl,--export=hs_init -optl -Wl,--allow-undefined -no-hs-main -optl-mexec-model=reactor 
+```
+
+### Create an Export
+
+The primary means of interacting with this plug-in is an export function that can be called by the outside world.
+Let's create a simple greeting plug-in.
+
+```haskell title=Example.hs
+module Example where
+
+import Extism.PDK
+
+makeGreeting g n =
+  output $ g ++ ", " ++ n
+
+greet = do
+  -- Get a name from the Extism runtime
+  name <- inputString
+  -- Get  configured greeting
+  greeting <- getConfig "greeting"
+  -- Greet the user, if no greeting is configured then "Hello" is used
+  makeGreeting (fromMaybe defaultGreeting greeting) name
+  -- Return code
+  return 0
+
+foreign export ccall "greet" greet:: IO Int32
+```
+
+### Compile the Plug-in
+
+Compile with `wasm32-wasi-cabal`:
+
+```bash
+wasm32-wasi-cabal build
+cp $(find dist-newstyle/build/wasm32-wasi/ -name example.wasm) ./plugin.wasm
+```
+
+:::note Exports
+Note that we must explicitly export the `greet` function at compile time.
+:::
+
+### Running the Plug-In
+
+This will create a `plugin.wasm` file. Now, you can try out your plugin by using any of the [Extism SDKs](https://extism.org/docs/category/integrate-into-your-codebase) or by using [Extism CLI](https://extism.org/docs/install)'s `run` command:
+
+```bash
+extism call plugin.wasm greet --input "Benjamin"
+# => Hello, Benjamin!
+```
+
+### Documentation
+
+Congrats! You just wrote your first Extism plug-in! To learn more about what this
+Haskell library can do, see the [haskell-pdk README](https://github.com/extism/haskell-pdk#readme).
 
   </TabItem>
   <TabItem value="Zig" label="Zig">
