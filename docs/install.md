@@ -1,25 +1,16 @@
 ---
-title: Installing Extism
-sidebar_position: 2
+title: Extism CLI
+sidebar_position: 5
 ---
 
-The `extism` [CLI](https://github.com/extism/cli) is used to manage [Extism](https://github.com/extism/extism) installations and execute plugins from the command-line. In order to run Extism, your system must be able to locate the `libextism.so` (on Linux), `extism.dll` (on Windows) or `libextism.dylib` (on macos).
-
-> **Note:** If you are using the [Rust Host SDK](/docs/integrate-into-your-codebase/rust-host-sdk), this is not the case, and can use Extism as a [crate dependency](https://crates.io/crates/extism) in your `Cargo.toml`. 
-
----
+The `extism` [CLI](https://github.com/extism/cli) is a useful but optional tool for developing on Extism.
+It handles a few things such as installing the shared library (Extism Runtime), or invoking plug-ins from the command line.
 
 The following instructions will walk you through how to install the Extism CLI, and then the installation of the shared library which a [Host SDK](/docs/concepts/host-sdk) will look for automatically.
 
-:::note
-Depending on the SDK you use, you may or may not need to install the runtime library on your machine.
-Check the documentation for your language's SDK for more info on what steps are needed.
-:::
-
-
 ## Install the Extism CLI
 
-Using go: <small><em>(recommended)</em></small>
+Using go: **(recommended)**
 
 ```sh
 go install github.com/extism/cli/extism@latest
@@ -27,17 +18,23 @@ go install github.com/extism/cli/extism@latest
 
 There are also releases available on Github: https://github.com/extism/cli/releases
 
-> **Note**: If you have installed the old cli via python, you may need to remove it:
+:::warning Remove old installation
+If you have installed the old cli via python, you may need to remove it:
 >   ```sh
 >   pip3 uninstall extism_cli --break-system-packages
 >   which extism # shouldn't print anything, if it does, delete it
 >   ```
-
----
+:::
 
 ## Using the Extism CLI
 
 The most common use-case is to to install Extism from Github releases, and then install the library and header file into the installation prefix of your choice. The default prefix is `/usr/local`, so libraries will be installed to `/usr/local/lib` and the header will be installed to `/usr/local/include`.
+
+:::note
+Some language SDKs come bundled with the runtime and some need you to install the runtime separately.
+If your language needs you to install the runtime, the SDKs readme will say so in the install instructions.
+:::
+
 
 ```sh
 sudo extism lib install
@@ -46,6 +43,7 @@ sudo extism lib install
 :::note
 `sudo` may use a different path than your user. If so, you may need to tell sudo to use the PATH defined for your user with: `sudo -E env "PATH=$PATH" extism lib install`
 :::
+
 #### Installing the latest from git
 
 It's also possible to install the latest build from the `main` git branch:
@@ -62,12 +60,9 @@ Pass the `--prefix` argument a path on disk where `extism` CLI will install the 
 extism lib install --prefix ~/.local
 ```
 
----
-
 ## Other CLI Features
 
 ```sh
-
 Usage:
   extism [command]
 
