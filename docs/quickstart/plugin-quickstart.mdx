@@ -538,6 +538,7 @@ Compile with `wasm32-wasi-cabal`:
 
 ```bash
 wasm32-wasi-cabal build
+cp $(find dist-newstyle/build/wasm32-wasi/ -name example.wasm) ./plugin.wasm
 ```
 
 :::note Exports
