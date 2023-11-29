@@ -9,8 +9,7 @@ export default function PDKLogoLinks() {
     { name: "AssemblyScript", path: "https://github.com/extism/assemblyscript-pdk", logo: "/img/sdk-languages/assemblyscript.svg" },
     { name: "C", path: "https://github.com/extism/c-pdk", logo: "/img/sdk-languages/c.svg" },
     { name: "Zig", path: "https://github.com/extism/zig-pdk", logo: "/img/sdk-languages/zig.svg" },
-    { name: "C#", path: "https://github.com/extism/dotnet-pdk", logo: "/img/sdk-languages/dotnet.svg" },
-    { name: "F#", path: "https://github.com/extism/dotnet-pdk", logo: "/img/sdk-languages/dotnet.svg" },
+    { name: ".NET", path: "https://github.com/extism/dotnet-pdk", logo: "/img/sdk-languages/dotnet.svg" },
   ]
 
   return (
