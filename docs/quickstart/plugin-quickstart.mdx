@@ -245,7 +245,7 @@ dotnet workload install wasi-experimental
 
 Create a new project and add this NuGet package to your project:
 
-```
+```sh
 dotnet new wasiconsole -o MyPlugin
 cd MyPlugin
 dotnet add package Extism.Pdk --prerelease
@@ -253,7 +253,7 @@ dotnet add package Extism.Pdk --prerelease
 
 Update your `MyPlugin.csproj` as follows:
 
-```xml
+```xml title=MyPlugin.csproj
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -273,14 +273,14 @@ Update your `MyPlugin.csproj` as follows:
 The primary means of interacting with this plug-in is an export function that can be called by the outside world.
 Let's create a simple greeting plug-in.
 
-```csharp
+```csharp title=Program.cs
 using System;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using Extism;
 
 namespace MyPlugin;
-public class Functions
+public class Program
 {
     [UnmanagedCallersOnly(EntryPoint = "greet")]
     public static int Greet()
@@ -338,14 +338,14 @@ dotnet workload install wasi-experimental
 Create a new project and add this NuGet package to your project:
 
 ```
-dotnet new wasiconsole -lang "F#" -o MyPlugin
+dotnet new console -o MyPlugin -lang F#
 cd MyPlugin
 dotnet add package Extism.Pdk --prerelease
 ```
 
 Update your `MyPlugin.fsproj` as follows:
 
-```xml
+```xml title=MyPlugin.fsproj
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -365,7 +365,7 @@ Update your `MyPlugin.fsproj` as follows:
 The primary means of interacting with this plug-in is an export function that can be called by the outside world.
 Let's create a simple greeting plug-in.
 
-```fsharp
+```fsharp title=Program.fs
 module MyPlugin
 
 open System
