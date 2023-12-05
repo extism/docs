@@ -347,14 +347,14 @@ This library depends on the native Extism runtime, we provide [native runtime pa
 <img src="https://img.shields.io/nuget/vpre/Extism.runtime.all" />
 
 ```
-dotnet add package Extism.runtime.win-64 --prerelease
+dotnet add package Extism.runtime.all --prerelease
 ```
 
 Then, add the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.Sdk) to your project:
 <img src="https://img.shields.io/nuget/vpre/Extism.Sdk" />
 
 ```
-dotnet add package Extism.Sdk
+dotnet add package Extism.Sdk --prerelease
 ```
 
 ### Import the library and load a plug-in
@@ -371,10 +371,9 @@ be written in any of the supported PDK languages.
 using System;
 
 using Extism.Sdk;
-using Extism.Sdk.Native;
 
 var manifest = new Manifest(new UrlWasmSource("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"));
-using var plugin = new Plugin(manifest, new HostFunction[] { });
+using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 ```
 
 ### Call an export function
@@ -386,7 +385,7 @@ Add these next lines to your `Program.cs` file:
 
 ```csharp title=Program.cs
 var output = plugin.Call("count_vowels", "Hello, World!");
-Console.WriteLine(output)
+Console.WriteLine(output);
 ```
 
 Run using `dotnet`:
@@ -399,7 +398,7 @@ dotnet run
 ### Documentation
 
 Congrats! You just ran your first Extism plug-in. To learn more about what this
-dotnet library can do, see the [dotnet-sdk README and reference docs](https://github.com/extism/dotnet-sdk).
+dotnet library can do, see the [dotnet-sdk README](https://github.com/extism/dotnet-sdk) and [reference docs](https://extism.github.io/dotnet-sdk/api/Extism.Sdk.html).
 
 If you're interested in writing how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
@@ -411,15 +410,15 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
 This library depends on the native Extism runtime, we provide [native runtime packages](https://www.nuget.org/packages/Extism.runtime.all) for all supported operating systems. You can install with:
 <img src="https://img.shields.io/nuget/vpre/Extism.runtime.all" />
 
-```
-dotnet add package Extism.runtime.win-64 --prerelease
+```sh
+dotnet add package Extism.runtime.all --prerelease
 ```
 
 Then, add the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.Sdk) to your project:
 <img src="https://img.shields.io/nuget/vpre/Extism.Sdk" />
 
-```
-dotnet add package Extism.Sdk
+```sh
+dotnet add package Extism.Sdk --prerelease
 ```
 
 ### Import the library and load a plug-in
@@ -441,7 +440,7 @@ open Extism.Sdk.Native
 let uri = Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")
 let manifest = Manifest(new UrlWasmSource(uri))
 
-use plugin = Plugin(manifest, Array.Empty<HostFunction>(), withWasi = true)
+let plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi = true)
 ```
 
 ### Call an export function
@@ -466,7 +465,7 @@ dotnet run
 ### Documentation
 
 Congrats! You just ran your first Extism plug-in. To learn more about what this
-dotnet library can do, see the [dotnet-sdk README and reference docs](https://github.com/extism/dotnet-sdk).
+dotnet library can do, see the [dotnet-sdk README](https://github.com/extism/dotnet-sdk) and [reference docs](https://extism.github.io/dotnet-sdk/api/Extism.Sdk.html).
 
 If you're interested in writing how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
 
