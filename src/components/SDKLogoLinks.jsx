@@ -3,7 +3,7 @@ import React from 'react';
 export default function SDKLogoLinks({ only }) {
   let sdks = [
     { name: "Browser", path: "https://github.com/extism/js-sdk", logo: "/img/sdk-languages/browser.svg" },
-    { name: "C", path: "https://github.com/extism/tree/main/libextism", logo: "/img/sdk-languages/c.svg" },
+    { name: "C", path: "https://github.com/extism/extism/tree/main/libextism", logo: "/img/sdk-languages/c.svg" },
     { name: "C++", path: "https://github.com/extism/cpp-sdk", logo: "/img/sdk-languages/cpp.svg" },
     { name: "Elixir", path: "https://github.com/extism/elixir-sdk", logo: "/img/sdk-languages/elixir.svg" },
     { name: "Go", path: "https://github.com/extism/go-sdk", logo: "/img/sdk-languages/go.svg" },
