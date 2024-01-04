@@ -11,19 +11,19 @@ The following instructions will walk you through how to install the Extism CLI, 
 ## Install the Extism CLI
 
 ```sh
-curl -s https://get.extism.org | sh
+curl -s https://get.extism.org/cli | sh
 ```
 
 Or to a specific path:
 
 ```sh
-curl -s https://get.extism.org | sh -s -- -o $HOME/.local/bin
+curl -s https://get.extism.org/cli | sh -s -- -o $HOME/.local/bin
 ```
 
 See the help output for more information:
 
 ```sh
-curl -s https://get.extism.org | sh -s -- -h
+curl -s https://get.extism.org/cli | sh -s -- -h
 ```
 
 Releases are also available on Github: https://github.com/extism/cli/releases
