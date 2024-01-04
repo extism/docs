@@ -17,7 +17,7 @@ curl -s https://get.extism.org | sh
 Or to a specific path:
 
 ```sh
-curl -s https://get.extism.org | sh -s -- -o $HOME/bin
+curl -s https://get.extism.org | sh -s -- -o $HOME/.local/bin
 ```
 
 See the help output for more information:
