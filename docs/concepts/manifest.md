@@ -1,6 +1,6 @@
 ---
 title: The Manifest
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 The manifest is a description of your plugin and some of the runtime constraints to apply to it. You can think of it as a blueprint to build your plugin.

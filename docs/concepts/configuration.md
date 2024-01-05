@@ -1,6 +1,6 @@
 ---
 title: Configuration
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 Generally speaking, all configuration is defined at the Host level. As a plug-in, you are able to configuration data that has been provided by a Host, but you cannot edit runtime configuration. The sections below go into further detail about configurability, as well as some advanced functionality which require Extism to be built from source with specific feature flags.
