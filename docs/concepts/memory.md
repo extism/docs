@@ -3,7 +3,7 @@ title: Memory
 sidebar_position: 5
 ---
 
-Passing variables and data into and out of WebAssembly (Wasm) isn't trivial as the host and the WebAssembly have separately managed memory and often use differing [ABIs](https://stackoverflow.com/questions/2171177/what-is-an-application-binary-interface-abi) for variables and function calls. The Extism framework provides a general purpose solution to ease passing data between the host and Wasm.
+Passing variables and data into and out of WebAssembly (Wasm) isn't trivial as the host and the WebAssembly have separately managed memory and often use differing [ABIs](https://stackoverflow.com/questions/2171177/what-is-an-application-binary-interface-abi) for variables and function calls. The Extism framework provides a general purpose solution to ease passing data between the host and Wasm. Extism implements this by managing memory isolated from both the host and the plug-in/Wasm module.
 
 To pass variables and data between the host and plug-ins, Extism uses a basic message passing system. Plug-in functions take in a buffer of bytes and return out a buffer of bytes. The exact format of the messages is set by the plug-in author. The Host SDKs and Plug-in Development Kits (PDKs) provide various language-specific convenience methods for serializing and deserializing native types into and out of Extism memory.
 
