@@ -36,7 +36,7 @@ cargo new --lib my-plugin
 Add the library from [crates.io](https://crates.io/crates/extism-pdk).
 
 ```bash
-cargo add extism-pdk@1.0.0-rc1
+cargo add extism-pdk
 ```
 
 Change your `Cargo.toml` to set the crate-type to `cdylib` (this instructs the compiler to produce a dynamic library, which for our target will be a Wasm binary):
@@ -248,7 +248,7 @@ Create a new project and add this NuGet package to your project:
 ```sh
 dotnet new wasiconsole -o MyPlugin
 cd MyPlugin
-dotnet add package Extism.Pdk --prerelease
+dotnet add package Extism.Pdk
 ```
 
 Update your `MyPlugin.csproj` as follows:
@@ -340,7 +340,7 @@ Create a new project and add this NuGet package to your project:
 ```
 dotnet new console -o MyPlugin -lang F#
 cd MyPlugin
-dotnet add package Extism.Pdk --prerelease
+dotnet add package Extism.Pdk
 ```
 
 Update your `MyPlugin.fsproj` as follows:
