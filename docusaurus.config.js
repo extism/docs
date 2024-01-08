@@ -1,32 +1,32 @@
 // @ts-check
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require("prism-react-renderer/themes/github");
+const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 // /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Extism - make all software programmable. Extend from within.',
-  tagline: 'The cross-language framework for building with WebAssembly (wasm).',
-  url: 'https://extism.org',
-  baseUrl: '/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  title: "Extism - make all software programmable. Extend from within.",
+  tagline: "The cross-language framework for building with WebAssembly",
+  url: "https://extism.org",
+  baseUrl: "/",
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
+  favicon: "img/favicon.ico",
 
-  organizationName: 'extism',
-  projectName: 'docs',
+  organizationName: "extism",
+  projectName: "docs",
 
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
   },
   presets: [
     [
-      'classic',
+      "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve("./sidebars.js"),
           // editUrl:
           //   'https://github.com/extism/docs',
         },
@@ -36,7 +36,7 @@ const config = {
           //   'https://github.com/extism/docs',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve("./src/css/custom.css"),
         },
       }),
     ],
@@ -46,64 +46,90 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Extism',
+        // title: "Extism",
         logo: {
-          alt: 'Extism Logo',
-          src: 'img/logo.svg',
+          alt: "Extism",
+          src: "img/logo-horizontal.png",
+          srcDark: "img/logo-horizontal-darkmode.png",
         },
         items: [
-          { type: 'doc', docId: 'overview', position: 'left', label: 'Overview' },
-          { to: '/docs/category/quickstart', label: 'Quickstart', position: 'left' },
-          { to: '/docs/category/concepts', label: 'Concepts', position: 'left' },
-          { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://playground.extism.org',
-            label: 'Extism Playground',
-            position: 'right',
+            type: "doc",
+            docId: "overview",
+            position: "left",
+            label: "Overview",
           },
           {
-            href: 'https://github.com/extism/extism',
-            label: 'GitHub',
-            position: 'right',
+            to: "/docs/category/quickstart",
+            label: "Quickstart",
+            position: "left",
           },
           {
-            href: 'https://discord.gg/cx3usBCWnc',
-            label: 'Discord',
-            position: 'right',
+            to: "/docs/category/concepts",
+            label: "Concepts",
+            position: "left",
+          },
+          { to: "/blog", label: "Blog", position: "left" },
+          {
+            href: "https://playground.extism.org",
+            label: "Extism Playground",
+            position: "right",
+          },
+          {
+            href: "https://github.com/extism/extism",
+            label: "GitHub",
+            position: "right",
+          },
+          {
+            href: "https://discord.gg/cx3usBCWnc",
+            label: "Discord",
+            position: "right",
           },
         ],
       },
       footer: {
-        style: 'dark',
+        style: "dark",
         links: [
           {
-            title: 'Docs',
+            title: "Docs",
             items: [
               {
-                label: 'Overview',
-                to: '/docs/overview',
+                label: "Overview",
+                to: "/docs/overview",
               },
-              { to: '/docs/install', label: 'Installation' },
-              { to: '/docs/quickstart/host-quickstart', label: 'Quickstart' },
-              { to: '/docs/quickstart/plugin-quickstart', label: 'Write a Plug-in' },
+              { to: "/docs/install", label: "Installation" },
+              { to: "/docs/quickstart/host-quickstart", label: "Quickstart" },
+              {
+                to: "/docs/quickstart/plugin-quickstart",
+                label: "Write a Plug-in",
+              },
             ],
           },
           {
-            title: 'Community',
-            items: [
-              { label: 'Extism Improvement Proposals (EIP)', href: 'https://github.com/extism/proposals' },
-              { label: 'GitHub Discussions', href: 'https://github.com/extism/extism/discussions' },
-              { label: 'Discord', href: 'https://discord.gg/cx3usBCWnc' },
-              { label: 'Twitter', href: 'https://twitter.com/extism' },
-              { label: 'Stack Overflow', href: 'https://stackoverflow.com/questions/tagged/extism' },
-            ],
-          },
-          {
-            title: 'Commercial Support',
+            title: "Community",
             items: [
               {
-                label: 'Dylibso',
-                href: 'https://dylib.so',
+                label: "Extism Improvement Proposals (EIP)",
+                href: "https://github.com/extism/proposals",
+              },
+              {
+                label: "GitHub Discussions",
+                href: "https://github.com/extism/extism/discussions",
+              },
+              { label: "Discord", href: "https://discord.gg/cx3usBCWnc" },
+              { label: "Twitter", href: "https://twitter.com/extism" },
+              {
+                label: "Stack Overflow",
+                href: "https://stackoverflow.com/questions/tagged/extism",
+              },
+            ],
+          },
+          {
+            title: "Commercial Support",
+            items: [
+              {
+                label: "Dylibso",
+                href: "https://dylib.so",
               },
             ],
           },
@@ -113,16 +139,26 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['php', 'ruby', 'rust', 'haskell', 'elixir', 'toml', 'csharp', 'java', 'zig'],
+        additionalLanguages: [
+          "php",
+          "ruby",
+          "rust",
+          "haskell",
+          "elixir",
+          "toml",
+          "csharp",
+          "java",
+          "zig",
+        ],
       },
       algolia: {
         // The application ID provided by Algolia
-        appId: 'ODNR4SNJO8',
+        appId: "ODNR4SNJO8",
 
         // Public API key: it is safe to commit it
-        apiKey: 'ce6382c7f97326cea11a1dc6ea42374e',
+        apiKey: "ce6382c7f97326cea11a1dc6ea42374e",
 
-        indexName: 'extism',
+        indexName: "extism",
 
         // Optional: see doc section below
         contextualSearch: true,
@@ -135,7 +171,6 @@ const config = {
 
         // Optional: path for search page that enabled by default (`false` to disable it)
         searchPagePath: false,
-
         //... other Algolia params
       },
     }),
