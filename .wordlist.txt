@@ -36,6 +36,8 @@ cli
 CLI
 cloneable
 clsx
+cmake
+CMake
 codebase
 codebases
 columnNumber
@@ -173,6 +175,7 @@ js
 json
 JSON
 jsonplaceholder
+jsoncpp
 Kib
 kv
 KV
