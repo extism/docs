@@ -851,7 +851,63 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
   </TabItem>
   <TabItem value="Zig" label="Zig">
 
-  See the [README](https://github.com/extism/zig-sdk)
+  ### Install the Dependency
+
+  For this library, you need to install the Extism Runtime. You can [download the shared object directly from a release](https://github.com/extism/extism/releases)
+   or use the [Extism CLI](https://github.com/extism/cli) to install it:
+
+```bash
+sudo extism lib install latest
+
+#=> Fetching https://github.com/extism/extism/releases/download/v1.0.0/libextism-aarch64-apple-darwin-v1.0.0.tar.gz
+#=> Copying libextism.dylib to /usr/local/lib/libextism.dylib
+#=> Copying extism.h to /usr/local/include/extism.h
+```
+
+### Import the library and load a plug-in
+
+Let's now load a plug-in from Zig!
+
+:::note Count Vowels Plugin
+`count_vowels.wasm` is an example plugin that counts vowels. It was written in Rust, but can
+be written in any of the supported PDK languages.
+:::
+
+```zig
+// First require the library
+const extism = @import("extism");
+const std = @import("std");
+
+const wasm_url = extism.manifest.WasmUrl{ .url = "https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm" };
+const manifest = .{ .wasm = &[_]extism.manifest.Wasm{.{ .wasm_url= wasm_url }} };
+
+var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+defer std.debug.assert(gpa.deinit() == .ok);
+const allocator = gpa.allocator();
+
+var plugin = try extism.Plugin.initFromManifest(
+    allocator,
+    manifest,
+    &[_]extism.Function{},
+    false,  
+);
+
+defer plugin.deinit();
+```
+
+### Call an export function
+
+This plug-in was written in Rust and it does one thing, it counts vowels in a string. As such, it exposes one "export" function: `count_vowels`. We can call exports using [Extism::Plugin#call](https://github.com/extism/zig-sdk/blob/main/src/plugin.zig#L61):
+
+```zig
+try plugin.call("count_vowels", "Hello, World!");
+# => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+java library can do, see the [zig-sdk README](https://github.com/extism/zig-sdk).
 
   </TabItem>
   <TabItem value="Haskell" label="Haskell">
@@ -921,7 +977,98 @@ If you're interested in writing how to write a plug-in, see the [plugin quicksta
   </TabItem>
   <TabItem value="C++" label="C++">
 
-  See the [README](https://github.com/extism/cpp-sdk)
+  ### Install the Dependencies
+
+- Install the Extism runtime by following the instructions [here](https://extism.org/docs/install)
+
+- Install cmake and jsoncpp
+
+```bash
+# on Debian
+sudo apt install cmake jsoncpp
+
+# on macOS
+brew install cmake jsoncpp
+```
+
+:::note 
+If you'd prefer to link jsoncpp statically, or do an in-tree build, [See Alternative Dependency Strategies](https://github.com/extism/cpp-sdk?tab=readme-ov-file#Alternative-Dependency-Strategies).
+:::
+
+**Build and Install cpp-sdk**
+```bash
+cmake -B build
+cmake --build build -j
+sudo cmake --install build
+```
+
+To add the cpp-sdk to a CMake project:
+
+```cmake
+find_package(extism-cpp)
+target_link_libraries(getting-started extism-cpp)
+```
+
+### Import the library and load a plug-in
+
+Let's now load a plug-in from C++ 
+
+```cpp
+#include <extism.hpp>
+
+int main(void) {
+  const auto manifest =
+      extism::Manifest::wasmURL("https://github.com/extism/plugins/releases/"
+                                "latest/download/count_vowels.wasm");
+  extism::Plugin plugin(manifest, true);
+}
+```
+
+ ### Call an export function
+
+ This plug-in was written in Rust and it does one thing, it counts vowels in a string. It exposes one "export" function: count_vowels. We can call exports using Plugin::call.
+ Let's add code to call count_vowels to our main func:
+
+ ```cpp
+#include <extism.hpp>
+#include <iostream>
+#include <string>
+
+int main(void) {
+  // ...
+
+  const std::string hello("Hello, World!");
+  auto out = plugin.call("count_vowels", hello);
+  std::string response(out.string());
+  std::cout << response << std::endl;
+  // => {"count":3,"total":3,"vowels":"aeiouAEIOU"}
+}
+```
+
+Build it:
+
+```bash
+cmake -B build && cmake --build build
+```
+
+Running this should print out the JSON vowel count report:
+
+```bash
+./build/getting-started
+{"count":3,"total":3,"vowels":"aeiouAEIOU"}
+```
+
+### Documentation
+
+Congrats! You just ran your first Extism plug-in. To learn more about what this
+C++ library can do, see the [cpp-sdk README](https://github.com/extism/cpp-sdk).
+
+If you're interested in writing how to write a plug-in, see the [plugin quickstart](/docs/quickstart/plugin-quickstart).
+
+  </TabItem>
+  <TabItem value="D" label="D">
+
+  See the [README](https://github.com/extism/d-sdk)
 
   </TabItem>
 </Tabs>

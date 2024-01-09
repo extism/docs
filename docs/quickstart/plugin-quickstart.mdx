@@ -479,8 +479,6 @@ C library can do, see the [c-pdk README](https://github.com/extism/c-pdk#readme)
 
 ### Install the Dependency
 
-# Extism Haskell PDK
-
 This library can be used to write [Extism Plug-ins](https://extism.org/docs/concepts/plug-in) in Haskell.
 
 Docs are available on Hackage: [https://hackage.haskell.org/package/extism-pdk](https://hackage.haskell.org/package/extism-pdk)
@@ -562,7 +560,125 @@ Haskell library can do, see the [haskell-pdk README](https://github.com/extism/h
   </TabItem>
   <TabItem value="Zig" label="Zig">
 
-  See the [README](https://github.com/extism/zig-pdk)
+  ### Install the Dependency
+
+  Create a new Zig project:
+
+```bash
+mkdir my-plugin
+cd my-plugin
+zig init
+```
+
+Add the library as a dependency:
+
+```zig
+// build.zig.zon
+
+.{
+    .name = "my-plugin",
+    .version = "0.0.0",
+
+    .dependencies = .{
+        .extism_pdk = .{
+            .url = "https://github.com/extism/zig-pdk/archive/<git-ref-here>.tar.gz",
+            // .hash = "" (zig build will tell you what to put here)
+        },
+    },
+
+    .paths = .{""},
+}
+
+```
+
+Change your `build.zig` so that it references `extism-pdk`:
+
+```zig
+const std = @import("std");
+const builtin = @import("builtin");
+
+pub fn build(b: *std.Build) void {
+    comptime {
+        const current_zig = builtin.zig_version;
+        const min_zig = std.SemanticVersion.parse("0.12.0-dev.2030+2ac315c24") catch unreachable;
+        if (current_zig.order(min_zig) == .lt) {
+            @compileError(std.fmt.comptimePrint("Your Zig version v{} does not meet the minimum build requirement of v{}", .{ current_zig, min_zig }));
+        }
+    }
+
+    const optimize = b.standardOptimizeOption(.{});
+    const target = b.standardTargetOptions(.{
+        // if you're using WASI, change the .os_tag to .wasi
+        .default_target = .{ .abi = .musl, .os_tag = .freestanding, .cpu_arch = .wasm32 },
+    });
+
+    var basic_example = b.addExecutable(.{
+        .name = "basic-example",
+        .root_source_file = .{ .path = "examples/basic.zig" },
+        .target = target,
+        .optimize = optimize,
+    });
+    basic_example.rdynamic = true;
+    basic_example.entry = .disabled; // or add an empty `pub fn main() void {}` to your code
+    const pdk_module = b.addModule("extism-pdk", .{
+        .root_source_file = .{ .path = "src/main.zig" },
+    });
+    basic_example.root_module.addImport("extism-pdk", pdk_module);
+
+    b.installArtifact(basic_example);
+    const basic_example_step = b.step("basic_example", "Build basic_example");
+    basic_example_step.dependOn(b.getInstallStep());
+}
+```
+
+### Create an Export
+
+The goal of writing an [Extism plug-in](https://extism.org/docs/concepts/plug-in) is to compile your Zig code to a Wasm module with exported functions that the host application can invoke. The first thing you should understand is creating an export. Let's write a simple program that exports a `greet` function which will take a name as a string and return a greeting string. Zig has excellent support for this through the `export` keyword:
+
+```zig
+const std = @import("std");
+const extism_pdk = @import("extism-pdk");
+const Plugin = extism_pdk.Plugin;
+
+const allocator = std.heap.wasm_allocator;
+
+export fn greet() i32 {
+    const plugin = Plugin.init(allocator);
+    const name = plugin.getInput() catch unreachable;
+    defer allocator.free(name);
+
+    const output = std.fmt.allocPrint(allocator, "Hello, {s}!", .{name}) catch unreachable;
+    plugin.output(output);
+    return 0;
+}
+```
+
+### Compile the Plug-in
+
+> Note: if you started with the generated project files from `zig init`, you should delete `src/root.zig`
+and any references to it if they are in your `build.zig` file.
+
+Then run:
+```sh
+zig build
+```
+
+This will put your compiled wasm in `zig-out/bin`.
+
+### Running the Plug-in
+
+We can now test it using the [Extism CLI](https://github.com/extism/cli)'s `run`
+command:
+
+```bash
+extism call ./zig-out/bin/my-plugin.wasm greet --input "Benjamin"
+# => Hello, Benjamin!
+```
+
+### Documentation
+
+Congrats! You just wrote your first Extism plug-in! To learn more about what this
+Zig library can do, see the [zig-pdk README](https://github.com/extism/zig-pdk#readme).
 
   </TabItem>
 </Tabs>
