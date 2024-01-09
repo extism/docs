@@ -5,42 +5,28 @@
  */
 
 /** TODO replace with cloudflare font so we don't expose our dear users to this **/
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #008080; /* Vibrant Teal */
-  --ifm-color-primary-dark: #006666; /* Deeper Shade of Teal */
-  --ifm-color-primary-darker: #004C4C; /* Dark, Rich Teal */
-  --ifm-color-primary-darkest: #003333; /* Almost Black Teal */
-  --ifm-color-primary-light: #4C9999; /* Light, Bright Teal */
-  --ifm-color-primary-lighter: #80B3B3; /* Softer, Pastel Teal */
-  --ifm-color-primary-lightest: #B3CCCC; /* Very Light Teal */
+  --ifm-color-primary: #008080;
+  /* Vibrant Teal */
+  --ifm-color-primary-dark: #006666;
+  /* Deeper Shade of Teal */
+  --ifm-color-primary-darker: #004C4C;
+  /* Dark, Rich Teal */
+  --ifm-color-primary-darkest: #003333;
+  /* Almost Black Teal */
+  --ifm-color-primary-light: #4C9999;
+  /* Light, Bright Teal */
+  --ifm-color-primary-lighter: #80B3B3;
+  /* Softer, Pastel Teal */
+  --ifm-color-primary-lightest: #B3CCCC;
+  /* Very Light Teal */
 
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-  --ifm-font-family-base: 'Montserrat';
-}
-
-@media screen and (max-width: 996px) {
-  :root {
-    --ifm-font-size-base: 18px;
-  }
-  article header h1 {
-    font-size: 1.5rem !important;
-  }
-  .hero .hero__title {
-    font-size: 2.5rem;
-  }
-}
-
-@media screen and (min-width: 997px) {
-  :root {
-    --ifm-font-size-base: 17px;
-  }
-  article header h1 {
-    font-size: 2rem !important;
-  }
+  --ifm-font-family-base: 'IBM Plex Sans';
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -90,11 +76,97 @@
   transition: 0.1s ease-in-out;
 }
 
+
+.hero__subtitle {
+  font-size: 2rem;
+}
+
+.cross-languages {
+  font-size: 50px;
+  padding: 0rem 0 5rem 0;
+  transform: scale(1.2);
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle; */
+}
+
+.slot-lang-logo {
+  /* display: flex; */
+  /* vertical-align: middle; */
+  /* outline: solid 1px #bf452c; */
+  width: 50px;
+  height: 50px;
+}
+
+.char-lang-logo {
+  /* outline: solid 1px orange; */
+  height: 150% !important;
+  /* min-width: 50px; */
+  /* min-height: 50px; */
+}
+
+.value-lang-logo img {
+  /* min-width: 50px;
+  min-height: 50px; */
+}
+
 /**
 * these customizations are to get the quickstart tabs to overflow properly,
 * so if you change this please go check that page
 **/
 .tabs {
-  overflow-x: visible; /** overide to default */
-  flex-wrap: wrap; /** adding this to wrap the tabs instead of a scroll bar */
+  overflow-x: visible;
+  /** overide to default */
+  flex-wrap: wrap;
+  /** adding this to wrap the tabs instead of a scroll bar */
+}
+
+
+@media screen and (max-width: 996px) {
+  :root {
+    --ifm-font-size-base: 18px;
+  }
+
+  article header h1 {
+    font-size: 1.5rem !important;
+  }
+
+  .hero .hero__title {
+    font-size: 2.5rem;
+  }
+
+  .hero__subtitle {
+    font-size: 1.5rem !important;
+  }
+
+  .sdk-quickstart ul li {
+    display: inline-block;
+    width: 18% !important;
+    max-width: 75px;
+    margin: 15px !important;
+    transition: 0.1s ease-in-out;
+  }
+
+  .cross-languages {
+    transform: scale(0.9) !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .char-lang-logo img {
+    /* outline: solid 1px orange; */
+    height: 50px !important;
+    position: relative;
+    top: 40px;
+  }
+}
+
+@media screen and (min-width: 997px) {
+  :root {
+    --ifm-font-size-base: 17px;
+  }
+
+  article header h1 {
+    font-size: 2rem !important;
+  }
 }
