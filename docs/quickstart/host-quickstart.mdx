@@ -755,10 +755,16 @@ be written in any of the supported PDK languages.
 
 ```php title=index.php
 <?php
+use Extism\Plugin;
+use Extism\Manifest;
+use Extism\UrlWasmSource;
+
 require_once __DIR__ . '/vendor/autoload.php';
 
-$wasm = (object) [ 'wasm' => [](object) [ 'url'] = 'https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm']];
-$plugin = new \Extism\Plugin($wasm);
+$wasm = new UrlWasmSource("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm");
+$manifest = new Manifest($wasm);
+
+$plugin = new Plugin($manifest, true);
 ```
 
 ### Call an export function
@@ -771,9 +777,8 @@ of vowels in the string we pass in and returns a JSON encoded result.
 
 // ...
 
-$output = $plugin->call("count_vowels", "this is an example");
-$json = json_decode(pack('C*', ...$output));
-echo "Vowels counted = " . $json->{'count'} . PHP_EOL;
+$output = $plugin->call("count_vowels", "Hello, World!");
+// => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 ```
 
 The run it:
