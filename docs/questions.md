@@ -15,7 +15,7 @@ Further, when tinkering with any of the low-level runtimes you'll be stuck with 
 If you’d like to dive a bit deeper, take a look at [this blog post](https://dylibso.com/blog/why-extism/).
 
 ### What data types does Extism allow me to pass between my Host application and the Plug-ins its running? Can I use Protobufs? JSON?
-Extism provides a bytes in / bytes out interface between Hosts and Plug-ins. This enables you to easily use complex data types (Strings! and more!) that are not supported by the core Wasm specification. You define your own high-level interface and bring your own serialization format, with the only limitation being the formats available in the host and plug-in languages you're using. Thus, Extism supports JSON, Proto, Cap'n Proto, Arrow - take your pick!
+Extism provides a bytes-in / bytes-out interface between Hosts and Plug-ins. This enables you to easily use complex data types (Strings! and more!) that are not supported by the core Wasm specification. You define your own high-level interface and bring your own serialization format, with the only limitation being the formats available in the host and plug-in languages you're using. Thus, Extism supports JSON, Proto, Cap'n Proto, Arrow - take your pick!
 
 ### Where does Extism “run” in relation to my host application/platform? Is it some sort of “side car” design pattern?
 Extism is actually embedded into your program's process, not isolated over a network boundary like a sidecar. The benefit of this is typically much faster execution speed, and thanks to WebAssembly's security model, it's safe to execute Plug-in code - unlike a DLL or dlopen to a .dylib or .so file. In effect, it becomes an actual function call, not a Remote Procedure Call (RPC).
@@ -26,16 +26,16 @@ Check out [this page](https://extism.org/docs/concepts/host-sdk) for more info o
 
 
 ### If I embed Extism in my application what is the impact on install size and memory usage?
-Install size will depend on your architecture. Because Extism uses other WebAssembly runtimes  under the hood, a lot of the size is related to that. You can also take a look at our [binary releases ](https://github.com/extism/extism/releases)to get an idea. In terms of memory usage, as the host you can constrain the memory that any plug-ins can use. 
+Install size will depend on your architecture. Because Extism uses other WebAssembly runtimes under the hood, a lot of the size is related to that. You can also take a look at our [binary releases](https://github.com/extism/extism/releases) to get an idea. In terms of memory usage, as the host, you can constrain the memory that any plug-ins can use. 
 
 ### I want to create a Plug-in in a language that compiles to WASM but doesn't have an officially supported Extism PDK. Is there a spec that I can follow to create a compatible WASM binary?
-Absolutely! You can create new PDKS by building wrappers around the functions defined in this header file in your language of choice. Send us a PR!
+Absolutely! You can create new PDKS by building wrappers around the functions defined in [this header file](https://github.com/extism/c-pdk/blob/main/extism-pdk.h) in your language of choice. Send us a PR!
 
 ### How can I create new SDKs for Extism?
 If you would like to implement an SDK in another language, please refer to the [Runtime APIs](https://extism.org/docs/concepts/runtime-apis/) section to see the functions you will need to write bindings to.
 
 ### Can I use Extism with my own WebAssembly runtime?
-Surely! but you’ll need to implement Extism on top of it. Luckily, much of Extism is, itself, implemented in Wasm :)  The main task is instantiating the Extism kernel as a Wasm module then mapping its exports as imports to the Plug-in. You’ll also need to write a class that contains both those modules and handles Plugin.call, etc. There might be a few other ways to do it but this is the simplest. 
+Surely! But, you’ll need to implement Extism on top of it. Luckily, much of Extism is, itself, implemented in Wasm. The main task is instantiating [the Extism kernel](https://github.com/extism/extism/blob/main/kernel/README.md) as a Wasm module then mapping its exports as imports to the Plug-in. You’ll also need to write a class that contains both those modules and handles Plugin.call, etc. There might be a few other ways to do it but this is the simplest. 
 
 Check out the Extism kernel [README](https://github.com/extism/extism/blob/main/kernel/README.md) for more information. To get a better idea of the approach, you can also check out [this branch](https://github.com/dylibso/chicory/compare/main...extism) of Chicory, a native WebAssembly runtime implemented in Java, which adds in the Extism kernel.
 
@@ -45,14 +45,12 @@ Extism Plug-ins are single threaded, as threading inside of a Wasm module is sti
 
 ### Does Extism support the Component Model?
 
-Extism is currently focused on WebAssembly core modules and the bountiful use cases that they unlock, but we are tracking the Component Model closely and are very excited about the next level of cross-language composability and complex type support that it’s bringing to the Wasm ecosystem. In fact, we have [Discord channel](https://discord.gg/cx3usBCWnc) dedicated to discussing the ways in which Extism can support it in the future. Come join in!
+Extism is currently focused on WebAssembly core modules and the bountiful use cases that they unlock, but we are tracking the Component Model closely and are very excited about the next level of cross-language composability and complex type support that it’s bringing to the Wasm ecosystem. In fact, we have a [Discord channel](https://extism.org/discord) dedicated to discussing the ways in which Extism can support it in the future. Come join in!
 
 
-### Which WebAssembly interfaces does Extism support (e.g., WASI, WASIX, WALI)?
+### Does Extism support WASI?
 
 Extism currently supports WASI as a superset of functionality - but you don’t always want to give your guest code access to system resources even in a limited environment. With Extism you don’t need to enable WASI to use a Plug-in, as you can invoke functions directly and even build your own custom [Host functions](https://extism.org/docs/concepts/host-functions) for fine-grained control over the capabilities your Plug-ins can access. But use what’s best suited for your needs!
-
-WASIX and WALI are under consideration.
 
 ### **Can a Plugin call functions on another Plugin?**
 
@@ -60,7 +58,7 @@ Yup! The caveat is that all Plug-in to Plug-in interactions need to be facilitat
 
 ### **Can I run a Plugin in a Plugin?**
 
-Sure… Check out this [little experiment](https://github.com/extism/plugpluginin). The bigger question is why do you want to do this?! Drop into Discord and tell us more :)
+Sure… Check out this [little experiment](https://github.com/extism/plugpluginin). We would like to know your goals which require this, though. Drop into [Discord](https://extism.org/discord) and tell us more :)
 
 ### What’s up with the Extism logo?
 
