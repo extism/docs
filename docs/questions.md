@@ -35,7 +35,8 @@ Absolutely! You can create new PDKS by building wrappers around the functions de
 If you would like to implement an SDK in another language, please refer to the [Runtime APIs](https://extism.org/docs/concepts/runtime-apis/) section to see the functions you will need to write bindings to.
 
 ### Can I use Extism with my own WebAssembly runtime?
-Surely! But, you’ll need to implement Extism on top of it. Luckily, much of Extism is, itself, implemented in Wasm. The main task is instantiating [the Extism kernel](https://github.com/extism/extism/blob/main/kernel/README.md) as a Wasm module then mapping its exports as imports to the Plug-in. You’ll also need to write a class that contains both those modules and handles Plugin.call, etc. There might be a few other ways to do it but this is the simplest. 
+Surely! But, you’ll need to implement Extism on top of it. Luckily, much of Extism is, itself, implemented in Wasm. The main task is instantiating [the Extism kernel](https://github.com/extism/extism/blob/main/kernel/README.md) as a Wasm module then mapping its exports as imports to the Plug-in. At a minimum you'll need some code to handle setting the input, making calls, error checking and retrieving the output. Additionally, features like the manifest, plug-in vars and HTTP would all have to be re-implemented. That would be the simplest path but you could always just opt to implement the entire [PDK interface](https://github.com/extism/c-pdk/blob/2a4d3357b11f65d0c8680ec5b60b9265f02154bc/extism-pdk.h#L27) from scratch.
+
 
 Check out the Extism kernel [README](https://github.com/extism/extism/blob/main/kernel/README.md) for more information. To get a better idea of the approach, you can also check out [this branch](https://github.com/dylibso/chicory/compare/main...extism) of Chicory, a native WebAssembly runtime implemented in Java, which adds in the Extism kernel.
 
