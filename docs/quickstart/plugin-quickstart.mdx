@@ -63,7 +63,7 @@ pub fn greet(name: String) -> FnResult<String> {
 
 ### Compile the Plug-in
 
-We can compile to the `wasm32-unknown-unknown` since we don't need to make any syscalls:
+We can compile to the `wasm32-unknown-unknown` since we don't need to make any syscalls (not using WASI):
 
 ```bash
 cargo build --target wasm32-unknown-unknown
@@ -84,6 +84,14 @@ command:
 extism call target/wasm32-unknown-unknown/debug/my_plugin.wasm greet --input "Benjamin"
 # => Hello, Benjamin!
 ```
+
+:::note Optimize using Release Mode
+You will get better performance and smaller `.wasm` binaries if you build your code using `--release`.
+
+```sh
+cargo build --target wasm32-unknown-unknown --release
+```
+:::
 
 ### Documentation
 
