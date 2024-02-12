@@ -10,6 +10,6 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
       - name: GitHub Spellcheck Action
-        uses: rojopolis/spellcheck-github-actions@0.35.0
+        uses: rojopolis/spellcheck-github-actions@0.36.0
         with:
           config_path: .spellcheck.yml
