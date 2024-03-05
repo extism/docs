@@ -20,6 +20,13 @@ const config = {
     defaultLocale: "en",
     locales: ["en"],
   },
+  scripts: [
+    {
+      src: 'https://scripts.simpleanalyticscdn.com/latest.js',
+      async: true, 
+      defer: true
+    }
+  ],
   presets: [
     [
       "classic",
