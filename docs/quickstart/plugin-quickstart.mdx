@@ -689,6 +689,74 @@ Congrats! You just wrote your first Extism plug-in! To learn more about what thi
 Zig library can do, see the [zig-pdk README](https://github.com/extism/zig-pdk#readme).
 
   </TabItem>
+
+  <TabItem value="AssemblyScript" label="AssemblyScript">
+
+  ### Install the Dependency
+
+  Create a new AssemblyScript project:
+
+```bash
+mkdir my-plugin
+cd my-plugin
+npm init
+npm install --save-dev assemblyscript
+npx asinit .
+```
+
+Add the library as a dependency:
+
+```as
+npm install @extism/as-pdk@1.0.0 --save
+```
+
+### Create an Export
+
+The primary means of interacting with this plug-in is an export function that can be called by the outside world. Let's create a simple greeting plug-in.
+
+```as
+import { Host, Var, Config } from '@extism/as-pdk';
+
+function myAbort(
+  message: string | null,
+  fileName: string | null,
+  lineNumber: u32,
+  columnNumber: u32
+): void { }
+
+export function greet(): i32 {
+  let name = Host.inputString();
+  
+  let output = "Hello, " + name + "!";
+  Host.outputString(output);
+
+  return 0;
+}
+```
+
+### Compile the Plug-in
+
+Then run:
+```sh
+npx asc example.ts --outFile example.wasm --use abort=example/myAbort
+```
+
+### Running the Plug-in
+
+We can now test it using the [Extism CLI](https://github.com/extism/cli)'s `run`
+command:
+
+```bash
+extism call ./example.wasm greet --input "Benjamin"
+# => Hello, Benjamin!
+```
+
+### Documentation
+
+Congrats! You just wrote your first Extism plug-in! To learn more about what this
+AssemblyScript library can do, see the [assemblyscript-pdk README](https://github.com/extism/assemblyscript-pdk#readme).
+
+  </TabItem>
 </Tabs>
 
 
