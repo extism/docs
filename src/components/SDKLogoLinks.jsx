@@ -12,6 +12,7 @@ export const sdks = [
   { name: ".NET", path: "https://github.com/extism/dotnet-sdk", logo: "/img/sdk-languages/dotnet.svg" },
   { name: "Node", path: "https://github.com/extism/js-sdk", logo: "/img/sdk-languages/node.svg" },
   { name: "OCaml", path: "https://github.com/extism/ocaml-sdk", logo: "/img/sdk-languages/ocaml.svg" },
+  { name: "PHP", path: "https://github.com/extism/perl-sdk", logo: "/img/sdk-languages/perl.svg" },
   { name: "PHP", path: "https://github.com/extism/php-sdk", logo: "/img/sdk-languages/php.svg" },
   { name: "Python", path: "https://github.com/extism/python-sdk", logo: "/img/sdk-languages/python.svg" },
   { name: "Ruby", path: "https://github.com/extism/ruby-sdk", logo: "/img/sdk-languages/ruby.svg" },
