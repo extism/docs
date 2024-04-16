@@ -1,0 +1,48 @@
+---
+title: Testing Plugins
+sidebar_position: 9
+---
+
+Extism plugins are WebAssembly modules, and as such, need to be tested within a
+WebAssembly runtime in order to truely verify how they behave and perform.
+
+To do this, a new test runner CLI must be used. This tool is called `xtp`. To
+install `xtp`, you can run:
+
+```sh
+curl https://static.dylibso.com/cli/install.sh | sudo sh
+```
+
+> NOTE: Dylibso is the core maintainer and creator of Extism. You can find more
+> information about the company at https://dylibso.com, and if you have any
+> questions about `xtp` or Extism, please reach us at support@dylibso.com or in
+> the [Extism Discord](https://extism.org/discord). The `xtp` CLI is a free
+> developer tool, part of a larger product, which you can learn about
+> [here](https://getxtp.com) - but you can use `xtp` CLI without using the XTP
+> platform.
+
+Once you have `xtp`, you can now run unit tests that call your Extism plugins
+and assert various things about them, such as outputs for given inputs, plugin
+state, or timing the performance of plugin function calls. To do this, we
+provide test harness libraries to create these unit tests for you to run with
+`xtp`.
+
+To begin testing your Extism plugins, use any of the following to write tests
+in:
+
+- [JavaScript/TypeScript](https://github.com/dylibso/xtp-test-js)
+- [Rust](https://github.com/dylibso/xtp-test-rust)
+- [Go](https://github.com/dylibso/xtp-test-go)
+
+Within each of these repositories, you will find detailed instructions on how to
+write, compile, and run tests. It's important to note, that while these
+libraries are available in JS, Rust, and Go, you can use them to test Extism
+plugins which were written in **any** of the
+[Extism PDK languages](/docs/concepts/pdk).
+
+For more context about this tool, the test harness libraries, and why we created
+them, please read the announcement blog post at:
+https://dylibso.com/blog/testing-extism-plugins/ or, watch the introduction
+video:
+
+<div style={{position: "relative", paddingBottom: "56.25%", height: 0}}><iframe src="https://www.loom.com/embed/517a112afe4e42419976dbf206f9ad54?sid=11cdd5a1-c392-4ea2-93a6-08ebcd67b09d" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}></iframe></div>

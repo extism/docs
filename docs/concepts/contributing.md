@@ -1,27 +1,48 @@
 ---
 title: Contributing
-sidebar_position: 9
+sidebar_position: 10
 ---
 
 ## Process
 
-Thank you for considering a contribution to the Extism project, we appreciate your time and welcome your ideas. 
+Thank you for considering a contribution to the Extism project, we appreciate
+your time and welcome your ideas.
 
-While we encourage anyone to contribute, we suggest that you follow the steps below before working on a feature you intend to upstream:
-1. **Search for existing issues** within the repositories in the [Extism GitHub organization](https://github.com/extism) - it's possible that someone has attempted similar work, or progress has been made that you can carry forward.
-2. **Open an issue** on the [Issue Tracker](https://github.com/extism/extism/issues), describe your use case and feature. We're here to help and are interested in what you are thinking about!
-3. **Share the link** to your issue with us on [Discord](https://discord.gg/cx3usBCWnc), so we can address it quickly and ensure you are not waiting long for feedback.
-4. **Alternatively, for major features or significant changes** to Extism, please refer to the [Extism Improvement Proposal](https://github.com/extism/proposals) process repository for more information. You can see how the core team tracks major components prior to implementation here.
+While we encourage anyone to contribute, we suggest that you follow the steps
+below before working on a feature you intend to upstream:
+
+1. **Search for existing issues** within the repositories in the
+   [Extism GitHub organization](https://github.com/extism) - it's possible that
+   someone has attempted similar work, or progress has been made that you can
+   carry forward.
+2. **Open an issue** on the
+   [Issue Tracker](https://github.com/extism/extism/issues), describe your use
+   case and feature. We're here to help and are interested in what you are
+   thinking about!
+3. **Share the link** to your issue with us on
+   [Discord](https://discord.gg/cx3usBCWnc), so we can address it quickly and
+   ensure you are not waiting long for feedback.
+4. **Alternatively, for major features or significant changes** to Extism,
+   please refer to the
+   [Extism Improvement Proposal](https://github.com/extism/proposals) process
+   repository for more information. You can see how the core team tracks major
+   components prior to implementation here.
 
 :::note We're here to help
 
-If you're unsure about where to start, always feel free to ask us in [Discord](https://discord.gg/cx3usBCWnc)!
+If you're unsure about where to start, always feel free to ask us in
+[Discord](https://discord.gg/cx3usBCWnc)!
 
 :::
 
 ---
 
-> _The Extism project is dedicated to upholding a community of kindness and respect, and have elected to adopt the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/). We take our role seriously in its implementation. As maintainers of the community, we reserve the right to take any action deemed necessary to ensure the continued safety and standards set forth in the text below._
+> _The Extism project is dedicated to upholding a community of kindness and
+> respect, and have elected to adopt the
+> [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/).
+> We take our role seriously in its implementation. As maintainers of the
+> community, we reserve the right to take any action deemed necessary to ensure
+> the continued safety and standards set forth in the text below._
 
 ## Contributor Covenant Code of Conduct
 
@@ -42,23 +63,23 @@ diverse, inclusive, and healthy community.
 Examples of behavior that contributes to a positive environment for our
 community include:
 
-* Demonstrating empathy and kindness toward other people
-* Being respectful of differing opinions, viewpoints, and experiences
-* Giving and gracefully accepting constructive feedback
-* Accepting responsibility and apologizing to those affected by our mistakes,
+- Demonstrating empathy and kindness toward other people
+- Being respectful of differing opinions, viewpoints, and experiences
+- Giving and gracefully accepting constructive feedback
+- Accepting responsibility and apologizing to those affected by our mistakes,
   and learning from the experience
-* Focusing on what is best not just for us as individuals, but for the overall
+- Focusing on what is best not just for us as individuals, but for the overall
   community
 
 Examples of unacceptable behavior include:
 
-* The use of sexualized language or imagery, and sexual attention or advances of
+- The use of sexualized language or imagery, and sexual attention or advances of
   any kind
-* Trolling, insulting or derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or email address,
+- Trolling, insulting or derogatory comments, and personal or political attacks
+- Public or private harassment
+- Publishing others' private information, such as a physical or email address,
   without their explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
+- Other conduct which could reasonably be considered inappropriate in a
   professional setting
 
 ### Enforcement Responsibilities
@@ -85,8 +106,8 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-[oss@extism.org](mailto:oss@extism.org).
-All complaints will be reviewed and investigated promptly and fairly.
+[oss@extism.org](mailto:oss@extism.org). All complaints will be reviewed and
+investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
 reporter of any incident.
