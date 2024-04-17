@@ -41,6 +41,201 @@ libraries are available in JS, Rust, Go, and Zig, you can use them to test Extis
 plugins which were written in **any** of the
 [Extism PDK languages](/docs/concepts/pdk).
 
+## Testing a Plugin with Host Functions 
+
+When your plugins need to make calls to Host Functions, the obvious question introduced is _"who is implementing the host functions?"_. 
+
+To solve for this, we provide an optional `--host` argument to the `xtp` CLI when you execute tests. Here's an end-to-end example, split into 3 different Wasm projects:
+- a KV datastore (`kvhost`), exporting `kv_read` and `kv_write` functions (these act in place of _real_ host functions and are imported by the plugin)
+- an Extism plugin (`kvplugin`), which interacts with the KV datastore via host function imports
+- an XTP test plugin (`kvtest`), which verifies the behavior of the Extism plugin
+
+> all of the following code can be found in full here: [`xtp-test-go/examples`](https://github.com/dylibso/xtp-test-go/tree/main/examples)
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="kvhost" label="Mock Host Functions" default>
+
+The `kvhost` project is a simple key-value store that exports `kv_read` and `kv_write` functions. These functions are used by the `kvplugin` 
+project to read and write key-value pairs. When this project is compiled, it will produce a Wasm file that can be used as a host for the `kvplugin` 
+project, passed as the `--host` argument to the `xtp` CLI.
+
+```go title="kvhost/main.go"
+package main
+
+import (
+    // to simulate Host Functions, use the PDK to manage host/guest memory.
+    pdk "github.com/extism/go-pdk"
+)
+
+// this is our in-memory KV store (e.g. a mock database)
+var kv map[string]string = make(map[string]string)
+
+// This export will be made available to the plugin as an import function
+//go:export kv_read
+func kv_read(key uint64) uint64 {
+    // find the memory block that contains the key, read the bytes, and look up the 
+    // coreesponding value in the KV store
+    keyMem := pdk.FindMemory(key)
+    k := string(keyMem.ReadBytes())
+    // if the entry is not found, return 0
+    v, ok := kv[k]
+    if !ok {
+        return 0
+    }
+
+    // allocate a new memory block for the value, write the value bytes, and return the offset
+    valMem := pdk.AllocateString(v)
+    return valMem.Offset()
+}
+
+// This export will be made available to the plugin as an import function
+//go:export kv_write
+func kv_write(key uint64, value uint64) {
+    // find the memory block that contains the key and value, read their bytes, 
+    // and store the key-value pair in the KV store
+    keyMem := pdk.FindMemory(key)
+    valueMem := pdk.FindMemory(value)
+    k := string(keyMem.ReadBytes())
+    v := string(valueMem.ReadBytes())
+    kv[k] = v
+}
+
+func main() {}
+```
+
+</TabItem>
+<TabItem value="kvplugin" label="Plugin using Host Functions">
+
+The `kvplugin` project is an Extism plugin that interacts with the KV datastore via host function 
+imports. This plugin reads and writes key-value pairs and stores them in the plugin's state. We will 
+verify this behavior using the `kvtest` project in the next tab.
+
+```go title=kvplugin/main.go
+package main
+
+import (
+    // this is a normal Extism plugin, so we import the PDK
+	pdk "github.com/extism/go-pdk"
+)
+
+// the `kv_read` and `kv_write` functions below are imported from the host,
+// (which we exported in the previous tab)
+
+//go:wasmimport extism:host/user kv_read
+func kv_read(key uint64) uint64
+
+//go:wasmimport extism:host/user kv_write
+func kv_write(key uint64, value uint64)
+
+//go:export run
+func run() int32 {
+    // allocate a key and value to write to the KV store
+	key := pdk.AllocateString("key")
+	value := pdk.AllocateString("value")
+	kv_write(key.Offset(), value.Offset())
+
+    // immediately read the key back from the KV store, just to verify that it was written
+	readVal := kv_read(key.Offset())
+	if readVal != 0 {
+        // if we found a value, read it from memory and append it to the plugin's state
+        // (we'll test the state output in the `kvtest` project)
+		readValMem := pdk.FindMemory(readVal)
+		varVal := pdk.GetVar("key")
+        // grow the var state in the plugin by appending the read value
+		pdk.SetVar("key", append(varVal, readValMem.ReadBytes()...))
+	} else {
+		pdk.SetVar("key", []byte(""))
+	}
+
+    // return the plugin's state as the output so we can test it in the `kvtest` project
+	pdk.Output(pdk.GetVar("key"))
+	return 0
+}
+
+func main() {}
+```
+
+</TabItem>
+
+<TabItem value="kvtest" label="XTP Test Plugin">
+
+The `kvtest` project is an XTP test plugin that verifies the behavior of the `kvplugin` project. When we 
+run this test, we will pass the `kvhost` project as the host, so that the `kvplugin` project can interact 
+with the KV store we simulate in the `kvhost` project.
+
+```go title=kvtest/main.go
+package main
+
+import (
+	"fmt"
+	"strings"
+
+    // import the test harness library
+	xtptest "github.com/dylibso/xtp-test-go"
+)
+
+//go:export test
+func test() int32 {
+    // call the `run` function in the `kvplugin` project, & verify the output
+	output := xtptest.CallString("run", nil)
+	xtptest.AssertEq("initial call to 'run' returns the correct value", output, "value")
+
+    // call the `run` function in the `kvplugin` project 10 times, & verify the output each time
+	xtptest.Group("multiple kv read/write calls produce correct state", func() {
+		for i := 0; i < 10; i++ {
+			output := xtptest.CallString("run", nil)
+			expected := strings.Repeat("value", i+1)
+			msg := fmt.Sprintf("repeat call to 'run' returns the correct value: %s", expected)
+			xtptest.AssertEq(msg, output, expected)
+		}
+	})
+
+	return 0
+}
+
+func main() {}
+```
+
+</TabItem>
+</Tabs>
+
+After compiling each of these Go projects to Wasm, you can run the test using the `xtp` CLI, 
+and pass the `--host` argument to specify the host Wasm file, to stich all the pieces together:
+
+```sh
+xtp plugin test kvplugin.wasm --with kvtest.wasm --host kvhost.wasm
+```
+
+You should see output like this: 
+
+```sh
+🧪 Testing plugin.wasm
+
+PASS ...... initial call to 'run' returns the correct value
+
+1/1 tests passed (completed in 17µs)
+
+📦 Group: multiple kv read/write calls produce correct state
+
+PASS ...... repeat call to 'run' returns the correct value: value
+PASS ...... repeat call to 'run' returns the correct value: valuevalue
+PASS ...... repeat call to 'run' returns the correct value: valuevaluevalue
+PASS ...... repeat call to 'run' returns the correct value: valuevaluevaluevalue
+PASS ...... repeat call to 'run' returns the correct value: valuevaluevaluevaluevalue
+PASS ...... repeat call to 'run' returns the correct value: valuevaluevaluevaluevaluevalue
+PASS ...... repeat call to 'run' returns the correct value: valuevaluevaluevaluevaluevaluevalue
+PASS ...... repeat call to 'run' returns the correct value: valuevaluevaluevaluevaluevaluevaluevalue
+PASS ...... repeat call to 'run' returns the correct value: valuevaluevaluevaluevaluevaluevaluevaluevalue
+PASS ...... repeat call to 'run' returns the correct value: valuevaluevaluevaluevaluevaluevaluevaluevaluevalue
+
+10/10 tests passed (completed in 845µs)
+
+all tests completed in 862µs
+```
+
 For more context about this tool, the test harness libraries, and why we created
 them, please read the announcement blog post at:
 https://dylibso.com/blog/testing-extism-plugins/ or, watch the introduction
