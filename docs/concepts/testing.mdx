@@ -45,7 +45,7 @@ plugins which were written in **any** of the
 
 When your plugins need to make calls to Host Functions, the obvious question introduced is _"who is implementing the host functions?"_. 
 
-To solve for this, we provide an optional `--host` argument to the `xtp` CLI when you execute tests. Here's an end-to-end example, split into 3 different Wasm projects:
+To solve for this, we provide an optional `--mock-host` argument to the `xtp` CLI when you execute tests. Here's an end-to-end example, split into 3 different Wasm projects:
 - a KV datastore (`kvhost`), exporting `kv_read` and `kv_write` functions (these act in place of _real_ host functions and are imported by the plugin)
 - an Extism plugin (`kvplugin`), which interacts with the KV datastore via host function imports
 - an XTP test plugin (`kvtest`), which verifies the behavior of the Extism plugin
@@ -60,7 +60,7 @@ import TabItem from '@theme/TabItem';
 
 The `kvhost` project is a simple key-value store that exports `kv_read` and `kv_write` functions. These functions are used by the `kvplugin` 
 project to read and write key-value pairs. When this project is compiled, it will produce a Wasm file that can be used as a host for the `kvplugin` 
-project, passed as the `--host` argument to the `xtp` CLI.
+project, passed as the `--mock-host` argument to the `xtp` CLI.
 
 ```go title="kvhost/main.go"
 package main
@@ -203,10 +203,10 @@ func main() {}
 </Tabs>
 
 After compiling each of these Go projects to Wasm, you can run the test using the `xtp` CLI, 
-and pass the `--host` argument to specify the host Wasm file, to stich all the pieces together:
+and pass the `--mock-host` argument to specify the host Wasm file, to stitch all the pieces together:
 
 ```sh
-xtp plugin test kvplugin.wasm --with kvtest.wasm --host kvhost.wasm
+xtp plugin test kvplugin.wasm --with kvtest.wasm --mock-host kvhost.wasm
 ```
 
 You should see output like this: 
