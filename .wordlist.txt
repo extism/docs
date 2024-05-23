@@ -57,6 +57,7 @@ KV
 Kib
 LibExtism
 MacOS
+Makefile
 MyUserData
 NIF
 NewContext
