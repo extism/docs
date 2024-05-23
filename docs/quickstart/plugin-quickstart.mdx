@@ -11,12 +11,6 @@ tags:
 The following is a minimal guide to running writing an Extism plug-in in your language
 of choice. This document should get you from `0` to `"Hello, World!"` as quickly as possible.
 
-
-:::tip Generate Plug-in Boilerplate
-You may also want to check out the [Extism CLI](/docs/install#generating-plugin-pdk-starters) which can generate much of the quickstart boilerplate for you.
-:::
-
-
 ## Choose A Language
 
 In Extism, your plug-in code is compiled to a binary Wasm module.
@@ -33,23 +27,10 @@ import TabItem from '@theme/TabItem';
 
 ### Install the Dependency
 
-Generate a `lib` project with Cargo:
+Generate a new plugin using [Extism CLI](https://extism.org/docs/install):
 
 ```bash
-cargo new --lib my-plugin
-```
-
-Add the library from [crates.io](https://crates.io/crates/extism-pdk).
-
-```bash
-cargo add extism-pdk
-```
-
-Change your `Cargo.toml` to set the crate-type to `cdylib` (this instructs the compiler to produce a dynamic library, which for our target will be a Wasm binary):
-
-```toml
-[lib]
-crate_type = ["cdylib"]
+extism gen plugin -l Rust -o plugin
 ```
 
 ### Create an Export
@@ -83,11 +64,11 @@ If this fails, make sure you have added this target to rust:
 ### Running the Plug-In
 
 This will put your compiled wasm in `target/wasm32-unknown-unknown/debug`.
-We can now test it using the [Extism CLI](https://github.com/extism/cli)'s `run`
+We can now test it using the [Extism CLI](https://extism.org/docs/install)'s `run`
 command:
 
 ```bash
-extism call target/wasm32-unknown-unknown/debug/my_plugin.wasm greet --input "Benjamin"
+extism call target/wasm32-unknown-unknown/debug/rust_pdk_template.wasm greet --input "Benjamin"
 # => Hello, Benjamin!
 ```
 
@@ -105,7 +86,7 @@ Congrats! You just wrote your first Extism plug-in! To learn more about what thi
 rust library can do, see the [rust-pdk README](https://github.com/extism/rust-pdk#readme) and [reference docs](https://docs.rs/extism-pdk/latest/extism_pdk/).
 
   </TabItem>
-  <TabItem value="JavaScript" label="JavaScript">
+  <TabItem value="JavaScript" label="JavaScript/TypeScript">
 
 ### Install the Dependency
 
@@ -132,6 +113,20 @@ For more information try --help
 :::note Mac Quarantine
 If you are using mac, you may need to tell your security system this unsigned binary is fine.
 :::
+
+Then, generate a JavaScript plugin using Extism CLI:
+```
+extism gen plugin -l JavaScript -o plugin
+cd plugin
+npm install
+```
+
+Or, for a TypeScript plugin:
+```
+extism gen plugin -l TypeScript -o plugin
+cd plugin
+npm install
+```
 
 ### Create an Export
 
@@ -162,17 +157,17 @@ declare module 'main' {
 Now we must compile this plug-in to wasm:
 
 ```bash
-extism-js plugin.js -i plugin.d.ts -o plugin.wasm
+npm run build
 ```
 
 ### Running the Plug-In
 
-We can now test it using the [Extism CLI](https://github.com/extism/cli)'s `run`
+We can now test it using the [Extism CLI](https://extism.org/docs/install)'s `run`
 command:
 
 ```bash
-extism call plugin.wasm greet --input "Benjamin" --wasi
-# => Hello, Benjamin!
+extism call ./dist/plugin.wasm greet --input "Benjamin" --wasi
+# => Hello, Benjamin
 ```
 
 :::note Wasi 
@@ -189,10 +184,10 @@ js library can do, see the [js-pdk README](https://github.com/extism/js-pdk#read
 
 ### Install the Dependency
 
-Include the library with Go get:
+Generate a Go plugin using [Extism CLI](https://extism.org/docs/install):
 
-```bash
-go get github.com/extism/go-pdk
+```
+extism gen plugin -l Go -o plugin
 ```
 
 ### Create an Export
@@ -228,17 +223,17 @@ The magic comment `//export` is what exports the function to the outside world:
 Now we must compile this plug-in to wasm. Currently the best way to do this is with [tinygo](https://tinygo.org/):
 
 ```bash
-tinygo build -o plugin.wasm -target wasi main.go
+make
 ```
 
 ### Running the Plug-In
 
-We can now test it using the [Extism CLI](https://github.com/extism/cli)'s `run`
+We can now test it using the [Extism CLI](https://extism.org/docs/install)'s `run`
 command:
 
 ```bash
 extism call plugin.wasm greet --input "Benjamin" --wasi
-# => Hello, Benjamin!
+# => Hello, Benjamin
 ```
 
 :::note Wasi 
@@ -253,7 +248,6 @@ go library can do, see the [go-pdk README](https://github.com/extism/go-pdk#read
   </TabItem>
   <TabItem value="C#" label="C#">
 
-
 ### Prerequisites
 
 1. [.NET SDK 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
@@ -266,29 +260,10 @@ dotnet workload install wasi-experimental
 
 ### Install the Dependency
 
-Create a new project and add this NuGet package to your project:
+Generate a C# plugin using [Extism CLI](https://extism.org/docs/install):
 
 ```sh
-dotnet new wasiconsole -o MyPlugin
-cd MyPlugin
-dotnet add package Extism.Pdk
-```
-
-Update your `MyPlugin.csproj` as follows:
-
-```xml title=MyPlugin.csproj
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
-    <OutputType>Exe</OutputType>
-    <PublishTrimmed>true</PublishTrimmed>
-
-    <!-- Make sure we create a standalone wasm file for our plugin -->
-    <WasmSingleFileBundle>true</WasmSingleFileBundle>
-    <WasmBuildNative>true</WasmBuildNative>
-  </PropertyGroup>
-</Project>
+extism gen plugin -l C# -o plugin
 ```
 
 ### Create an Export
@@ -302,7 +277,7 @@ using System.Runtime.InteropServices;
 using System.Text.Json;
 using Extism;
 
-namespace MyPlugin;
+namespace Plugin;
 public class Program
 {
     [UnmanagedCallersOnly(EntryPoint = "greet")]
@@ -330,10 +305,10 @@ dotnet build
 
 ### Running the Plug-In
 
-This will create a `MyPlugin.wasm` file in `bin/Debug/net8.0/wasi-wasm/AppBundle`. Now, you can try out your plugin by using any of the [Extism SDKs](https://extism.org/docs/category/integrate-into-your-codebase) or by using [Extism CLI](https://extism.org/docs/install)'s `run` command:
+This will create a `Plugin.wasm` file in `bin/Debug/net8.0/wasi-wasm/AppBundle`. Now, you can try out your plugin by using any of the [Extism SDKs](https://extism.org/docs/category/integrate-into-your-codebase) or by using [Extism CLI](https://extism.org/docs/install)'s `run` command:
 
 ```bash
-extism call .\bin\Debug\net8.0\wasi-wasm\AppBundle\MyPlugin.wasm greet --input "Benjamin" --wasi
+extism call .\bin\Debug\net8.0\wasi-wasm\AppBundle\Plugin.wasm greet --input "Benjamin" --wasi
 # => Hello, Benjamin!
 ```
 
@@ -358,29 +333,10 @@ dotnet workload install wasi-experimental
 
 ### Install the Dependency
 
-Create a new project and add this NuGet package to your project:
+Generate a new plugin using the [Extism CLI](https://extism.org/docs/install):
 
 ```
-dotnet new console -o MyPlugin -lang F#
-cd MyPlugin
-dotnet add package Extism.Pdk
-```
-
-Update your `MyPlugin.fsproj` as follows:
-
-```xml title=MyPlugin.fsproj
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <RuntimeIdentifier>wasi-wasm</RuntimeIdentifier>
-    <OutputType>Exe</OutputType>
-    <PublishTrimmed>true</PublishTrimmed>
-
-    <!-- Make sure we create a standalone wasm file for our plugin -->
-    <WasmSingleFileBundle>true</WasmSingleFileBundle>
-    <WasmBuildNative>true</WasmBuildNative>
-  </PropertyGroup>
-</Project>
+extism gen plugin -l F# -o plugin
 ```
 
 ### Create an Export
@@ -389,7 +345,7 @@ The primary means of interacting with this plug-in is an export function that ca
 Let's create a simple greeting plug-in.
 
 ```fsharp title=Program.fs
-module MyPlugin
+module Plugin
 
 open System
 open System.Runtime.InteropServices
@@ -418,10 +374,10 @@ dotnet build
 
 ### Running the Plug-In
 
-This will create a `MyPlugin.wasm` file in `bin/Debug/net8.0/wasi-wasm/AppBundle`. Now, you can try out your plugin by using any of the [Extism SDKs](https://extism.org/docs/category/integrate-into-your-codebase) or by using [Extism CLI](https://extism.org/docs/install)'s `run` command:
+This will create a `Plugin.wasm` file in `bin/Debug/net8.0/wasi-wasm/AppBundle`. Now, you can try out your plugin by using any of the [Extism SDKs](https://extism.org/docs/category/integrate-into-your-codebase) or by using [Extism CLI](https://extism.org/docs/install)'s `run` command:
 
 ```bash
-extism call .\bin\Debug\net8.0\wasi-wasm\AppBundle\MyPlugin.wasm greet --input "Benjamin" --wasi
+extism call .\bin\Debug\net8.0\wasi-wasm\AppBundle\Plugin.wasm greet --input "Benjamin" --wasi
 # => Hello, Benjamin!
 ```
 
@@ -435,10 +391,12 @@ dotnet library can do, see the [dotnet-pdk README](https://github.com/extism/dot
 
 ### Install the Dependency
 
-The quickest way to getting started is to vendor the source for the PDK as a git submodule:
+The quickest way to getting started is generate a C plugin via the [Extism CLI](https://extism.org/docs/install):
 
 ```bash
-git submodule add https://github.com/extism/c-pdk extism-pdk
+extism gen plugin -l C -o plugin
+cd ./plugin
+git submodule update --init --recursive
 ```
 
 ### Create an Export
@@ -446,8 +404,10 @@ git submodule add https://github.com/extism/c-pdk extism-pdk
 The primary means of interacting with this plug-in is an export function that can be called by the outside world.
 Let's create a simple greeting plug-in.
 
-```c title=main.c
-#include "extism-pdk.h"
+```c title=src/plugin.c
+#define EXTISM_ENABLE_LOW_LEVEL_API
+#define EXTISM_IMPLEMENTATION
+#include "../extism/extism-pdk.h"
 
 const char *greeting = "Hello, ";
 uint64_t greetingLen = 7;
@@ -457,7 +417,7 @@ int32_t greet() {
 
   // Load input
   uint8_t inputData[inputLen];
-  extism_load_input(inputData, inputLen);
+  extism_load_input(0, inputData, inputLen);
 
   // Allocate a new offset used to store greeting and name
   uint64_t outputLen = greetingLen + inputLen;
@@ -476,11 +436,15 @@ int32_t greet() {
 Compile with clang and target `wasm32-unknown-unknown`:
 
 ```bash
-clang -o plugin.wasm --target=wasm32-unknown-unknown -nostdlib -Wl,--no-entry -Wl,--export=greet main.c
+clang -o plugin.wasm --target=wasm32-unknown-unknown -nostdlib -Wl,--no-entry -mexec-model=reactor -Wl,--export=greet ./src/plugin.c
 ```
 
 :::note Exports
 Note that we must explicitly export the `greet` function at compile time.
+:::
+
+:::note Makefile
+You can also use the Makefile in the generated plugin. But you'll have to edit it so that the `greet` functions is exported.
 :::
 
 ### Running the Plug-In
@@ -489,7 +453,7 @@ This will create a `plugin.wasm` file. Now, you can try out your plugin by using
 
 ```bash
 extism call plugin.wasm greet --input "Benjamin"
-# => Hello, Benjamin!
+# => Hello, Benjamin
 ```
 
 ### Documentation
@@ -508,23 +472,10 @@ Docs are available on Hackage: [https://hackage.haskell.org/package/extism-pdk](
 
 ## Install
 
-Make sure you have [wasm32-wasi-ghc](https://gitlab.haskell.org/ghc/ghc-wasm-meta) installed, then generate an `Executable` project with cabal:
+Make sure you have [wasm32-wasi-ghc](https://gitlab.haskell.org/ghc/ghc-wasm-meta) installed, then generate a Haskell plugin using the [Extism CLI](https://extism.org/docs/install):
 
 ```bash
-cabal init
-```
-
-Add the library from [Hackage](https://hackage.haskell.org/package/extism-pdk) to your cabal file:
-
-```bash
-build-depends: extism-pdk
-```
-
-We will also need to add some additional ghc options to expose the correct functions:
-
-```
-ghc-options:
-  -optl -Wl,--export=greet -optl -Wl,--export=hs_init -optl -Wl,--allow-undefined -no-hs-main -optl-mexec-model=reactor 
+extism gen plugin -l Haskell -o plugin
 ```
 
 ### Create an Export
@@ -532,25 +483,39 @@ ghc-options:
 The primary means of interacting with this plug-in is an export function that can be called by the outside world.
 Let's create a simple greeting plug-in.
 
-```haskell title=Example.hs
-module Example where
+```haskell title=Main.hs
+module Greet where
 
+import Data.Int
+import Data.Maybe
 import Extism.PDK
 
-makeGreeting g n =
+mkGreeting :: String -> String -> IO ()
+mkGreeting g n =
   output $ g ++ ", " ++ n
 
+greet :: IO Int32
 greet = do
   -- Get a name from the Extism runtime
   name <- inputString
   -- Get  configured greeting
   greeting <- getConfig "greeting"
   -- Greet the user, if no greeting is configured then "Hello" is used
-  makeGreeting (fromMaybe defaultGreeting greeting) name
-  -- Return code
-  return 0
+  mkGreeting (fromMaybe "Hello" greeting) name
+  -- Return 0 to signal success
+  pure 0
 
-foreign export ccall "greet" greet:: IO Int32
+foreign export ccall "greet" greet :: IO Int32
+```
+
+```haskell title=Plugin.hs
+module Plugin (mkGreeting) where
+
+import Extism.PDK
+
+mkGreeting :: String -> String -> IO ()
+mkGreeting g n =
+  output $ g ++ ", " ++ n
 ```
 
 ### Compile the Plug-in
@@ -558,8 +523,7 @@ foreign export ccall "greet" greet:: IO Int32
 Compile with `wasm32-wasi-cabal`:
 
 ```bash
-wasm32-wasi-cabal build
-cp $(find dist-newstyle/build/wasm32-wasi/ -name example.wasm) ./plugin.wasm
+make
 ```
 
 :::note Exports
@@ -571,7 +535,7 @@ Note that we must explicitly export the `greet` function at compile time.
 This will create a `plugin.wasm` file. Now, you can try out your plugin by using any of the [Extism SDKs](https://extism.org/docs/category/integrate-into-your-codebase) or by using [Extism CLI](https://extism.org/docs/install)'s `run` command:
 
 ```bash
-extism call plugin.wasm greet --input "Benjamin"
+extism call plugin.wasm greet --input "Benjamin" --wasi
 # => Hello, Benjamin!
 ```
 
@@ -588,70 +552,7 @@ Haskell library can do, see the [haskell-pdk README](https://github.com/extism/h
   Create a new Zig project:
 
 ```bash
-mkdir my-plugin
-cd my-plugin
-zig init
-```
-
-Add the library as a dependency:
-
-```zig
-// build.zig.zon
-
-.{
-    .name = "my-plugin",
-    .version = "0.0.0",
-
-    .dependencies = .{
-        .extism_pdk = .{
-            .url = "https://github.com/extism/zig-pdk/archive/<git-ref-here>.tar.gz",
-            // .hash = "" (zig build will tell you what to put here)
-        },
-    },
-
-    .paths = .{""},
-}
-
-```
-
-Change your `build.zig` so that it references `extism-pdk`:
-
-```zig
-const std = @import("std");
-const builtin = @import("builtin");
-
-pub fn build(b: *std.Build) void {
-    comptime {
-        const current_zig = builtin.zig_version;
-        const min_zig = std.SemanticVersion.parse("0.12.0-dev.2030+2ac315c24") catch unreachable;
-        if (current_zig.order(min_zig) == .lt) {
-            @compileError(std.fmt.comptimePrint("Your Zig version v{} does not meet the minimum build requirement of v{}", .{ current_zig, min_zig }));
-        }
-    }
-
-    const optimize = b.standardOptimizeOption(.{});
-    const target = b.standardTargetOptions(.{
-        // if you're using WASI, change the .os_tag to .wasi
-        .default_target = .{ .abi = .musl, .os_tag = .freestanding, .cpu_arch = .wasm32 },
-    });
-
-    var basic_example = b.addExecutable(.{
-        .name = "basic-example",
-        .root_source_file = .{ .path = "examples/basic.zig" },
-        .target = target,
-        .optimize = optimize,
-    });
-    basic_example.rdynamic = true;
-    basic_example.entry = .disabled; // or add an empty `pub fn main() void {}` to your code
-    const pdk_module = b.addModule("extism-pdk", .{
-        .root_source_file = .{ .path = "src/main.zig" },
-    });
-    basic_example.root_module.addImport("extism-pdk", pdk_module);
-
-    b.installArtifact(basic_example);
-    const basic_example_step = b.step("basic_example", "Build basic_example");
-    basic_example_step.dependOn(b.getInstallStep());
-}
+extism gen plugin -l Zig -o plugin
 ```
 
 ### Create an Export
@@ -690,11 +591,11 @@ This will put your compiled wasm in `zig-out/bin`.
 
 ### Running the Plug-in
 
-We can now test it using the [Extism CLI](https://github.com/extism/cli)'s `run`
+We can now test it using the [Extism CLI](https://extism.org/docs/install)'s `run`
 command:
 
 ```bash
-extism call ./zig-out/bin/my-plugin.wasm greet --input "Benjamin"
+extism call ./zig-out/bin/zig-pdk-template.wasm greet --input "Benjamin"
 # => Hello, Benjamin!
 ```
 
@@ -707,22 +608,14 @@ Zig library can do, see the [zig-pdk README](https://github.com/extism/zig-pdk#r
 
   <TabItem value="AssemblyScript" label="AssemblyScript">
 
-  ### Install the Dependency
+### Install the Dependency
 
-  Create a new AssemblyScript project:
+Generate a new plugin using [Extism CLI](https://extism.org/docs/install):
 
 ```bash
-mkdir my-plugin
-cd my-plugin
-npm init
-npm install --save-dev assemblyscript
-npx asinit .
-```
-
-Add the library as a dependency:
-
-```as
-npm install @extism/as-pdk@1.0.0 --save
+extism gen plugin -l AssemblyScript -o plugin
+cd plugin
+npm install
 ```
 
 ### Create an Export
@@ -730,21 +623,18 @@ npm install @extism/as-pdk@1.0.0 --save
 The primary means of interacting with this plug-in is an export function that can be called by the outside world. Let's create a simple greeting plug-in.
 
 ```as
-import { Host, Var, Config } from '@extism/as-pdk';
+import { Config, Host, Var } from "@extism/as-pdk";
 
 function myAbort(
   message: string | null,
   fileName: string | null,
   lineNumber: u32,
-  columnNumber: u32
-): void { }
+  columnNumber: u32,
+): void {}
 
 export function greet(): i32 {
-  let name = Host.inputString();
-  
-  let output = "Hello, " + name + "!";
-  Host.outputString(output);
-
+  const name = Host.inputString();
+  Host.outputString("Hello, " + name);
   return 0;
 }
 ```
@@ -753,17 +643,17 @@ export function greet(): i32 {
 
 Then run:
 ```sh
-npx asc example.ts --outFile example.wasm --use abort=example/myAbort
+npm run build
 ```
 
 ### Running the Plug-in
 
-We can now test it using the [Extism CLI](https://github.com/extism/cli)'s `run`
+We can now test it using the [Extism CLI](https://extism.org/docs/install)'s `run`
 command:
 
 ```bash
-extism call ./example.wasm greet --input "Benjamin"
-# => Hello, Benjamin!
+extism call ./index.wasm greet --input "Benjamin"
+# => Hello, Benjamin
 ```
 
 ### Documentation
