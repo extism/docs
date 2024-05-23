@@ -236,6 +236,81 @@ PASS ...... repeat call to 'run' returns the correct value: valuevaluevaluevalue
 all tests completed in 862µs
 ```
 
+## Mocking input data to plugin test calls
+
+Configure your test with dynamic input provided by a `xtp` CLI param or `xtp.toml` file. Read runtime-provided input that mocks the actual input when a plugin is called: 
+
+> Note: this is available in each of the [JavaScript/TypeScript](https://github.com/dylibso/xtp-test-js), [Rust](https://github.com/dylibso/xtp-test-rust), [Go](https://github.com/dylibso/xtp-test-go), & [Zig](https://github.com/dylibso/xtp-test-zig) test harness libraries.
+
+```go
+//go:export test
+func test() int32 {
+    // use the MockInputBytes() function to read the input data provided by the test runner
+    // (there are variations of this function in other xtp-test libraries)
+	notEmpty := xtptest.CallString("count_vowels", xtptest.MockInputBytes())
+	xtptest.AssertNe("with mock, not empty", notEmpty, "")
+  // ...
+}
+```
+
+### Providing mock input data
+
+There are two ways to provide input data to the plugin test calls: 
+- `xtp` CLI, using `--mock-input-data` or `--mock-input-file`
+- `xtp.toml` file
+
+### Using the `xtp` CLI
+
+CLI supports args `--mock-input-data` and `--mock-input-file` to pass text or load a file.
+
+e.g 
+```sh
+xtp plugin test plugin.wasm --with test.wasm --mock-input-data "this is my mock input data"
+# or a path to a file for --mock-input-file
+```
+
+### Using `xtp.toml`
+
+`xtp.toml` supports syntax such as: 
+
+```toml
+# path or url locating the wasm plugin to test
+bin = "https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm"
+
+[[test]]
+# label this test something recognizable to see in CLI output
+name = "basic"
+# build the test wasm module, is run before the test
+build = "cd examples/countvowels && tinygo build -o test.wasm -target wasi test.go"
+# the wasm module to use as the test
+with = "examples/countvowels/test.wasm"
+# provide mock input data to the plugin test call, returned to a 'MockInput' type of function call
+mock_input = { data = "this is my mock input data" }
+
+[[test]]
+name = "basic - file input"
+build = "cd examples/countvowels && tinygo build -o test.wasm -target wasi test.go"
+with = "examples/countvowels/test.wasm"
+# load mock input data from a file instead of inline
+mock_input = { file = "examples/countvowels/test.go" }
+```
+
+> (see examples used in [`examples/countvowels`](https://github.com/dylibso/xtp-test-go/blob/main/examples/countvowels/test.go))
+
+## Overriding `xtp.toml` location
+
+When running `xtp plugin test`, if `xtp.toml` is present in the current directory, it will be used to configure the test. The location of the file can be overridden using `--path`:
+
+```sh
+xtp plugin test --path tests/countvowels
+```
+
+## Usage in tests
+
+The various XTP libraries provide convenient functions like `MockInput()`, `MockInputString()`, and `MockInputBytes()` to dynamically read input from the host, mocked out by the supported options above. 
+
+---
+
 For more context about this tool, the test harness libraries, and why we created
 them, please read the announcement blog post at:
 https://dylibso.com/blog/testing-extism-plugins/ or, watch the introduction
