@@ -9,26 +9,6 @@ If you would like to embed Extism into a language that we currently do not suppo
 
 The general set of functions that is necessary to satisfy the runtime requirements is:
 
-### `extism_context_new`
-
-Create a new context.
-
-```c
-struct ExtismContext *extism_context_new(void);
-```
-
----
-
-### `extism_context_free`
-
-Free a context.
-
-```c
-void extism_context_free(struct ExtismContext *ctx);
-```
-
----
-
 ### `extism_plugin_new`
 
 Create a new plugin.
@@ -75,16 +55,6 @@ Remove a plugin from the registry and free associated memory.
 
 ```c
 void extism_plugin_free(struct ExtismContext *ctx, ExtismPlugin plugin);
-```
-
----
-
-### `extism_context_reset`
-
-Remove all plugins from the registry.
-
-```c
-void extism_context_reset(struct ExtismContext *ctx);
 ```
 
 ---
