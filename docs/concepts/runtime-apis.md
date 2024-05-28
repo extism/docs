@@ -9,26 +9,6 @@ If you would like to embed Extism into a language that we currently do not suppo
 
 The general set of functions that is necessary to satisfy the runtime requirements is:
 
-### `extism_context_new`
-
-Create a new context.
-
-```c
-struct ExtismContext *extism_context_new(void);
-```
-
----
-
-### `extism_context_free`
-
-Free a context.
-
-```c
-void extism_context_free(struct ExtismContext *ctx);
-```
-
----
-
 ### `extism_plugin_new`
 
 Create a new plugin.
@@ -37,34 +17,26 @@ Create a new plugin.
 - `functions`: is an array of `ExtismFunction*`
 - `n_functions`: is the number of functions
 - `with_wasi`: enables/disables WASI
+- `errmsg`: error message during plugin creation, this should be freed with
+  `extism_plugin_new_error_free`
+
 
 ```c
-ExtismPlugin extism_plugin_new(struct ExtismContext *ctx,
-                               const uint8_t *wasm,
+ExtismPlugin extism_plugin_new(const uint8_t *wasm,
                                ExtismSize wasm_size,
                                const ExtismFunction **functions,
                                ExtismSize n_functions,
-                               bool with_wasi);
+                               bool with_wasi,
+                               char **errmsg);
 ```
-
 ---
 
-### `extism_plugin_update`
+### `extism_plugin_new_error_free`
 
-Update a plugin, keeping the existing ID.
-
-Similar to `extism_plugin_new` but takes an `index` argument to specify which plugin to update.
-
-Memory for this plugin will be reset upon update.
+Frees the error message returned when creating a plugin
 
 ```c
-bool extism_plugin_update(struct ExtismContext *ctx,
-                          ExtismPlugin index,
-                          const uint8_t *wasm,
-                          ExtismSize wasm_size,
-                          const ExtismFunction **functions,
-                          ExtismSize n_functions,
-                          bool with_wasi);
+void extism_plugin_new_error_free(char *err);
 ```
 
 ---
@@ -74,17 +46,7 @@ bool extism_plugin_update(struct ExtismContext *ctx,
 Remove a plugin from the registry and free associated memory.
 
 ```c
-void extism_plugin_free(struct ExtismContext *ctx, ExtismPlugin plugin);
-```
-
----
-
-### `extism_context_reset`
-
-Remove all plugins from the registry.
-
-```c
-void extism_context_reset(struct ExtismContext *ctx);
+void extism_plugin_free(ExtismPlugin *plugin);
 ```
 
 ---
@@ -94,8 +56,7 @@ void extism_context_reset(struct ExtismContext *ctx);
 Update plugin config values, this will merge with the existing values.
 
 ```c
-bool extism_plugin_config(struct ExtismContext *ctx,
-                          ExtismPlugin plugin,
+bool extism_plugin_config(ExtismPlugin *plugin,
                           const uint8_t *json,
                           ExtismSize json_size);
 ```
@@ -107,8 +68,7 @@ bool extism_plugin_config(struct ExtismContext *ctx,
 Returns true if `func_name` exists.
 
 ```c
-bool extism_plugin_function_exists(struct ExtismContext *ctx,
-                                   ExtismPlugin plugin,
+bool extism_plugin_function_exists(ExtismPlugin *plugin,
                                    const char *func_name);
 ```
 
@@ -121,9 +81,10 @@ Call a function.
 - `data`: is the input data
 - `data_len`: is the length of `data`
 
+Returns `0` when the call is successful.
+
 ```c
-int32_t extism_plugin_call(struct ExtismContext *ctx,
-                           ExtismPlugin plugin_id,
+int32_t extism_plugin_call(ExtismPlugin *plugin,
                            const char *func_name,
                            const uint8_t *data,
                            ExtismSize data_len);
@@ -131,12 +92,32 @@ int32_t extism_plugin_call(struct ExtismContext *ctx,
 
 ---
 
-### `extism_error`
+### `extism_plugin_call_with_host_context`
 
-Get the error associated with a `Context` or `Plugin`, if `plugin` is `-1` then the context error will be returned.
+Call a function with additional host context that can be accessed from inside host functions.
+- `func_name`: is the function to call
+- `data`: is the input data
+- `data_len`: is the length of `data`
+- `host_ctx`: an opaque pointer that can be accessed in host functions
+
+Returns `0` when the call is successful.
 
 ```c
-const char *extism_error(struct ExtismContext *ctx, ExtismPlugin plugin);
+int32_t extism_plugin_call_with_host_context(ExtismPlugin *plugin,
+                           const char *func_name,
+                           const uint8_t *data,
+                           ExtismSize data_len,
+                           void *host_ctx);
+```
+
+---
+
+### `extism_plugin_error`
+
+Get the error associated with a `Plugin`
+
+```c
+const char *extism_plugin_error(ExtismPlugin *plugin);
 ```
 
 ---
@@ -146,7 +127,7 @@ const char *extism_error(struct ExtismContext *ctx, ExtismPlugin plugin);
 Get the length of a plugin's output data.
 
 ```c
-ExtismSize extism_plugin_output_length(struct ExtismContext *ctx, ExtismPlugin plugin);
+ExtismSize extism_plugin_output_length(ExtismPlugin *plugin);
 ```
 
 ---
@@ -156,7 +137,17 @@ ExtismSize extism_plugin_output_length(struct ExtismContext *ctx, ExtismPlugin p
 Get the plugin's output data.
 
 ```c
-const uint8_t *extism_plugin_output_data(struct ExtismContext *ctx, ExtismPlugin plugin);
+const uint8_t *extism_plugin_output_data(ExtismPlugin *plugin);
+```
+
+---
+
+### `extism_plugin_reset`
+
+Reset the Extism runtime, this will invalidate all allocated memory.
+
+```c
+bool extism_plugin_reset(ExtismPlugin *plugin);
 ```
 
 ---
@@ -167,6 +158,28 @@ Set log file and level.
 
 ```c
 bool extism_log_file(const char *filename, const char *log_level);
+```
+
+---
+
+### `extism_log_custom`
+
+Enable a custom log handler, this will buffer logs until `extism_log_drain`
+is called Log level should be one of: info, error, trace, debug, warn
+
+```c
+bool extism_log_custom(const char *log_level);
+```
+
+---
+
+### `extism_log_drain`
+
+Calls the provided callback function for each buffered log line.
+This is only needed when `extism_log_custom` is used.
+
+```c
+void extism_log_drain(void (*handler)(const char *, uintptr_t));
 ```
 
 ---
@@ -190,6 +203,17 @@ uint8_t *extism_current_plugin_memory(ExtismCurrentPlugin *plugin);
 ```
 
 ---
+
+### `extism_current_plugin_host_context`
+
+Get access to the host context, passed in using `extism_plugin_call_with_host_context`
+
+```c
+void *extism_current_plugin_host_context(ExtismCurrentPlugin *plugin);
+```
+
+---
+
 
 ### `extism_current_plugin_memory_alloc`
 
@@ -267,33 +291,41 @@ Free an `ExtismFunction`
 void extism_function_free(ExtismFunction *ptr);
 ```
 
-## Type definitions: 
+---
 
-### `ExtismContext`
+### `extism_plugin_cancel_handle`
 
-A `Context` is used to store and manage plugins
+Get handle for plugin cancellation
 
 ```c
-typedef struct ExtismContext ExtismContext;
+const ExtismCancelHandle *extism_plugin_cancel_handle(const ExtismPlugin *plugin);
 ```
 
 ---
+
+### `extism_plugin_cancel`
+
+Cancel a running plugin from another thread
+
+```c
+bool extism_plugin_cancel(const ExtismCancelHandle *handle);
+```
+
+---
+
+## Type definitions:
 
 ### `ExtismPlugin`
 
 ```c
-typedef int32_t ExtismPlugin;
+typedef struct ExtismPlugin ExtismPlugin;
 ```
-
----
 
 ### `ExtismSize`
 
 ```c
 typedef uint64_t ExtismSize;
 ```
-
----
 
 ### `ExtismFunction`
 
@@ -303,8 +335,6 @@ typedef uint64_t ExtismSize;
 typedef struct ExtismFunction ExtismFunction;
 ```
 
----
-
 ### `ExtismCurrentPlugin`
 
 `ExtismCurrentPlugin` provides access to the currently executing plugin from within a host function
@@ -312,3 +342,12 @@ typedef struct ExtismFunction ExtismFunction;
 ```c
 typedef struct ExtismCurrentPlugin ExtismCurrentPlugin;
 ```
+
+### `ExtismCancelHandle`
+
+`ExtismCancelHandle` can be used to cancel a running plugin from another thread
+
+```c
+typedef struct ExtismCancelHandle ExtismCancelHandle;
+```
+
