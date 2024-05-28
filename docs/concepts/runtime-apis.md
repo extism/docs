@@ -81,6 +81,8 @@ Call a function.
 - `data`: is the input data
 - `data_len`: is the length of `data`
 
+Returns `0` when the call is successful.
+
 ```c
 int32_t extism_plugin_call(ExtismPlugin *plugin,
                            const char *func_name,
@@ -92,11 +94,13 @@ int32_t extism_plugin_call(ExtismPlugin *plugin,
 
 ### `extism_plugin_call_with_host_context`
 
-Call a function.
+Call a function with additional host context that can be accessed from inside host functions.
 - `func_name`: is the function to call
 - `data`: is the input data
 - `data_len`: is the length of `data`
 - `host_ctx`: an opaque pointer that can be accessed in host functions
+
+Returns `0` when the call is successful.
 
 ```c
 int32_t extism_plugin_call_with_host_context(ExtismPlugin *plugin,
@@ -346,3 +350,4 @@ typedef struct ExtismCurrentPlugin ExtismCurrentPlugin;
 ```c
 typedef struct ExtismCancelHandle ExtismCancelHandle;
 ```
+
