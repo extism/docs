@@ -6,22 +6,21 @@ sidebar_position: 6
 The manifest is a description of your plugin and some of the runtime constraints to apply to it. You can think of it as a blueprint to build your plugin.
 
 ```python tile=run-plugin.py
-with Context() as context:
-    wasm = open("../wasm/code.wasm", 'rb').read()
-    wasm_hash = hashlib.sha256(wasm).hexdigest()
-    config = {
-        "wasm": [
-            {
-                "data": wasm,
-                "hash": wasm_hash
-            }
-        ],
-        "memory": {
-            "max_pages": 5
+wasm = open("../wasm/code.wasm", 'rb').read()
+wasm_hash = hashlib.sha256(wasm).hexdigest()
+manifest = {
+    "wasm": [
+        {
+            "data": wasm,
+            "hash": wasm_hash
         }
+    ],
+    "memory": {
+        "max_pages": 5
     }
+}
 
-    plugin = context.plugin(config)
+plugin = context.plugin(manifest)
 ```
 
 ### Schema
