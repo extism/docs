@@ -70,10 +70,16 @@ plugin = context.plugin(manifest)
     ]
 
     # Describes the limits on the memory the plugin may be allocated.
-    # The units here are pages where a page is 64Kib. e.g. 16 pages would require 1MiB.
     "memory": {
         # The max amount of pages the plugin can allocate
-        "max_pages": 4
+        # One page is 64Kib. e.g. 16 pages would require 1MiB.
+        "max_pages": 4,
+
+        # The max size of an Extism HTTP response in bytes
+        "max_http_response_bytes": 4096,
+
+        # The max size of all Extism vars in bytes
+        "max_var_bytes": 4096
     },
 
     # An optional set of hosts this plugin can communicate with.
