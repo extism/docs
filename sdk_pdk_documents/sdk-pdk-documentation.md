@@ -7,28 +7,9 @@ sidebar_position: 1
 
 ## General SDK & PDK
 
-<!-- pull_from: zig-sdk.md, block: some_block, processed: true -->
-This is a block of text with some zig code in it
+<!-- pull_from: zig-sdk.md, block: some_block -->
 
-```
-const std = @import("std");
-
-fn main() {
-    return 32;
-}
-```
-
-
-<!-- pull_from: rust-sdk.md, block: some_block, processed: true -->
-This is a block of text with some zig code in it
-
-```
-fn main() {
-    println!("Hello, Crabs!");
-}
-
-```
-
+<!-- pull_from: rust-sdk.md, block: some_block -->
 
 <!-- block: some_block -->
 Cool other stuff here

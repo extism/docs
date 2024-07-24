@@ -2,17 +2,7 @@
 
 ## Rus SDK
 
-<!-- pull_from: zig-sdk.md, block: some_block, processed: true -->
-This is a block of text with some zig code in it
-
-```
-const std = @import("std");
-
-fn main() {
-    return 32;
-}
-```
-
+<!-- pull_from: zig-sdk.md, block: some_block -->
 
 <!-- block: some_block -->
 This is a block of text with some zig code in it
