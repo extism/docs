@@ -44,11 +44,6 @@ Check out the Extism kernel [README](https://github.com/extism/extism/blob/main/
 
 Extism Plug-ins are single threaded, as threading inside of a Wasm module is still a developing story in the WebAssembly ecosystem. But your host application can do whatever it wants! If you need concurrency, one pattern might be to create “pools” of Plug-in instances that can be called from threads running in your Host.
 
-### Does Extism support the Component Model?
-
-Extism is currently focused on WebAssembly core modules and the bountiful use cases that they unlock, but we are tracking the Component Model closely and are very excited about the next level of cross-language composability and complex type support that it’s bringing to the Wasm ecosystem. In fact, we have a [Discord channel](https://extism.org/discord) dedicated to discussing the ways in which Extism can support it in the future. Come join in!
-
-
 ### Does Extism support WASI?
 
 Extism currently supports WASI as a superset of functionality - but you don’t always want to give your guest code access to system resources even in a limited environment. With Extism you don’t need to enable WASI to use a Plug-in, as you can invoke functions directly and even build your own custom [Host functions](https://extism.org/docs/concepts/host-functions) for fine-grained control over the capabilities your Plug-ins can access. But use what’s best suited for your needs!
