@@ -129,6 +129,39 @@ extism call --input "this is a test" test/code.wasm count_vowels
 {"count": 4}
 ```
 
+For plugins which require manifest and configuration properties to be set, you can pass these as flags to the `call` command.
+
+Use `extism help call` to explore the available flags:
+
+```sh
+Usage:
+  extism call [flags] wasm_file function
+
+Flags:
+      --allow-host stringArray                  Allow access to an HTTP host, if no hosts are listed then all requests will fail. Globs may be used for wildcards
+      --allow-path stringArray                  Allow a path to be accessed from inside the Wasm sandbox, a path can be either a plain path or a map from HOST_PATH:GUEST_PATH
+      --config stringArray                      Set config values, should be in KEY=VALUE format
+  -h, --help                                    help for call
+      --http-response-max extism_http_request   Maximum HTTP response size in bytes when using extism_http_request (default -1)
+  -i, --input string                            Input data
+      --link stringArray                        Additional modules to link
+      --log-level string                        Set log level: trace, debug, warn, info, error
+      --loop int                                Number of times to call the function (default 1)
+  -m, --manifest                                When set the input file will be parsed as a JSON encoded Extism manifest instead of a WASM file
+      --memory-max int                          Maximum number of pages to allocate
+      --set-config config                       Create config object using JSON, this will be merged with any config arguments
+      --stdin                                   Read input from stdin
+      --timeout uint                            Timeout in milliseconds
+      --var-max int                             Maximum size in bytes of Extism var store (default -1)
+      --wasi                                    Enable WASI
+
+Global Flags:
+      --github-token string   Github access token, can also be set using the $GITHUB_TOKEN env variable
+  -q, --quiet                 Suppress output
+  -v, --verbose               Enable additional logging
+
+```
+
 ### Check installed version
 
 The CLI can also be used to get information about the installed version of
